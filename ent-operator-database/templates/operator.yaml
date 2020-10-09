@@ -1,0 +1,101 @@
+{{- if .Values.deployOperator }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-operator
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        controller: {{ .Release.Name }}-operator
+  template:
+    metadata:
+      labels:
+        controller: {{ .Release.Name }}-operator
+    spec:
+      serviceAccountName: {{ .Release.Name }}-operator
+{{- if not .Values.managedSecurityContext }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+{{- end }}
+{{- if .Values.registry.imagePullSecrets}}
+      imagePullSecrets:
+      - name: {{ .Values.registry.imagePullSecrets }}
+{{- end }}
+      containers:
+      - name: mongodb-enterprise-operator
+        image: {{ .Values.registry.operator.Image }}:{{ .Values.registry.operator.Tag | default "latest" }}
+        imagePullPolicy: {{ .Values.registry.pullPolicy }}
+        {{- if .Values.operator.watchedResources }}
+        args:
+          {{- range .Values.operator.watchedResources }}
+          - "-watch-resource={{ . }}"
+          {{- end }}
+        command:
+          - "/usr/local/bin/mongodb-enterprise-operator"
+        {{- end }}
+        env:
+        - name: OPERATOR_ENV
+          value: {{ .Values.operator.env }}
+        - name: WATCH_NAMESPACE
+{{- if .Values.operator.watchNamespace}}
+          value: "{{ .Values.operator.watchNamespace }}"
+{{- else }}
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+{{- end }}
+        - name: CURRENT_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+{{- if eq .Values.managedSecurityContext true }}
+        - name: MANAGED_SECURITY_CONTEXT
+          value: 'true'
+{{- end }}
+        - name: IMAGE_PULL_POLICY
+          value: {{ .Values.registry.pullPolicy }}
+        # Database
+        - name: MONGODB_ENTERPRISE_DATABASE_IMAGE
+          value: {{ .Values.registry.database.Image }}
+        # Ops Manager
+        - name: OPS_MANAGER_IMAGE_REPOSITORY
+          value: {{ .Values.registry.opsManager.Image }}
+        - name: INIT_OPS_MANAGER_IMAGE_REPOSITORY
+          value: {{ .Values.registry.initOpsManager.Image }}
+        - name: INIT_OPS_MANAGER_VERSION
+          value: {{ .Values.registry.initOpsManager.Tag }}
+        - name: INIT_APPDB_IMAGE_REPOSITORY
+          value: {{ .Values.registry.initAppDb.Image }}
+        - name: INIT_APPDB_VERSION
+          value: {{ .Values.registry.initAppDb.Tag }}
+        - name: OPS_MANAGER_IMAGE_PULL_POLICY
+          value: {{ .Values.registry.pullPolicy }}
+        - name: APPDB_IMAGE_REPOSITORY
+          value: {{ .Values.registry.appDb.Image }}
+{{- if .Values.registry.imagePullSecrets }}
+        - name: IMAGE_PULL_SECRETS
+          value: {{ .Values.registry.imagePullSecrets }}
+{{- end }}
+
+
+{{- if .Values.debug }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: debug-svc
+spec:
+  type: NodePort
+  ports:
+    - nodePort: {{ .Values.debugPort }}
+      port: 40000
+      protocol: TCP
+  selector:
+    app: {{ .Release.Name }}-operator
+{{- end }}
+
+{{- end }}

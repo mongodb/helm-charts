@@ -1,0 +1,18 @@
+{{- if .Values.deployOpsManager }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.opsManager.name }}-global-admin
+  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
+  namespace: {{ .Values.operator.watchNamespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+type: Opaque
+data:
+    Username: {{ .Values.opsManager.globalAdmin | b64enc }}
+    Password: {{ .Values.opsManager.globalAdminPassword | b64enc }}
+    FirstName: {{ .Values.opsManager.globalAdminFirstName | b64enc }}
+    LastName: {{ .Values.opsManager.globalAdminLastName  | b64enc }}
+{{- end }}

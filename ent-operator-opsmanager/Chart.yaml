@@ -1,0 +1,13 @@
+apiVersion: v2
+name: mongodb-enterprise-operator
+description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
+version: 0.1.0
+kubeVersion: '>=1.15-0'
+keywords:
+- opsManager
+- mongodb
+- database
+- nosql
+home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+maintainers:
+- name: Cloud Team

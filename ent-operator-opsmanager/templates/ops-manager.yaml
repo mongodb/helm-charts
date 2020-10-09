@@ -1,0 +1,132 @@
+{{- if .Values.deployOpsManager }}
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBOpsManager
+metadata:
+  name: mongodb-ops-manager
+  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
+  namespace: {{ .Values.operator.watchNamespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.opsManager.replicas | default 1 }}
+  version: {{ .Values.opsManager.version | default "4.4.2" }}
+  adminCredentials: {{ .Values.opsManager.name }}-global-admin
+  persistent: true
+
+  configuration:
+    # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
+    # this requires to set some mandatory configuration properties, see
+    # https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html#mms.ignoreInitialUiSetup
+    mms.ignoreInitialUiSetup: "true"
+    automation.versions.source: {{ .Values.opsManager.versionSource | quote }}
+    mms.adminEmailAddr: {{ .Values.opsManager.mail.adminEmailAddr | quote }}
+    mms.fromEmailAddr: {{ .Values.opsManager.mail.adminEmailAddr | quote }}
+    mms.replyToEmailAddr: {{ .Values.opsManager.mail.adminEmailAddr | quote }}
+    mms.mail.hostname: {{ .Values.opsManager.mail.hostname | quote }}
+    mms.mail.port: {{ .Values.opsManager.mail.port | quote }}
+    mms.mail.ssl: "true"
+    mms.mail.transport: "smtp"
+    mms.minimumTLSVersion: "TLSv1.2"
+
+  statefulSet:
+    spec:
+      {{- if eq .Values.opsManager.versionSource "local" }}
+      # the Persistent Volume Claim will be created for each Ops Manager Pod
+      volumeClaimTemplates:
+        - metadata:
+            name: mongodb-versions
+          spec:
+            accessModes: [ "ReadWriteOnce" ]
+            resources:
+              requests:
+                storage: {{ .Values.opsManager.installerVolumeSize }}
+
+      template:
+        spec:
+          containers:
+            - name: mongodb-ops-manager
+              volumeMounts:
+                - name: mongodb-versions
+                  # this is the directory in each Pod where all MongoDB
+                  # archives must be put
+                  mountPath: /mongodb-ops-manager/mongodb-releases                  
+              resources:
+                {{- toYaml .Values.opsManager.resources | nindent 16 }}
+          {{- with .Values.opsManager.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{ else }}
+      template:
+        spec:
+          containers:
+            - name: mongodb-ops-manager
+              resources:
+                {{- toYaml .Values.opsManager.resources | nindent 16 }}
+          {{- with .Values.opsManager.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}      
+      {{ end }}
+
+  # Exposing Ops Manager to External DNS: AWK EKS exmaple
+  externalConnectivity:
+    # LoadBalancer|NodePort
+    type: LoadBalancer
+
+
+  # optional. Enabled by default
+  # Allows to configure backup in Ops Manager
+  backup:
+    enabled: {{ .Values.opsManager.backup.enabled | default true }}
+    # optional. Configured by default if backup is enabled.
+    # Configures Head db storage parameters
+  {{- if .Values.opsManager.backup.enabled }}    
+    headDB:
+      # optional. Default storage is 30G
+      storage: 50G
+
+    # Configures the list of Oplog Store Configs
+
+    opLogStores:
+      - name: {{ .Values.opsManager.backup.opLog.name }}
+        # reference to MongoDB Custom Resource. The Operator watches changes in it and updates Oplog configuration
+        # in Ops Manager
+        mongodbResourceRef:
+          name: {{ .Values.opsManager.backup.opLog.mongodbResourceRef }}
+        # optional. Specify if Oplog database has SCRAM-SHA authentication enabled
+        mongodbUserRef:
+          name: {{ .Values.opsManager.backup.opLog.mongodbUserRef }}
+    
+    # Configures the list of S3 Snapshot Configs. Application database is used as a database for S3 metadata
+    # by default
+    # Note, that either S3 Snapshot or Blockstore config needs to be specified to backup MongoDB deployments
+    {{- if .Values.opsManager.backup.configureObjectStore }}
+    {{- with .Values.opsManager.backup.s3Stores}}
+    s3Stores:
+      - name: {{ .name }}
+        # the name of the secret which contains aws credentials
+        s3SecretRef:
+          name: {{ .s3SecretRef }}
+        s3BucketEndpoint: {{ .s3BucketEndpoint }}
+        s3BucketName: {{ .s3BucketName }}
+        pathStyleAccessEnabled: {{ .pathStyleAccessEnabled }}
+    {{- end }}
+    {{- end }}
+
+    # Configures the list of Blockstore Configs
+    {{- if .Values.opsManager.backup.configureBlockStore }}
+    blockStores:
+      - name: blockStore1
+        # reference to MongoDB Custom Resource. The Operator watches changes in it and updates Blockstore configuration
+        # in Ops Manager
+        mongodbResourceRef:
+          name: my-mongodb-blockstore
+    {{- end }}
+  {{- end }}
+  applicationDatabase:
+    members: 3
+    persistent: true
+{{- end }}

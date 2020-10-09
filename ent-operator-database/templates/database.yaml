@@ -1,0 +1,53 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: {{ .Values.dataBase.name }}
+  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
+  namespace: {{ .Values.operator.watchNamespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  
+spec:
+  type: {{ .Values.dataBase.type | quote }}
+  members: {{ .Values.dataBase.members }}
+
+  # Using a version >= 4.0 will enable SCRAM-SHA-256 authentication
+  # setting a version < 4.0 will enable SCRAM-SHA-1/MONGODB-CR authentication
+  version: 4.0.4-ent
+
+  opsManager:
+    configMapRef:
+      name: {{ .Values.dataBase.name }}-configmap
+  credentials: {{ .Values.dataBase.name }}-crendential
+
+  security:
+    authentication:
+      enabled: true
+      modes: ["SCRAM"] # Valid authentication modes are "SCRAM' and "X509"
+
+      # Optional field - ignoreUnknownUsers
+      # A value of true means that any users not configured via the Operator or the Ops Manager or Cloud Manager UI
+      # will not be altered in any way
+
+      # If you need to manage MongoDB users directly via the mongods, set this value to true
+      ignoreUnknownUsers: false # default value false
+  podTemplate:
+    spec:
+      terminationGracePeriodSeconds: 10
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: zone
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+        matchLabels:
+          foo: bar
+        # This container will be added to each pod as a sidecar
+      containers:
+        resources:
+          {{- toYaml .Values.dataBase.resources | nindent 10 }}
+      {{- with .Values.dataBase.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
