@@ -1,0 +1,12 @@
+apiVersion: v2
+name: mongodb-enterprise-operator
+description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
+version: 0.1.0
+kubeVersion: '>=1.15-0'
+keywords:
+- mongodb
+- database
+- nosql
+home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+maintainers:
+- name: MongoDB Cloud Team

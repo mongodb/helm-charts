@@ -93,12 +93,6 @@ spec:
             exposedExternally:
               type: boolean
 
-            agent:
-              type: object
-              properties:
-                startupOptions:
-                  type: object
-
             # Generic PodSpec configuration
             podSpec:
               type: object
@@ -189,13 +183,6 @@ spec:
                               type: string
                             key:
                               type: string
-                        automationLdapGroupDN:
-                          type: string
-                        clientCertificateSecretRef:
-                          type: object
-                          properties:
-                            name:
-                              type: string
                       required:
                         - mode
                     enabled:
@@ -206,8 +193,6 @@ spec:
                         type: string
                         enum: ["SCRAM", "X509", "LDAP"]
                     ignoreUnknownUsers:
-                      type: boolean
-                    requireClientTLSAuthentication:
                       type: boolean
                 tls:
                   type: object
@@ -530,28 +515,13 @@ spec:
               properties:
                 additionalMongodConfig:
                   type: object
-                agent:
-                  type: object
-                  properties:
-                    startupOptions:
-                      type: object
             configSrv:
               type: object
               properties:
                 additionalMongodConfig:
                   type: object
-                agent:
-                  type: object
-                  properties:
-                    startupOptions:
-                      type: object
             shard:
               type: object
               properties:
                 additionalMongodConfig:
                   type: object
-                agent:
-                  type: object
-                  properties:
-                    startupOptions:
-                      type: object
