@@ -9,4 +9,5 @@ keywords:
 - nosql
 home: https://github.com/mongodb/helm-charts
 maintainers:
-- name: MongoDB Cloud Team
+- name: theburi
+  email: belika@hotmail.com
