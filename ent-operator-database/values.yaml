@@ -1,5 +1,5 @@
 
-## Operator
+## MongoDB Enterprise Database
 
 # Set this to true if your cluster is managing SecurityContext for you.
 # If running OpenShift (Cloud, Minishift, etc.), set this to true.
@@ -9,49 +9,23 @@ managedSecurityContext: false
 deployOperator: true
 deployValidationWebhooks: true # Optional configuration.
 
+name: mdbreplset 
+type: ReplicaSet
+members: 3
+opsManager:
+  URL: "http://a2fbcb181660c4589afae30959c8218a-2143866689.eu-west-1.elb.amazonaws.com:8080"
+  APIKey: "UZMWOTAX"
+  APISecret: "7b9b5641-cfee-42ed-8d0e-44667d51d2ea"
+  orgid: "5f6e1653a0b3b16931c7a3ae"  
+resources: 
+  limits:
+    cpu: 2
+    memory: 1.5G
+  requests:
+    cpu: 1
+    memory: 1G
 
 clusterName: cluster.local
-
-operator:
-  # Execution environment for the operator, dev or prod. Use dev for more verbose logging
-  env: prod
-
-  # Name that will be assigned to most of internal Kubernetes objects like Deployment, ServiceAccount, Role etc.
-  name: mongodb-enterprise-operator
-
-  # Name of the deployment of the operator pod
-  deployment_name: mongodb-enterprise-operator
-
-  # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-  version: 1.7.2  
-
-  # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
-  watchedResources:
-  - mongodb
-  - opsmanagers
-  - mongodbusers
-
-  # When Operator is deployed globally add a list of namespaces to watch
-  # watchNamespace:
-  # - mongodb
-
-
-dataBase:
-  name: mdbreplset 
-  type: ReplicaSet
-  members: 3
-  opsManager:
-    URL: "http://a2fbcb181660c4589afae30959c8218a-2143866689.eu-west-1.elb.amazonaws.com:8080"
-    APIKey: "UZMWOTAX"
-    APISecret: "7b9b5641-cfee-42ed-8d0e-44667d51d2ea"
-    orgid: "5f6e1653a0b3b16931c7a3ae"  
-  resources: 
-    limits:
-      cpu: 2
-      memory: 1.5G
-    requests:
-      cpu: 1
-      memory: 1G
 
 registry:
   # Redhat repository is registry.connect.redhat.com/mongod

@@ -1,9 +1,8 @@
-{{ if .Values.deployOperator }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-operator
+  name: {{ .Release.Name }}-operator  
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
@@ -97,5 +96,3 @@ spec:
   selector:
     app: {{ .Release.Name }}-operator
 {{- end }}
-
-{{ end }}

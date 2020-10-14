@@ -1,5 +1,3 @@
-
-{{ if .Values.deployOperator }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -89,8 +87,6 @@ subjects:
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
-
-{{ end }}
 
 
 {{ if .Values.deployValidationWebhooks }}

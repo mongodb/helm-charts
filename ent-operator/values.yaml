@@ -6,7 +6,6 @@
 managedSecurityContext: false
 
 # Section to describe components that needs to be installed
-deployOperator: true
 deployValidationWebhooks: true # Optional configuration.
 
 
@@ -40,7 +39,7 @@ registry:
   
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.7.1
+    Tag: 1.8.0
 
   database:
     Image: quay.io/mongodb/mongodb-enterprise-database:1.7.1

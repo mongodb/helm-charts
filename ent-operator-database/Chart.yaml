@@ -1,5 +1,5 @@
 apiVersion: v2
-name: mongodb-enterprise-operator
+name: mongodb-enterprise-database
 description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
 version: 0.1.0
 kubeVersion: '>=1.15-0'

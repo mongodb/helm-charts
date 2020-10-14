@@ -1,3 +1,8 @@
+---
+name: ops-manager
+replicas: 1
+version: "4.4.2"
+
 
 # Set this to true if your cluster is managing SecurityContext for you.
 # If running OpenShift (Cloud, Minishift, etc.), set this to true.
@@ -12,73 +17,47 @@ deployBackupInfrastructure: true
 
 clusterName: cluster.local
 
-operator:
-  # Execution environment for the operator, dev or prod. Use dev for more verbose logging
-  env: prod
+# for fully air-gapped environemnts choose "local"
+# to proxy mongodb installers download via Ops Manager choose "remote"
+versionSource: "mongodb"  # [ mongodb| local| remote ]
+installerVolumeSize: "20G"
 
-  # Name that will be assigned to most of internal Kubernetes objects like Deployment, ServiceAccount, Role etc.
-  name: mongodb-enterprise-operator
+globalAdmin: "test@test.com"
+globalAdminPassword: "KubeTest!1"
+globalAdminFirstName: "First Name"
+globalAdminLastName: "Last Name"
 
-  # Name of the deployment of the operator pod
-  deployment_name: mongodb-enterprise-operator
+# This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a normal DB
+backup:
+  enabled: true
+  configureObjectStore: true # aka S3
+  configureBlockStore: false
+  configureFileSystem: false # For OpsManager v 4.4.2+
+  opLog:
+    name: opLog1
+    mongodbResourceRef: om-mongodb-oplog
+    mongodbUserRef: admin-user
+  s3Stores:
+    name: s3store1
+      # the name of the secret which contains aws credentials
+    s3SecretRef: my-aws-creds
+    s3BucketEndpoint: s3.us-east-1.amazonaws.com
+    s3BucketName: my-bucket-name
+    pathStyleAccessEnabled: true
 
-  # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-  version: 1.7.1  
-
-  # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
-  watchedResources:
-  - mongodb
-  - opsmanagers
-  - mongodbusers
-
-  # When Operator needs to manage different namespace
-  # watchNamespace: mongodb
-
-opsManager:
-  name: ops-manager
-  replicas: 1
-  version: "4.4.2"
-  # for fully air-gapped environemnts choose "local"
-  # to proxy mongodb installers download via Ops Manager choose "remote"
-  versionSource: "mongodb"  # [ mongodb| local| remote ]
-  installerVolumeSize: "20G"
-
-  globalAdmin: "test@test.com"
-  globalAdminPassword: "KubeTest!1"
-  globalAdminFirstName: "First Name"
-  globalAdminLastName: "Last Name"
-
-  # This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a normal DB
-  backup:
-    enabled: true
-    configureObjectStore: true # aka S3
-    configureBlockStore: false
-    configureFileSystem: false # For OpsManager v 4.4.2+
-    opLog:
-      name: opLog1
-      mongodbResourceRef: om-mongodb-oplog
-      mongodbUserRef: admin-user
-    s3Stores:
-      name: s3store1
-        # the name of the secret which contains aws credentials
-      s3SecretRef: my-aws-creds
-      s3BucketEndpoint: s3.us-east-1.amazonaws.com
-      s3BucketName: my-bucket-name
-      pathStyleAccessEnabled: true
-
-  #Required: SMTP Mail server set up for password recorvery
-  mail:
-    adminEmailAddr: "support@example.com"
-    hostname: "email-smtp.us-east-1.amazonaws.com"
-    port: "465"
-  resources: 
-    limits:
-      cpu: 2
-      memory: 8G
-    requests:
-      cpu: 1
-      memory: 6G
-  tolerations: []
+#Required: SMTP Mail server set up for password recorvery
+mail:
+  adminEmailAddr: "support@example.com"
+  hostname: "email-smtp.us-east-1.amazonaws.com"
+  port: "465"
+resources: 
+  limits:
+    cpu: 2
+    memory: 8G
+  requests:
+    cpu: 1
+    memory: 6G
+tolerations: []
 
 
 

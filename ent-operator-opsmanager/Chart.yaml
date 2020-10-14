@@ -1,5 +1,5 @@
 apiVersion: v2
-name: mongodb-enterprise-operator
+name: mongodb-enterprise-opsmanager
 description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
 version: 0.1.0
 kubeVersion: '>=1.15-0'
@@ -11,3 +11,7 @@ keywords:
 home: https://github.com/mongodb/mongodb-enterprise-kubernetes
 maintainers:
 - name: Cloud Team
+dependencies:
+    - name: mongodb-enterprise-operator
+      version: "0.1.0"
+      repository: "https://github.com/mongodb/helm-charts"
