@@ -10,7 +10,7 @@ managedSecurityContext: false
 
 # Section to describe components that needs to be installed
 deployOperator: true
-deployValidationWebhooks: true # Optional configuration.
+deployValidationWebhooks: true  # Optional configuration.
 
 deployOpsManager: true
 deployBackupInfrastructure: true
@@ -30,9 +30,9 @@ globalAdminLastName: "Last Name"
 # This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a normal DB
 backup:
   enabled: true
-  configureObjectStore: true # aka S3
+  configureObjectStore: true  # aka S3
   configureBlockStore: false
-  configureFileSystem: false # For OpsManager v 4.4.2+
+  configureFileSystem: false  # For OpsManager v 4.4.2+
   opLog:
     name: opLog1
     mongodbResourceRef: om-mongodb-oplog
@@ -45,12 +45,12 @@ backup:
     s3BucketName: my-bucket-name
     pathStyleAccessEnabled: true
 
-#Required: SMTP Mail server set up for password recorvery
+# Required: SMTP Mail server set up for password recovery
 mail:
   adminEmailAddr: "support@example.com"
   hostname: "email-smtp.us-east-1.amazonaws.com"
   port: "465"
-resources: 
+resources:
   limits:
     cpu: 2
     memory: 8G
@@ -59,11 +59,9 @@ resources:
     memory: 6G
 tolerations: []
 
-
-
 registry:
-  # Redhat repository is registry.connect.redhat.com/mongodb
-  
+  # RedHat repository is registry.connect.redhat.com/mongodb
+
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
     Tag: 1.7.1
