@@ -21,7 +21,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"      
       - name: Helm Chart Releaser
         # You may pin to the exact commit or the version.
         # uses: helm/chart-releaser-action@97237943efb7a48269d47a642ec5fdff675aa55f
