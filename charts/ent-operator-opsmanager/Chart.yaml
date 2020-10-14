@@ -11,7 +11,4 @@ keywords:
 home: https://github.com/mongodb/mongodb-enterprise-kubernetes
 maintainers:
 - name: Cloud Team
-dependencies:
-    - name: mongodb-enterprise-operator
-      version: "0.1.0"
-      repository: "https://github.com/mongodb/helm-charts"
+
