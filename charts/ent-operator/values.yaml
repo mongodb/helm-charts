@@ -64,7 +64,7 @@ registry:
   pullPolicy: Always
   # Specify if images are pulled from private registry
 
-debugPort: 
+debugPort:
 # Set this to true if the operator will require Kubernetes CA
 # infrastructure to generate TLS certificates.
 needsCAInfrastructure: true
