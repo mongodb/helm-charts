@@ -2,24 +2,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.dataBase.name }}-configmap
-  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
-  namespace: {{ .Values.operator.watchNamespace }}
-  {{- else }}
+  name: {{ .Values.name }}-configmap
   namespace: {{ .Release.Namespace }}
-  {{- end }}
 data:
-  projectName: {{ .Values.dataBase.name }}
-  {{ if .Values.dataBase.opsManager.URL }}  
-  baseUrl: {{ .Values.dataBase.opsManager.URL }}
-  {{ else }}
-  baseUrl: {{ .Values.opsManager.name }}.{{ .Values.opsManager.namespace }}.svc.{{ .Values.clusterName }}
-  {{ end }}
+  projectName: {{ .Values.name }}
+  baseUrl: {{ .Values.opsManager.URL }}
 
   # Optional parameters
 
   # If orgId is omitted a new organization will be created, with the same name as the Project. 
   # Also API Key used must have global admin permissions
-  {{- if .Values.dataBase.opsManager.orgid }}
-  orgId: {{ .Values.dataBase.opsManager.orgid | quote }}
+  {{- if .Values.opsManager.orgid }}
+  orgId: {{ .Values.opsManager.orgid | quote }}
   {{- end }}

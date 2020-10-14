@@ -2,16 +2,16 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: {{ .Values.dataBase.name }}
-  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
-  namespace: {{ .Values.operator.watchNamespace }}
+  name: {{ .Values.name }}
+  {{- if not (eq (.Values.watchNamespace | default "*") "*") }}
+  namespace: {{ .Values.watchNamespace }}
   {{- else }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
   
 spec:
-  type: {{ .Values.dataBase.type | quote }}
-  members: {{ .Values.dataBase.members }}
+  type: {{ .Values.type | quote }}
+  members: {{ .Values.members }}
 
   # Using a version >= 4.0 will enable SCRAM-SHA-256 authentication
   # setting a version < 4.0 will enable SCRAM-SHA-1/MONGODB-CR authentication
@@ -19,8 +19,8 @@ spec:
 
   opsManager:
     configMapRef:
-      name: {{ .Values.dataBase.name }}-configmap
-  credentials: {{ .Values.dataBase.name }}-crendential
+      name: {{ .Values.name }}-configmap
+  credentials: {{ .Values.name }}-crendential
 
   security:
     authentication:
@@ -46,8 +46,8 @@ spec:
         # This container will be added to each pod as a sidecar
       containers:
         resources:
-          {{- toYaml .Values.dataBase.resources | nindent 10 }}
-      {{- with .Values.dataBase.tolerations }}
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

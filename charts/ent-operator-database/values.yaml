@@ -1,4 +1,3 @@
-
 ## MongoDB Enterprise Database
 
 # Set this to true if your cluster is managing SecurityContext for you.
@@ -9,27 +8,28 @@ managedSecurityContext: false
 deployOperator: true
 deployValidationWebhooks: true # Optional configuration.
 
-name: mdbreplset 
+name: mdbreplset
 type: ReplicaSet
 members: 3
 opsManager:
   URL: "http://a2fbcb181660c4589afae30959c8218a-2143866689.eu-west-1.elb.amazonaws.com:8080"
   APIKey: "UZMWOTAX"
   APISecret: "7b9b5641-cfee-42ed-8d0e-44667d51d2ea"
-  orgid: "5f6e1653a0b3b16931c7a3ae"  
-resources: 
+  orgid: "5f6e1653a0b3b16931c7a3ae"
+resources:
   limits:
     cpu: 2
     memory: 1.5G
   requests:
     cpu: 1
     memory: 1G
+tolerations: []
 
 clusterName: cluster.local
 
 registry:
   # Redhat repository is registry.connect.redhat.com/mongod
-  
+
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
     Tag: 1.7.1
