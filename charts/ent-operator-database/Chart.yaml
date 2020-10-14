@@ -1,7 +1,7 @@
 apiVersion: v2
 name: mongodb-enterprise-database
 description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
-version: 0.1.0
+version: 0.1.1
 kubeVersion: '>=1.15-0'
 keywords:
 - mongodb
@@ -11,3 +11,7 @@ home: https://github.com/mongodb/mongodb-enterprise-kubernetes
 maintainers:
 - name: theburi
   email: belika@hotmail.com
+  dependencies:
+    - name: mongodb-enterprise-operator
+      version: "0.1.*"
+      repository: "https://mongodb.github.io/helm-charts/charts"

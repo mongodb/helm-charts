@@ -1,7 +1,7 @@
 apiVersion: v2
 name: mongodb-enterprise-opsmanager
 description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
-version: 0.1.0
+version: 0.1.1
 kubeVersion: '>=1.15-0'
 keywords:
 - opsManager
