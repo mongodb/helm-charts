@@ -28,6 +28,6 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           # The charts directory
-          charts_dir: ./ 
+          charts_dir: . 
           # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
           charts_repo_url: https://mongodb.github.io/helm-charts 
