@@ -10,4 +10,5 @@ keywords:
 - nosql
 home: https://github.com/mongodb/mongodb-enterprise-kubernetes
 maintainers:
-- name: Cloud Team
+- name: Andrey Belik
+  email: andrey.belik@mongodb.com
