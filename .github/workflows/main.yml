@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Release Charts
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Helm Chart Releaser
+        # You may pin to the exact commit or the version.
+        # uses: helm/chart-releaser-action@97237943efb7a48269d47a642ec5fdff675aa55f
+        uses: helm/chart-releaser-action@v1.0.0
+        with:
+          # The charts directory
+          charts_dir: ./ 
+          # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
+          charts_repo_url: https://mongodb.github.io/helm-charts 
