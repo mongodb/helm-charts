@@ -19,6 +19,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Helm Chart Releaser
         # You may pin to the exact commit or the version.
