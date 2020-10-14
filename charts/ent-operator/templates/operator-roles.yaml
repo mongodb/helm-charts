@@ -11,12 +11,12 @@ imagePullSecrets:
 
 
 ---
-kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
+kind: {{ if eq (.Values.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.operator.name }}
-  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
-  namespace: {{ .Values.operator.watchNamespace }}
+  name: {{ .Values.name }}
+  {{- if not (eq (.Values.watchNamespace | default "*") "*") }}
+  namespace: {{ .Values.watchNamespace }}
   {{- else }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
@@ -46,7 +46,7 @@ rules:
   - watch
   - delete
   - update
-  {{- if eq (.Values.operator.watchNamespace | default "") "*" }}
+  {{- if eq (.Values.watchNamespace | default "") "*" }}
 - apiGroups:
   - ""
   resources:
@@ -72,15 +72,15 @@ rules:
   - "*"
 
 ---
-kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRoleBinding {{ else }} RoleBinding {{ end }}
+kind: {{ if eq (.Values.watchNamespace | default "") "*" }} ClusterRoleBinding {{ else }} RoleBinding {{ end }}
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.operator.name }}
+  name: {{ .Values.name }}
   namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
-  name: {{ .Values.operator.name }}
+  kind: {{ if eq (.Values.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
+  name: {{ .Values.name }}
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
