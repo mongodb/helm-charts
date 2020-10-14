@@ -6,9 +6,9 @@ name: Release Charts
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: 
+      - main
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,13 +19,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"      
       - name: Helm Chart Releaser
         # You may pin to the exact commit or the version.
         # uses: helm/chart-releaser-action@97237943efb7a48269d47a642ec5fdff675aa55f
         uses: helm/chart-releaser-action@v1.0.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          # The charts directory
-          charts_dir: ./ 
           # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
           charts_repo_url: https://mongodb.github.io/helm-charts 
