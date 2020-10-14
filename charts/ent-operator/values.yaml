@@ -1,4 +1,3 @@
-
 ## Operator
 
 # Set this to true if your cluster is managing SecurityContext for you.
@@ -6,8 +5,7 @@
 managedSecurityContext: false
 
 # Section to describe components that needs to be installed
-deployValidationWebhooks: true # Optional configuration.
-
+deployValidationWebhooks: true  # Optional configuration.
 
 clusterName: cluster.local
 
@@ -21,9 +19,10 @@ name: mongodb-enterprise-operator
 deployment_name: mongodb-enterprise-operator
 
 # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-version: 1.8.0  
+version: 1.8.0
 
-# The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
+# The Custom Resources that will be watched by the Operator.
+# Needs to be changed if only some of the CRDs are installed
 watchedResources:
 - mongodb
 - opsmanagers
@@ -36,7 +35,7 @@ watchedResources:
 
 registry:
   # Redhat repository is registry.connect.redhat.com/mongod
-  
+
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
     Tag: 1.8.0

@@ -7,7 +7,7 @@ managedSecurityContext: false
 # Section to describe components that needs to be installed
 deployOperator: true
 # Optional configuration.
-deployValidationWebhooks: true 
+deployValidationWebhooks: true
 
 name: mdbreplset
 type: ReplicaSet
