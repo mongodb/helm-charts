@@ -3,40 +3,40 @@ name: Lint and Test Charts
 on:
   pull_request:
     paths:
-      - '**'
+      - 'charts/**'
 
 jobs:
-    lint-chart:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v2
-    
-          - name: Fetch history
-            run: git fetch --prune --unshallow
-    
-          - name: Run chart-testing (lint)
-            id: lint
-            uses: helm/chart-testing-action@v1.0.0
-            with:
-              command: lint
-              config: .github/ct.yaml
+  lint-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    kubeval-chart:
-        runs-on: ubuntu-latest
-        needs:
-            - lint-chart
-        strategy:
-            matrix:
-            k8s:
-                - v1.15.11
-                - v1.16.8
-                - v1.17.4
-        steps:
-            - name: Checkout
-            uses: actions/checkout@v1
-            - name: Run kubeval
-            env:
-                KUBERNETES_VERSION: ${{ matrix.k8s }}
-            run: .github/kubeval.sh
+    - name: Fetch history
+        run: git fetch --prune --unshallow
+
+      - name: Run chart-testing (lint)
+        id: lint
+        uses: helm/chart-testing-action@v1.0.0
+        with:
+          command: lint
+          config: .github/ct.yaml
+
+  kubeval-chart:
+    runs-on: ubuntu-latest
+    needs:
+      - lint-chart
+    strategy:
+      matrix:
+      k8s:
+        - v1.15.11
+        - v1.16.8
+        - v1.17.4
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Run kubeval
+      env:
+        KUBERNETES_VERSION: ${{ matrix.k8s }}
+      run: .github/kubeval.sh
 
