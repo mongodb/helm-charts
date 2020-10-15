@@ -1,0 +1,58 @@
+apiVersion: v1
+entries:
+  mongodb-enterprise-database:
+  - apiVersion: v2
+    created: "2020-10-15T09:34:20.24264252Z"
+    description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
+    digest: 5b1c09635e95822289a0e4d475a4dbc707c03d5c76d86538edeabe32a5f72334
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-database
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-database-0.1.1/mongodb-enterprise-database-0.1.1.tgz
+    version: 0.1.1
+  mongodb-enterprise-operator:
+  - apiVersion: v2
+    created: "2020-10-15T09:34:20.396453408Z"
+    description: MongoDB Kubernetes Enterprise Operator deployment
+    digest: 92667b98ef46f7959fc8d9f1edde5750b8a2331926013edbb5b88195851e5f96
+    home: https://github.com/mongodb/helm-charts
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-operator
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-operator-0.1.1/mongodb-enterprise-operator-0.1.1.tgz
+    version: 0.1.1
+  mongodb-enterprise-opsmanager:
+  - apiVersion: v2
+    created: "2020-10-15T09:34:20.496139829Z"
+    description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
+    digest: 1cd8efac21a039c3a07b84ac288644bece4022586a358baf6607b2df47bed486
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    keywords:
+    - opsManager
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-opsmanager
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-opsmanager-0.1.1/mongodb-enterprise-opsmanager-0.1.1.tgz
+    version: 0.1.1
+generated: "2020-10-15T09:34:20.11136906Z"
