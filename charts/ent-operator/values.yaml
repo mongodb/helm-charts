@@ -58,7 +58,7 @@ registry:
     Image: quay.io/mongodb/mongodb-enterprise-init-appdb
     Tag: 1.0.4
 
-  imagePullSecrets: 
+  imagePullSecrets:
   # TODO: specify for each image and move there?
   pullPolicy: Always
   # Specify if images are pulled from private registry
