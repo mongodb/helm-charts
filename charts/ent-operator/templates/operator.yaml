@@ -22,16 +22,20 @@ spec:
 {{- end }}
 {{- if .Values.registry.imagePullSecrets }}
       imagePullSecrets:
-      - name: {{ .Values.registry.imagePullSecrets }}
+      - name: {{ .Values.registry.imagePullSecrets | quote }}
 {{- end }}
       containers:
       - name: mongodb-enterprise-operator
         image: {{ .Values.registry.operator.Image }}:{{ .Values.registry.operator.Tag | default "latest" }}
         imagePullPolicy: {{ .Values.registry.pullPolicy }}
-        {{- if .Values.watchedResources }}
+        {{- if or .Values.watchOpsManagers .Values.watchDatabase }}
         args:
-          {{- range .Values.watchedResources }}
-          - "-watch-resource={{ . }}"
+          {{- if .Values.watchOpsManager   }}
+          - "-watch-resource=opsmanagers"
+          {{- end }}
+          {{- if .Values.watchDatabase }}          
+          - "-watch-resource=mongodb"
+          - "-watch-resource=mongodbusers"
           {{- end }}
         command:
           - "/usr/local/bin/mongodb-enterprise-operator"
@@ -41,7 +45,7 @@ spec:
           value: {{ .Values.env }}
         - name: WATCH_NAMESPACE
 {{- if .Values.watchNamespace }}
-          value: "{{ .Values.operator.watchNamespace }}"
+          value: "{{ .Values.watchNamespace }}"
 {{- else }}
           valueFrom:
             fieldRef:

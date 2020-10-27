@@ -23,13 +23,12 @@ version: 1.8.0
 
 # The Custom Resources that will be watched by the Operator.
 # Needs to be changed if only some of the CRDs are installed
-watchedResources:
-- mongodb
-- opsmanagers
-- mongodbusers
+watchOpsManager: true
+watchDatabase: true
+
 
 # When Operator is deployed globally add a list of namespaces to watch
-watchNamespace:
+watchNamespace: []
 # - mongodb
 
 registry:
@@ -40,24 +39,24 @@ registry:
     Tag: 1.8.0
 
   database:
-    Image: quay.io/mongodb/mongodb-enterprise-database:1.7.1
+    Image: quay.io/mongodb/mongodb-enterprise-database:2.0.0
 
   databaseInit:
-    Image: quay.io/mongodb/mongodb-enterprise-database:1.7.1
+    Image: quay.io/mongodb/mongodb-enterprise-database:1.0.0
 
   opsManager:
     Image: quay.io/mongodb/mongodb-enterprise-ops-manager
 
   initOpsManager:
-    Image: quay.io/mongodbmongodb-enterprise-init-ops-manager
-    Tag: 1.0.1
+    Image: quay.io/mongodb/mongodb-enterprise-init-ops-manager
+    Tag: 1.0.2
 
   appDb:
     Image: quay.io/mongodb/mongodb-enterprise-appdb
 
   initAppDb:
     Image: quay.io/mongodb/mongodb-enterprise-init-appdb
-    Tag: 1.0.2
+    Tag: 1.0.4
 
   imagePullSecrets:
   # TODO: specify for each image and move there?
