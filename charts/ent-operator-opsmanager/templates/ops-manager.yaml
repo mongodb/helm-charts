@@ -1,16 +1,20 @@
-{{- if .Values.deployOpsManager }}
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBOpsManager
 metadata:
-  name: mongodb-ops-manager
+  name: {{ .Release.Name }}-ops-manager
   namespace: {{ .Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    "app.kubernetes.io/managed-by": {{ .Release.Service }}
+
 spec:
   replicas: {{ .Values.replicas | default 1 }}
   version: {{ .Values.version | default "4.4.2" }}
   adminCredentials: {{ .Values.name }}-global-admin
   persistent: true
 
+  # For the full list of options see https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html
   configuration:
     # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
     # this requires to set some mandatory configuration properties, see
@@ -22,9 +26,10 @@ spec:
     mms.replyToEmailAddr: {{ .Values.mail.adminEmailAddr | quote }}
     mms.mail.hostname: {{ .Values.mail.hostname | quote }}
     mms.mail.port: {{ .Values.mail.port | quote }}
-    mms.mail.ssl: "true"
-    mms.mail.transport: "smtp"
-    mms.minimumTLSVersion: "TLSv1.2"
+    mms.mail.ssl: {{ .Values.mail.ssl | quote }}
+    mms.mail.transport: {{ .Values.mail.transport | quote }}
+    mms.minimumTLSVersion: {{ .Values.minimumTLSVersion | quote }}
+    mms.publicApi.whitelistEnabled: {{ .Values.publicApi.whitelistEnabled | quote }}
 
   statefulSet:
     spec:
@@ -125,4 +130,3 @@ spec:
   applicationDatabase:
     members: 3
     persistent: true
-{{- end }}
