@@ -15,13 +15,6 @@ jobs:
       - name: Fetch history
         run: git fetch --prune --unshallow
 
-      - name: Update Dependencies
-        id: dependencies
-        uses: helm/chart-testing-action@v1.0.0
-        with:
-          command: dependency update 
-          config: .github/ct.yaml
-
       - name: Run chart-testing (lint)
         id: lint
         uses: helm/chart-testing-action@v1.0.0
