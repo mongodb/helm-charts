@@ -11,7 +11,8 @@ home: https://github.com/mongodb/mongodb-enterprise-kubernetes
 maintainers:
 - name: theburi
   email: belika@hotmail.com
-  dependencies:
-    - name: mongodb-enterprise-operator
-      version: "0.1.*"
-      repository: "https://mongodb.github.io/helm-charts/charts"
+dependencies:
+  - name: mongodb-enterprise-operator
+    version: "0.1.*"
+    repository: "https://mongodb.github.io/helm-charts"
+    condition: mongodb-enterprise-operator.enabled
