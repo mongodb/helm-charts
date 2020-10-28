@@ -8,13 +8,13 @@ version: "4.4.2"
 # If running OpenShift (Cloud, Minishift, etc.), set this to true.
 managedSecurityContext: false
 
-# Kubernetes internal DNS 
+# Kubernetes internal DNS
 clusterName: cluster.local
 
 # Section to describe components that needs to be installed
-# mongodb-enterprise-operator.enabled: will deploy operator in the same namespace. 
-# This should be set to false if operator is already managing namespace 
-# deployValidationWebhooks: will deploy optional CRD validation webhooks. 
+# mongodb-enterprise-operator.enabled: will deploy operator in the same namespace.
+# This should be set to false if operator is already managing namespace
+# deployValidationWebhooks: will deploy optional CRD validation webhooks.
 # Validation webhooks ensure that CRD is valid before applying it to a cluster with kubectl.
 # Without webhooks Operator will perform validation and logs would need to be checked
 
@@ -23,7 +23,7 @@ deployValidationWebhooks: true  # Optional configuration.
 
 # MongoDB Ops Manager configuration parameters
 
-# Deploy Ops Manager backup daemon and set it up. 
+# Deploy Ops Manager backup daemon and set it up.
 # Note: OpLogs DB needs to be provisioned separately
 deployBackupInfrastructure: true
 
@@ -31,8 +31,6 @@ deployBackupInfrastructure: true
 # to proxy mongodb installers download via Ops Manager choose "remote"
 versionSource: "mongodb"  # [ mongodb| local| remote ]
 installerVolumeSize: "20G"
-
-
 
 # Ops Manager Global Admin user name and password.
 # Ensure it complies with OpsManager password format
