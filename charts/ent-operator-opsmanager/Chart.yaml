@@ -15,6 +15,6 @@ maintainers:
   email: belika@hotmail.com
 dependencies:
   - name: mongodb-enterprise-operator
-    version: "0.1.2"
+    version: "0.1.*"
     repository: "https://mongodb.github.io/helm-charts"
     condition: mongodb-enterprise-operator.enabled
