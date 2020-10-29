@@ -4,6 +4,8 @@ kind: Secret
 metadata:
   name: {{ .Values.name }}-global-admin
   namespace: {{ .Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 type: Opaque
 data:
     Username: {{ .Values.globalAdmin | b64enc }}

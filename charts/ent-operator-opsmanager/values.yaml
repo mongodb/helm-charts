@@ -8,26 +8,45 @@ version: "4.4.2"
 # If running OpenShift (Cloud, Minishift, etc.), set this to true.
 managedSecurityContext: false
 
+# Kubernetes internal DNS
+clusterName: cluster.local
+
 # Section to describe components that needs to be installed
-deployOperator: true
+# mongodb-enterprise-operator.enabled: will deploy operator in the same namespace.
+# This should be set to false if operator is already managing namespace
+# deployValidationWebhooks: will deploy optional CRD validation webhooks.
+# Validation webhooks ensure that CRD is valid before applying it to a cluster with kubectl.
+# Without webhooks Operator will perform validation and logs would need to be checked
+
+mongodb-enterprise-operator.enabled: true
 deployValidationWebhooks: true  # Optional configuration.
 
-deployOpsManager: true
-deployBackupInfrastructure: true
+# MongoDB Ops Manager configuration parameters
 
-clusterName: cluster.local
+# Deploy Ops Manager backup daemon and set it up.
+# Note: OpLogs DB needs to be provisioned separately
+deployBackupInfrastructure: true
 
 # for fully air-gapped environemnts choose "local"
 # to proxy mongodb installers download via Ops Manager choose "remote"
 versionSource: "mongodb"  # [ mongodb| local| remote ]
 installerVolumeSize: "20G"
 
+# Ops Manager Global Admin user name and password.
+# Ensure it complies with OpsManager password format
 globalAdmin: "test@test.com"
 globalAdminPassword: "KubeTest!1"
 globalAdminFirstName: "First Name"
 globalAdminLastName: "Last Name"
 
-# This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a normal DB
+# enable Access Lists for Ops Manager
+publicApi:
+  whitelistEnabled: false
+
+
+minimumTLSVersion: "TLSv1.2"
+
+# This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a Mongo DB CRD
 backup:
   enabled: true
   configureObjectStore: true  # aka S3
@@ -50,6 +69,8 @@ mail:
   adminEmailAddr: "support@example.com"
   hostname: "email-smtp.us-east-1.amazonaws.com"
   port: "465"
+  ssl: "true"
+  transport: "smtp"
 resources:
   limits:
     cpu: 2
@@ -59,39 +80,13 @@ resources:
     memory: 6G
 tolerations: []
 
-registry:
-  # RedHat repository is registry.connect.redhat.com/mongodb
-
-  operator:
-    Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.7.1
-
-  dataBase:
-    Image: quay.io/mongodb/mongodb-enterprise-database:1.7.1
-
-  opsManager:
-    Image: quay.io/mongodb/mongodb-enterprise-ops-manager
-
-  initOpsManager:
-    Image: quay.io/mongodb/mongodb-enterprise-init-ops-manager
-    Tag: 1.0.1
-
-  appDb:
-    Image: quay.io/mongodb/mongodb-enterprise-appdb
-
-  initAppDb:
-    Image: quay.io/mongodb/mongodb-enterprise-init-appdb
-    Tag: 1.0.2
-
-  imagePullSecrets:
-  # TODO: specify for each image and move there?
-  pullPolicy: Always
-  # Specify if images are pulled from private registry
-
 # Set this to true if the operator will require Kubernetes CA
 # infrastructure to generate TLS certificates.
 needsCAInfrastructure: true
 
 # Set this to false to disable subresource utilization
-# It might be required on some versions of Openshift
+# It might be required on some versions of Openshift 3.11
 subresourceEnabled: true
+
+registry:
+  imagePullSecrets:
