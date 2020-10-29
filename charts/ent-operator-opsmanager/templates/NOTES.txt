@@ -11,4 +11,9 @@ To connect to Ops Manager when LoadBalancer was configured by chart try:
 
   $ kubectl -n {{ .Release.Namespace }} get svc {{ .Release.Name }}-ops-manager-svc-ext
 
+OpsManager Global Admin API Key is generated and can be used by mongocli to create first User orgs
+
+  $ kubectl -n {{ .Release.Namespace }} get secrete {{ .Release.Name }}-ops-manager-admin-key -o yaml --template={{.data}} | base64 -D
+
+
 Happy Helming...

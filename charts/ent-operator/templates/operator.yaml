@@ -63,6 +63,8 @@ spec:
           value: {{ .Values.registry.pullPolicy }}
         - name: MONGODB_ENTERPRISE_DATABASE_IMAGE
           value: {{ .Values.registry.database.Image }}
+        - name: INIT_DATABASE_IMAGE_REPOSITORY
+          value: {{ .Values.registry.databaseInit.Image }}
         - name: IMAGE_PULL_POLICY
           value: {{ .Values.registry.pullPolicy }}
         - name: OPS_MANAGER_IMAGE_REPOSITORY
