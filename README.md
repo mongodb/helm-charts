@@ -10,9 +10,8 @@ This functionality is in alpha and is subject to change. The code is provided as
 
 This repository contains sample HELM charts for different MongoDB products
 
-|
-|--------------------------------------
-| ent-operator             |          |
-| ent-operator-database    |          |
-| ent-operator-opsmanager  |          |
-|--------------------------------------
+| charts                  |
+|-------------------------|
+| ent-operator            |
+| ent-operator-database   |
+| ent-operator-opsmanager |
