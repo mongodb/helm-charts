@@ -39,10 +39,12 @@ registry:
     Tag: 1.8.0
 
   database:
-    Image: quay.io/mongodb/mongodb-enterprise-database:2.0.0
+    Image: quay.io/mongodb/mongodb-enterprise-database
+    Tag: 2.0.0
 
   databaseInit:
-    Image: quay.io/mongodb/mongodb-enterprise-database:1.0.0
+    Image: quay.io/mongodb/mongodb-enterprise-database
+    Tag: 1.0.0
 
   opsManager:
     Image: quay.io/mongodb/mongodb-enterprise-ops-manager

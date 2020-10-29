@@ -63,10 +63,12 @@ spec:
           value: {{ .Values.registry.pullPolicy }}
         - name: MONGODB_ENTERPRISE_DATABASE_IMAGE
           value: {{ .Values.registry.database.Image }}
+        - name: DATABASE_VERSION
+          value: {{ .Values.registry.database.Tag }}
         - name: INIT_DATABASE_IMAGE_REPOSITORY
           value: {{ .Values.registry.databaseInit.Image }}
-        - name: IMAGE_PULL_POLICY
-          value: {{ .Values.registry.pullPolicy }}
+        - name: INIT_DATABASE_VERSION
+          value: {{ .Values.registry.databaseInit.Tag }}
         - name: OPS_MANAGER_IMAGE_REPOSITORY
           value: {{ .Values.registry.opsManager.Image }}
         - name: INIT_OPS_MANAGER_IMAGE_REPOSITORY
@@ -81,6 +83,8 @@ spec:
           value: {{ .Values.registry.pullPolicy }}
         - name: APPDB_IMAGE_REPOSITORY
           value: {{ .Values.registry.appDb.Image }}
+        - name: IMAGE_PULL_POLICY
+          value: {{ .Values.registry.pullPolicy }}
 {{- if .Values.registry.imagePullSecrets }}
         - name: IMAGE_PULL_SECRETS
           value: {{ .Values.registry.imagePullSecrets }}
