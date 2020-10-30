@@ -3,11 +3,7 @@ apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
   name: {{ .Values.name }}
-  {{- if not (eq (.Values.watchNamespace | default "*") "*") }}
-  namespace: {{ .Values.watchNamespace }}
-  {{- else }}
   namespace: {{ .Release.Namespace }}
-  {{- end }}
   
 spec:
   type: {{ .Values.type | quote }}
@@ -19,8 +15,16 @@ spec:
 
   opsManager:
     configMapRef:
+{{- if .Values.opsManager.configMap }}      
+      name: {{ .Values.opsManager.configMap }}
+{{- else }}
       name: {{ .Values.name }}-configmap
-  credentials: {{ .Values.name }}-crendential
+{{- end }}
+{{- if .Values.opsManager.secretRef }}
+  credentials: {{ .Values.opsManager.secretRef }}
+{{- else }}
+  credentials: {{ .Values.name }}-credential
+{{- end }}
 
   security:
     authentication:

@@ -1,3 +1,4 @@
+{{- if not .Values.opsManager.configMap }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -15,3 +16,4 @@ data:
   {{- if .Values.opsManager.orgid }}
   orgId: {{ .Values.opsManager.orgid | quote }}
   {{- end }}
+{{- end }}
