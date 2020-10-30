@@ -43,7 +43,7 @@ registry:
     Tag: 2.0.0
 
   databaseInit:
-    Image: quay.io/mongodb/mongodb-enterprise-database
+    Image: quay.io/mongodb/mongodb-enterprise-init-database
     Tag: 1.0.0
 
   opsManager:
