@@ -29,7 +29,14 @@ spec:
   security:
     authentication:
       enabled: true
-      modes: ["SCRAM"] # Valid authentication modes are "SCRAM' and "X509"
+      modes: 
+        {{- range .Values.security.authentication.modes }}
+        - {{ . | quote }} # Valid authentication modes are "SCRAM' and "X509"
+        {{- end }}
+    {{- if .Values.security.tls.enabled }}
+    tls:
+      enabled: {{ .Values.security.tls.enabled }}
+    {{- end }}
 
       # Optional field - ignoreUnknownUsers
       # A value of true means that any users not configured via the Operator or the Ops Manager or Cloud Manager UI
