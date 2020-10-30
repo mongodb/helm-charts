@@ -5,7 +5,10 @@
 managedSecurityContext: false
 
 # Section to describe components that needs to be installed
-deployOperator: true
+mongodb-enterprise-operator:
+  enabled: true
+
+
 # Optional configuration.
 deployValidationWebhooks: true
 
@@ -13,10 +16,15 @@ name: mdbreplset
 type: ReplicaSet
 members: 3
 opsManager:
-  URL: "http://a2fbcb181660c4589afae30959c8218a-2143866689.eu-west-1.elb.amazonaws.com:8080"
-  APIKey: "UZMWOTAX"
-  APISecret: "7b9b5641-cfee-42ed-8d0e-44667d51d2ea"
-  orgid: "5f6e1653a0b3b16931c7a3ae"
+  # Ops Manager connection could be configured  with Values and This HELM chart will create
+  # nesessary Secret and Config Map.
+  URL:
+  orgid:
+  APIKey:
+  APISecret:
+  # Alternatevly an existing secret and config map could be provided directly
+  configMap: opsmanager-configmap
+  secretRef: opsmanager-org-access-key
 resources:
   limits:
     cpu: 2
@@ -29,38 +37,7 @@ tolerations: []
 clusterName: cluster.local
 
 registry:
-  # Redhat repository is registry.connect.redhat.com/mongod
-
-  operator:
-    Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.7.1
-
-  database:
-    Image: quay.io/mongodb/mongodb-enterprise-database:1.7.1
-
-  opsManager:
-    Image: quay.io/mongodb/mongodb-enterprise-ops-manager
-
-  initOpsManager:
-    Image: quay.io/mongodbmongodb-enterprise-init-ops-manager
-    Tag: 1.0.1
-
-  appDb:
-    Image: quay.io/mongodb/mongodb-enterprise-appdb
-
-  initAppDb:
-    Image: quay.io/mongodb/mongodb-enterprise-init-appdb
-    Tag: 1.0.2
-
   imagePullSecrets:
   # TODO: specify for each image and move there?
   pullPolicy: Always
   # Specify if images are pulled from private registry
-
-# Set this to true if the operator will require Kubernetes CA
-# infrastructure to generate TLS certificates.
-needsCAInfrastructure: true
-
-# Set this to false to disable subresource utilization
-# It might be required on some versions of Openshift
-subresourceEnabled: true
