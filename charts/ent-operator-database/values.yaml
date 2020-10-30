@@ -25,6 +25,14 @@ opsManager:
   # Alternatevly an existing secret and config map could be provided directly
   configMap: opsmanager-configmap
   secretRef: opsmanager-org-access-key
+
+security:
+  authentication:
+    modes: ["SCRAM"]  # Valid authentication modes are "SCRAM", "LDAP" and "X509"
+  tls:
+    enabled: false
+
+
 resources:
   limits:
     cpu: 2
@@ -41,3 +49,23 @@ registry:
   # TODO: specify for each image and move there?
   pullPolicy: Always
   # Specify if images are pulled from private registry
+
+users:
+  - username: admin-user
+    db: admin
+    password: "%SomeLong%password$foradmin"
+    roles:
+      - db: admin
+        name: clusterAdmin
+      - db: admin
+        name: userAdminAnyDatabase
+      - db: admin
+        name: readWrite
+      - db: admin
+        name: userAdminAnyDatabase
+  - username: app-user
+    db: admin
+    password: "%SomeLong%password$"
+    roles:
+      - db: admin
+        name: readWrite
