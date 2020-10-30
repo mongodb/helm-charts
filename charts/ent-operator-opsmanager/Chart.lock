@@ -1,6 +1,6 @@
 dependencies:
 - name: mongodb-enterprise-operator
   repository: https://mongodb.github.io/helm-charts
-  version: 0.1.2
-digest: sha256:d609ac9f6a005bb48a95e192aad78fcfc5678a23c00aaa2b3f982cd4e27cd903
-generated: "2020-10-28T11:57:52.439806Z"
+  version: 0.1.6
+digest: sha256:ba002699e7c9943839f72e7b5cc0d25c698a2a5ac57692bd2c03743d5b7579ff
+generated: "2020-10-30T14:22:12.761262Z"
