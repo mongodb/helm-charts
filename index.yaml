@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   mongodb-enterprise-database:
   - apiVersion: v2
+    created: "2020-10-30T11:12:24.174030027Z"
+    dependencies:
+    - condition: mongodb-enterprise-operator.enabled
+      name: mongodb-enterprise-operator
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.1.*
+    description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
+    digest: 58241f81389a63f8453bd5616db86f5888a3482a01c60782d569529e94f51e6b
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-database
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-database-0.1.2/mongodb-enterprise-database-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     created: "2020-10-15T09:34:20.24264252Z"
     description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
     digest: 5b1c09635e95822289a0e4d475a4dbc707c03d5c76d86538edeabe32a5f72334
