@@ -24,7 +24,11 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"      
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"     
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.0 
       - name: Helm Chart Releaser
         # You may pin to the exact commit or the version.
         # uses: helm/chart-releaser-action@97237943efb7a48269d47a642ec5fdff675aa55f
