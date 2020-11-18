@@ -103,7 +103,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: mongodb-enterprise-operator-mongodb-webhook
+  name: {{ .Release.Name }}-{{ .Release.Namespace }}-webhook
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator

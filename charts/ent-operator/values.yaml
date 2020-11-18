@@ -23,8 +23,8 @@ version: 1.8.2
 
 # The Custom Resources that will be watched by the Operator.
 # Needs to be changed if only some of the CRDs are installed
-watchOpsManager: true
-watchDatabase: true
+watchOpsManager: false
+watchDatabase: false
 
 
 # When Operator is deployed globally add a list of namespaces to watch
