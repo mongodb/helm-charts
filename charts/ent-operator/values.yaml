@@ -19,7 +19,7 @@ name: mongodb-enterprise-operator
 deployment_name: mongodb-enterprise-operator
 
 # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-version: 1.8.0
+version: 1.8.2
 
 # The Custom Resources that will be watched by the Operator.
 # Needs to be changed if only some of the CRDs are installed
@@ -36,7 +36,7 @@ registry:
 
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.8.0
+    Tag: 1.8.2
 
   database:
     Image: quay.io/mongodb/mongodb-enterprise-database
@@ -44,21 +44,21 @@ registry:
 
   databaseInit:
     Image: quay.io/mongodb/mongodb-enterprise-init-database
-    Tag: 1.0.0
+    Tag: 1.0.1
 
   opsManager:
     Image: quay.io/mongodb/mongodb-enterprise-ops-manager
 
   initOpsManager:
     Image: quay.io/mongodb/mongodb-enterprise-init-ops-manager
-    Tag: 1.0.2
+    Tag: 1.0.3
 
   appDb:
     Image: quay.io/mongodb/mongodb-enterprise-appdb
 
   initAppDb:
     Image: quay.io/mongodb/mongodb-enterprise-init-appdb
-    Tag: 1.0.4
+    Tag: 1.0.5
 
   imagePullSecrets:
   # TODO: specify for each image and move there?
