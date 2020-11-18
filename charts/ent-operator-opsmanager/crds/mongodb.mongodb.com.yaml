@@ -93,6 +93,12 @@ spec:
             exposedExternally:
               type: boolean
 
+            agent:
+              type: object
+              properties:
+                startupOptions:
+                  type: object
+
             # Generic PodSpec configuration
             podSpec:
               type: object
@@ -108,12 +114,16 @@ spec:
                   type: string
                 cpu:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 cpuRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memory:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memoryRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 podAffinity:
                   type: object
                 nodeAffinity:
@@ -183,6 +193,13 @@ spec:
                               type: string
                             key:
                               type: string
+                        automationLdapGroupDN:
+                          type: string
+                        clientCertificateSecretRef:
+                          type: object
+                          properties:
+                            name:
+                              type: string
                       required:
                         - mode
                     enabled:
@@ -193,6 +210,8 @@ spec:
                         type: string
                         enum: ["SCRAM", "X509", "LDAP"]
                     ignoreUnknownUsers:
+                      type: boolean
+                    requireClientTLSAuthentication:
                       type: boolean
                 tls:
                   type: object
@@ -314,12 +333,16 @@ spec:
                   type: string
                 cpu:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 cpuRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memory:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memoryRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 podAffinity:
                   type: object
                 nodeAffinity:
@@ -380,12 +403,16 @@ spec:
                   type: string
                 cpu:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 cpuRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memory:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memoryRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 podAffinity:
                   type: object
                 nodeAffinity:
@@ -446,12 +473,16 @@ spec:
                   type: string
                 cpu:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 cpuRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memory:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 memoryRequests:
                   type: string
+                  description: "DEPRECATED. Please set this value using `spec.podTemplate` instead."
                 podAffinity:
                   type: object
                 nodeAffinity:
@@ -515,13 +546,28 @@ spec:
               properties:
                 additionalMongodConfig:
                   type: object
+                agent:
+                  type: object
+                  properties:
+                    startupOptions:
+                      type: object
             configSrv:
               type: object
               properties:
                 additionalMongodConfig:
                   type: object
+                agent:
+                  type: object
+                  properties:
+                    startupOptions:
+                      type: object
             shard:
               type: object
               properties:
                 additionalMongodConfig:
                   type: object
+                agent:
+                  type: object
+                  properties:
+                    startupOptions:
+                      type: object
