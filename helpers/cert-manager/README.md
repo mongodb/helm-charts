@@ -5,7 +5,7 @@ This chart provides an example for certificate generation using  cert manager fo
 
 
 ### Prerequisite steps
-Enter name of MongoDB CRD and descide on a namespace. Certificates should be deployed in the same namespace.
+Enter name of MongoDB CRD and decide on a namespace. Certificates should be deployed in the same namespace.
 
 `` $ MONGODB_NAME=mdbreplset
 ``

@@ -7,7 +7,8 @@ managedSecurityContext: false
 # Section to describe components that needs to be installed
 mongodb-enterprise-operator:
   enabled: true
-
+  watchOpsManager: false
+  watchDatabase: true
 
 # Optional configuration.
 deployValidationWebhooks: true
@@ -31,8 +32,9 @@ security:
     modes: ["SCRAM"]  # Valid authentication modes are "SCRAM", "LDAP" and "X509"
   tls:
     enabled: false
-
-
+    caRef: mdbreplset-ca
+    # Note: Operator would expect Pem secret to have name: <metadata.name>-cert    
+    
 resources:
   limits:
     cpu: 2
