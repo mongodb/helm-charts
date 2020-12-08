@@ -33,8 +33,8 @@ security:
   tls:
     enabled: false
     caRef: mdbreplset-ca
-    # Note: Operator would expect Pem secret to have name: <metadata.name>-cert    
-    
+    # Note: Operator would expect Pem secret to have name: <metadata.name>-cert
+
 resources:
   limits:
     cpu: 2
