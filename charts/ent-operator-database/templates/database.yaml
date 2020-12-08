@@ -36,6 +36,7 @@ spec:
     {{- if .Values.security.tls.enabled }}
     tls:
       enabled: {{ .Values.security.tls.enabled }}
+      ca: {{  .Values.security.tls.ca }}
     {{- end }}
 
       # Optional field - ignoreUnknownUsers

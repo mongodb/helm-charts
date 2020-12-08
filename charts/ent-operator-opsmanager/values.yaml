@@ -18,7 +18,11 @@ clusterName: cluster.local
 # Validation webhooks ensure that CRD is valid before applying it to a cluster with kubectl.
 # Without webhooks Operator will perform validation and logs would need to be checked
 
-mongodb-enterprise-operator.enabled: true
+mongodb-enterprise-operator:
+  enabled: true
+  watchOpsManager: true
+  watchDatabase: true
+
 deployValidationWebhooks: true  # Optional configuration.
 
 # MongoDB Ops Manager configuration parameters
