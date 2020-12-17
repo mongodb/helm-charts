@@ -1,6 +1,4 @@
 private/
-.crt
-.key
-.tgz
-.crt
-.key
+*.crt
+*.key
+*.tgz
