@@ -2,19 +2,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-operator  
+  name: {{ .Release.Name }}  
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
       matchLabels:
-        controller: {{ .Release.Name }}-operator
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        controller: {{ .Release.Name }}-operator
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+      annotations:
+        # lets promethues know to scrape the operator pod and where to scrape them
+        loadtest.io/scrape_port: "8080"
+        loadtest.io/should_be_scraped: "true"
     spec:
-      serviceAccountName: {{ .Release.Name }}-operator
+      serviceAccountName: {{ .Release.Name }}
 {{- if not .Values.managedSecurityContext }}
       securityContext:
         runAsNonRoot: true
@@ -40,6 +48,8 @@ spec:
         command:
           - "/usr/local/bin/mongodb-enterprise-operator"
         {{- end }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
         env:
         - name: OPERATOR_ENV
           value: {{ .Values.env }}

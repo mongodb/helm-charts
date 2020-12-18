@@ -16,24 +16,11 @@ spec:
 
   # For the full list of options see https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html
   configuration:
-    # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
-    # this requires to set some mandatory configuration properties, see
-    # https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html#mms.ignoreInitialUiSetup
-    mms.ignoreInitialUiSetup: "true"
-    automation.versions.source: {{ .Values.versionSource | quote }}
-    mms.adminEmailAddr: {{ .Values.mail.adminEmailAddr | quote }}
-    mms.fromEmailAddr: {{ .Values.mail.adminEmailAddr | quote }}
-    mms.replyToEmailAddr: {{ .Values.mail.adminEmailAddr | quote }}
-    mms.mail.hostname: {{ .Values.mail.hostname | quote }}
-    mms.mail.port: {{ .Values.mail.port | quote }}
-    mms.mail.ssl: {{ .Values.mail.ssl | quote }}
-    mms.mail.transport: {{ .Values.mail.transport | quote }}
-    mms.minimumTLSVersion: {{ .Values.minimumTLSVersion | quote }}
-    mms.publicApi.whitelistEnabled: {{ .Values.publicApi.whitelistEnabled | quote }}
+    {{- toYaml .Values.configuration | nindent 4 }}
 
   statefulSet:
     spec:
-      {{- if eq .Values.versionSource "local" }}
+      {{- if eq .Values.configuration.automation.versions.source "local" }}
       # the Persistent Volume Claim will be created for each Ops Manager Pod
       volumeClaimTemplates:
         - metadata:

@@ -19,24 +19,31 @@ name: mongodb-enterprise-operator
 deployment_name: mongodb-enterprise-operator
 
 # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-version: 1.8.2
+version: 1.9.0
 
 # The Custom Resources that will be watched by the Operator.
 # Needs to be changed if only some of the CRDs are installed
-watchOpsManager: false
-watchDatabase: false
+watchOpsManager: true
+watchDatabase: true
 
 
 # When Operator is deployed globally add a list of namespaces to watch
 watchNamespace: []
 # - mongodb
+resources:
+  limits:
+    cpu: 300m
+    memory: 1G
+  requests:
+    cpu: 200m
+    memory: 200Mi
 
 registry:
   # Redhat repository is registry.connect.redhat.com/mongod
 
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.8.2
+    Tag: 1.9.0
 
   database:
     Image: quay.io/mongodb/mongodb-enterprise-database

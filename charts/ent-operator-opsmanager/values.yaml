@@ -30,11 +30,33 @@ deployValidationWebhooks: true  # Optional configuration.
 # Deploy Ops Manager backup daemon and set it up.
 # Note: OpLogs DB needs to be provisioned separately
 deployBackupInfrastructure: true
-
-# for fully air-gapped environemnts choose "local"
-# to proxy mongodb installers download via Ops Manager choose "remote"
-versionSource: "mongodb"  # [ mongodb| local| remote ]
 installerVolumeSize: "20G"
+# Ops Manager configuration option. For a complete list of options please visit
+# https://docs.opsmanager.mongodb.com/current/reference/configuration
+configuration:
+  # for fully air-gapped environemnts choose "local"
+  # to proxy mongodb installers download via Ops Manager choose "remote"    
+  automation:
+    versions:
+      source: "mongodb"  # [ mongodb| local| remote ]
+  mms:
+    # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
+    # this requires to set some mandatory configuration properties, see
+    # https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html#mms.ignoreInitialUiSetup
+    ignoreInitialUiSetup: "true"    
+    
+    adminEmailAddr: "test@test.com"
+    fromEmailAddr: "test@test.com"
+    
+    replyToEmailAddr: "test@test.com"
+    mail:
+      hostname: email-smtp.us-east-1.amazonaws.com"
+      port: "465"
+      ssl: "true"
+      transport: "smtp"
+    minimumTLSVersion: "TLSv1.2"
+    publicApi:
+      whitelistEnabled: "false"
 
 # Ops Manager Global Admin user name and password.
 # Ensure it complies with OpsManager password format
@@ -43,12 +65,6 @@ globalAdminPassword: "KubeTest!1"
 globalAdminFirstName: "First Name"
 globalAdminLastName: "Last Name"
 
-# enable Access Lists for Ops Manager
-publicApi:
-  whitelistEnabled: false
-
-
-minimumTLSVersion: "TLSv1.2"
 
 # This section is not managed by HELM Chart for now. OpLog DB should be provisioned as a Mongo DB CRD
 backup:
@@ -69,12 +85,7 @@ backup:
     pathStyleAccessEnabled: true
 
 # Required: SMTP Mail server set up for password recovery
-mail:
-  adminEmailAddr: "support@example.com"
-  hostname: "email-smtp.us-east-1.amazonaws.com"
-  port: "465"
-  ssl: "true"
-  transport: "smtp"
+
 resources:
   limits:
     cpu: 2

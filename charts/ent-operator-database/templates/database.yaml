@@ -11,7 +11,10 @@ spec:
 
   # Using a version >= 4.0 will enable SCRAM-SHA-256 authentication
   # setting a version < 4.0 will enable SCRAM-SHA-1/MONGODB-CR authentication
-  version: 4.0.4-ent
+  version: {{ .Values.version }}
+  persistent : true
+  backup:
+    enabled: {{ .Values.backup }}
 
   opsManager:
     configMapRef:
@@ -36,7 +39,7 @@ spec:
     {{- if .Values.security.tls.enabled }}
     tls:
       enabled: {{ .Values.security.tls.enabled }}
-      ca: {{  .Values.security.tls.ca }}
+      ca: {{  .Values.security.tls.caRef }}
     {{- end }}
 
       # Optional field - ignoreUnknownUsers
@@ -45,21 +48,26 @@ spec:
 
       # If you need to manage MongoDB users directly via the mongods, set this value to true
       ignoreUnknownUsers: false # default value false
-  podTemplate:
-    spec:
-      terminationGracePeriodSeconds: 10
-      topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: zone
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-        matchLabels:
-          foo: bar
-        # This container will be added to each pod as a sidecar
-      containers:
-        resources:
-          {{- toYaml .Values.resources | nindent 10 }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+  podSpec:
+    podTemplate:
+      spec:
+        terminationGracePeriodSeconds: 10
+        topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+          matchLabels:
+            foo: bar
+          # This container will be added to each pod as a sidecar
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+        {{- with .Values.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+
+    persistence:
+      {{- toYaml .Values.persistence | nindent 6 }}
