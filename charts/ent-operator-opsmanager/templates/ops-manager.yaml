@@ -10,7 +10,7 @@ metadata:
 
 spec:
   replicas: {{ .Values.replicas | default 1 }}
-  version: {{ .Values.version | default "4.4.2" }}
+  version: {{ .Values.version | default "4.4.6" }}
   adminCredentials: {{ .Values.name }}-global-admin
   persistent: true
 
@@ -19,8 +19,8 @@ spec:
     {{- toYaml .Values.configuration | nindent 4 }}
 
   statefulSet:
-    spec:
-      {{- if eq .Values.configuration.automation.versions.source "local" }}
+    spec:      
+      {{- if .Values.installerVolumeSize }}
       # the Persistent Volume Claim will be created for each Ops Manager Pod
       volumeClaimTemplates:
         - metadata:

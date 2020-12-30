@@ -1,7 +1,7 @@
 ---
 name: ops-manager
 replicas: 1
-version: "4.4.2"
+version: "4.4.6"
 
 
 # Set this to true if your cluster is managing SecurityContext for you.
@@ -30,33 +30,31 @@ deployValidationWebhooks: true  # Optional configuration.
 # Deploy Ops Manager backup daemon and set it up.
 # Note: OpLogs DB needs to be provisioned separately
 deployBackupInfrastructure: true
-installerVolumeSize: "20G"
+# Provision Volume that will store MongoDB installers. Use with Version.source: local 
+provisionInstallersVolumeSize: "20G"
 # Ops Manager configuration option. For a complete list of options please visit
 # https://docs.opsmanager.mongodb.com/current/reference/configuration
+
 configuration:
   # for fully air-gapped environemnts choose "local"
   # to proxy mongodb installers download via Ops Manager choose "remote"    
-  automation:
-    versions:
-      source: "mongodb"  # [ mongodb| local| remote ]
-  mms:
+  "automation.versions.source": "remote"  # [ local| hybrid| remote ]
+  
     # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
     # this requires to set some mandatory configuration properties, see
     # https://docs.opsmanager.mongodb.com/current/reference/configuration/index.html#mms.ignoreInitialUiSetup
-    ignoreInitialUiSetup: "true"    
+  mms.ignoreInitialUiSetup: "true"    
     
-    adminEmailAddr: "test@test.com"
-    fromEmailAddr: "test@test.com"
+  mms.adminEmailAddr: "test@test.com"
+  mms.fromEmailAddr: "test@test.com"
     
-    replyToEmailAddr: "test@test.com"
-    mail:
-      hostname: email-smtp.us-east-1.amazonaws.com"
-      port: "465"
-      ssl: "true"
-      transport: "smtp"
-    minimumTLSVersion: "TLSv1.2"
-    publicApi:
-      whitelistEnabled: "false"
+  mms.replyToEmailAddr: "test@test.com"
+  mms.mail.hostname: "email-smtp.us-east-1.amazonaws.com"
+  mms.mail.port: "465"
+  mms.mail.ssl: "true"
+  mms.mail.transport: "smtp"
+  mms.minimumTLSVersion: "TLSv1.2"
+  mms.publicApi.whitelistEnabled: "false"
 
 # Ops Manager Global Admin user name and password.
 # Ensure it complies with OpsManager password format
