@@ -4,7 +4,13 @@ kind: MongoDB
 metadata:
   name: {{ .Values.name }}
   namespace: {{ .Release.Namespace }}
-  
+  annotations:
+    "meta.helm.sh/release-name": {{ .Release.Name }}
+    "meta.helm.sh/release-namespace": {{ .Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    "app.kubernetes.io/managed-by": {{ .Release.Service }}
+
 spec:
   type: {{ .Values.type | quote }}
   members: {{ .Values.members }}

@@ -5,6 +5,13 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.name }}-configmap
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "meta.helm.sh/release-name": {{ .Release.Name }}
+    "meta.helm.sh/release-namespace": {{ .Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ $.Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    "app.kubernetes.io/managed-by": {{ .Release.Service }}
+
 data:
   projectName: {{ .Values.name }}
   baseUrl: {{ .Values.opsManager.URL }}
