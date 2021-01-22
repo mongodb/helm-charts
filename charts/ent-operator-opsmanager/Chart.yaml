@@ -1,7 +1,7 @@
 apiVersion: v2
 name: mongodb-enterprise-opsmanager
 description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
-version: 0.2.2
+version: 0.2.3
 kubeVersion: '>=1.15-0'
 keywords:
 - opsManager
@@ -15,6 +15,6 @@ maintainers:
   email: belika@hotmail.com
 dependencies:
   - name: mongodb-enterprise-operator
-    version: "0.1.6"
+    version: "0.3.0"
     repository: "https://mongodb.github.io/helm-charts"
     condition: mongodb-enterprise-operator.enabled
