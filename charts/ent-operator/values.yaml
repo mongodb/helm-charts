@@ -63,7 +63,7 @@ registry:
   appDb:
     Image: quay.io/mongodb/mongodb-enterprise-appdb
     Tag: 10.2.15.5958-1_4.2.11-ent
-    
+
   initAppDb:
     Image: quay.io/mongodb/mongodb-enterprise-init-appdb
     Tag: 1.0.6
