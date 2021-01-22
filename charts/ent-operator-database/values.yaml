@@ -15,7 +15,7 @@ deployValidationWebhooks: true
 
 name: mdbreplset
 type: ReplicaSet
-version: 4.4.1-ent
+version: 4.4.2-ent
 members: 3
 backup: false
 

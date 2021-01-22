@@ -93,6 +93,8 @@ spec:
           value: {{ .Values.registry.pullPolicy }}
         - name: APPDB_IMAGE_REPOSITORY
           value: {{ .Values.registry.appDb.Image }}
+        - name: APPDB_AGENT_VERSION
+          value: {{ .Values.registry.appDb.Tag }}
         - name: IMAGE_PULL_POLICY
           value: {{ .Values.registry.pullPolicy }}
 {{- if .Values.registry.imagePullSecrets }}
