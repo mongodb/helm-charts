@@ -37,7 +37,7 @@ provisionInstallersVolumeSize: "20G"
 
 configuration:
   # for fully air-gapped environemnts choose "local"
-  # to proxy mongodb installers download via Ops Manager choose "remote" 
+  # to proxy mongodb installers download via Ops Manager choose "remote"
   "automation.versions.source": "remote"  # [ local| hybrid| remote ]
 
     # passing mms.ignoreInitialUiSetup=true allows to avoid the setup wizard in Ops Manager. Note, that
