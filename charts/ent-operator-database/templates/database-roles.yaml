@@ -8,6 +8,13 @@ metadata:
   {{- else }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
+  annotations:
+    "meta.helm.sh/release-name": {{ .Release.Name }}
+    "meta.helm.sh/release-namespace": {{ .Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    "app.kubernetes.io/managed-by": {{ .Release.Service }}
+
 {{- if .Values.registry.imagePullSecrets}}
 imagePullSecrets:
   - name: {{ .Values.registry.imagePullSecrets }}

@@ -5,6 +5,12 @@ kind: MongoDBUser
 metadata:
   name: {{ $.Values.name }}-{{ .username }}-mongodbuser
   namespace: {{ $.Release.Namespace }}
+  annotations:
+    "meta.helm.sh/release-name": {{ $.Release.Name }}
+    "meta.helm.sh/release-namespace": {{ $.Release.Namespace }}
+  labels:
+    "helm.sh/chart": {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
+    "app.kubernetes.io/managed-by": {{ $.Release.Service }}
 spec:
   passwordSecretKeyRef:
     name: {{ $.Values.name }}-{{ .username }}-secret # the name of the secret that stores this user's password
