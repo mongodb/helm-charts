@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   mongodb-enterprise-database:
   - apiVersion: v2
+    created: "2021-03-02T14:29:41.691015548Z"
+    dependencies:
+    - condition: mongodb-enterprise-operator.enabled
+      name: mongodb-enterprise-operator
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.3.0
+    description: MongoDB Kubernetes Enterprise Operator- MongoDB DataBase charts
+    digest: b33b039c644b2d7590aa7805dd6762bfc81273cf8cbe2b21406ffdcf69fa916e
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-database
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-database-0.2.4/mongodb-enterprise-database-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
     created: "2021-01-22T15:42:15.065648902Z"
     dependencies:
     - condition: mongodb-enterprise-operator.enabled
@@ -135,6 +158,23 @@ entries:
     version: 0.1.1
   mongodb-enterprise-operator:
   - apiVersion: v2
+    created: "2021-03-02T14:29:41.823810099Z"
+    description: MongoDB Kubernetes Enterprise Operator deployment
+    digest: dbbede6713523f8c43f1e9d6f62817b311edb93c91d13e3068c380c56a764c49
+    home: https://github.com/mongodb/helm-charts
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-operator
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-operator-0.3.1/mongodb-enterprise-operator-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     created: "2021-01-22T12:06:08.596722062Z"
     description: MongoDB Kubernetes Enterprise Operator deployment
     digest: 4dc99abd12a25acfa6e2159327d0ac0f7809f345c5863f8e2c47087fd3fbc024
@@ -203,6 +243,30 @@ entries:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-operator-0.1.1/mongodb-enterprise-operator-0.1.1.tgz
     version: 0.1.1
   mongodb-enterprise-opsmanager:
+  - apiVersion: v2
+    created: "2021-03-02T14:29:41.956291553Z"
+    dependencies:
+    - condition: mongodb-enterprise-operator.enabled
+      name: mongodb-enterprise-operator
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.3.0
+    description: MongoDB Kubernetes Enterprise Operator - Ops Manager Chart
+    digest: c829b8c956283cf2a3044c3ab6cb9bd9702c4cfd215ae5a6de62f5297bd2272b
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - opsManager
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.15-0'
+    maintainers:
+    - email: belika@hotmail.com
+      name: theburi
+    name: mongodb-enterprise-opsmanager
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-opsmanager-0.2.5/mongodb-enterprise-opsmanager-0.2.5.tgz
+    version: 0.2.5
   - apiVersion: v2
     created: "2021-01-22T14:16:41.706689865Z"
     dependencies:
