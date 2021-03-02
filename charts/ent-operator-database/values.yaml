@@ -74,6 +74,9 @@ persistence:
 
 clusterName: cluster.local
 
+additionalMongodConfig:
+  storageEngine: wiredTiger
+
 # External connectivity configuration
 # https://docs.mongodb.com/kubernetes-operator/master/tutorial/connect-from-outside-k8s/
 externalConnectivity:

@@ -70,3 +70,8 @@ kubectl create configmap opsmanager-configmap --from-literal=projectName=$MONGOD
 pushd ../charts/ent-operator-database/
 helm upgrade mongodb . --set opsManager.configMap=opsmanager-configmap --set opsManager.secretRef=opsmanager-org-access-key  -n $MONGODB_NAMESPACE --create-namespace -i
 popd
+
+until [ $(kubectl get mdb -n $MONGODB_NAMESPACE -o=jsonpath='{.items[0].status.phase}') = Running ];
+do
+sleep 10s
+done;

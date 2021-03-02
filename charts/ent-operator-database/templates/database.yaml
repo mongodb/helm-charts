@@ -55,6 +55,13 @@ spec:
 
       # If you need to manage MongoDB users directly via the mongods, set this value to true
       ignoreUnknownUsers: false # default value false
+
+
+  additionalMongodConfig:
+{{- with .Values.additionalMongodConfig }}
+{{- toYaml . | nindent 4 }}
+{{- end }}
+  
 {{- if .Values.externalConnectivity.enable }}
   externalConnectivity:
     {{- with .Values.externalConnectivity.replicaSetHorizons }}

@@ -19,7 +19,7 @@ name: mongodb-enterprise-operator
 deployment_name: mongodb-enterprise-operator
 
 # Version of mongodb-enterprise-operator and mongodb-enterprise-database images
-version: 1.9.1
+version: 1.9.2
 
 # The Custom Resources that will be watched by the Operator.
 # Needs to be changed if only some of the CRDs are installed
@@ -43,7 +43,7 @@ registry:
 
   operator:
     Image: quay.io/mongodb/mongodb-enterprise-operator
-    Tag: 1.9.1
+    Tag: 1.9.2
 
   database:
     Image: quay.io/mongodb/mongodb-enterprise-database
