@@ -1,7 +1,7 @@
 apiVersion: v2
 name: mongodb-enterprise-operator
 description: MongoDB Kubernetes Enterprise Operator deployment
-version: 0.3.0
+version: 0.3.1
 kubeVersion: '>=1.16-0'
 keywords:
 - mongodb

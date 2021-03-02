@@ -87,10 +87,10 @@ backup:
 resources:
   limits:
     cpu: 2
-    memory: 8G
+    memory: 6G
   requests:
     cpu: 1
-    memory: 6G
+    memory: 3G
 tolerations: []
 
 # Set this to true if the operator will require Kubernetes CA
