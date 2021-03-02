@@ -1,4 +1,4 @@
-{{- if eq .Values.type "ReplicaSet" }}
+{{- if eq .Values.type "ShardedCluster" }}
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDB
@@ -14,14 +14,22 @@ metadata:
 
 spec:
   type: {{ .Values.type | quote }}
-  members: {{ .Values.replicaSet.members }}
-
-  # Using a version >= 4.0 will enable SCRAM-SHA-256 authentication
-  # setting a version < 4.0 will enable SCRAM-SHA-1/MONGODB-CR authentication
   version: {{ .Values.version }}
   persistent : true
   backup:
-    enabled: {{ .Values.backup }}
+    enabled: {{ .Values.backup }}   
+
+{{- with .Values.mongos }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+
+{{- with .Values.shardServer }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+
+{{- with .Values.configServer }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 
   opsManager:
     configMapRef:
@@ -55,17 +63,6 @@ spec:
 
       # If you need to manage MongoDB users directly via the mongods, set this value to true
       ignoreUnknownUsers: false # default value false
-{{- if .Values.externalConnectivity.enable }}
-  externalConnectivity:
-    {{- with .Values.externalConnectivity.replicaSetHorizons }}
-    replicaSetHorizons:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}    
-{{- end }}
-{{- if .Values.agent }}
-  agent:
-{{- toYaml .Values.agent | nindent 4 }}
-{{- end }}
   podSpec:
     podTemplate:
       spec:

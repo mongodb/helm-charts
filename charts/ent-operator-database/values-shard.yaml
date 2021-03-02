@@ -1,0 +1,151 @@
+## MongoDB Enterprise Database
+
+# Set this to true if your cluster is managing SecurityContext for you.
+# If running OpenShift (Cloud, Minishift, etc.), set this to true.
+managedSecurityContext: false
+
+# Section to describe components that needs to be installed
+mongodb-enterprise-operator:
+  enabled: true
+  watchOpsManager: false
+  watchDatabase: true
+
+# Optional configuration.
+deployValidationWebhooks: true
+
+name: mdbreplset
+type: ShardedCluster
+version: 4.4.2-ent
+backup: false
+
+mongos:
+  mongodsPerShardCount: 3
+  mongosCount: 2
+  mongosPodSpec:
+    # additionalMongodConfig: 
+    persistence:
+      single: 1G
+    #   multiple:
+    #     data:
+    #     journal:
+    #     logs:
+    podTemplate:
+      # metadata:
+      spec:
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              limits:
+                cpu: "0.8"
+                memory: 1G
+        # tolerations:
+        #   - key: "key"
+        #     operator: "Exists"
+        #     effect: "NoSchedule"
+  agentConfigServer:
+    startupOptions:
+      maxLogFiles: "30"
+      dialTimeoutSeconds: "40"
+
+shardServer:
+  shardCount: 2
+  shardPodSpec:
+    # additionalMongodConfig: 
+    persistence:
+      single: 1G
+    #   multiple:
+    #     data:
+    #     journal:
+    #     logs:
+    podTemplate:
+      # metadata:
+      spec:
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              limits:
+                cpu: "0.8"
+                memory: 1G
+        # tolerations:
+        #   - key: "key"
+        #     operator: "Exists"
+        #     effect: "NoSchedule"
+  agentConfigServer:
+    startupOptions:
+      maxLogFiles: "30"
+      dialTimeoutSeconds: "40"
+
+configServer:
+  configServerCount: 3
+  configSrvPodSpec:
+    # additionalMongodConfig: 
+    persistence:
+      single: 1G
+    #   multiple:
+    #     data:
+    #     journal:
+    #     logs:
+    podTemplate:
+      # metadata:
+      spec:
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              limits:
+                cpu: "0.8"
+                memory: 1G
+        # tolerations:
+        #   - key: "key"
+        #     operator: "Exists"
+        #     effect: "NoSchedule"
+  agentConfigServer:
+    startupOptions:
+      maxLogFiles: "30"
+      dialTimeoutSeconds: "40"
+
+opsManager:
+  # Ops Manager connection could be configured  with Values and This HELM chart will create
+  # nesessary Secret and Config Map.
+  URL:
+  orgid:
+  APIKey:
+  APISecret:
+  # Alternatevly an existing secret and config map could be provided directly
+  configMap: opsmanager-configmap
+  secretRef: opsmanager-org-access-key
+
+security:
+  authentication:
+    modes: ["SCRAM"]  # Valid authentication modes are "SCRAM", "LDAP" and "X509"
+  tls:
+    enabled: false
+    caRef: mdbreplset-ca
+    # Note: Operator would expect Pem secret to have name: <metadata.name>-cert
+
+clusterName: cluster.local
+
+registry:
+  imagePullSecrets:
+  # TODO: specify for each image and move there?
+  pullPolicy: Always
+  # Specify if images are pulled from private registry
+
+users:
+  - username: admin-user
+    db: admin
+    password: "%SomeLong%password$foradmin"
+    roles:
+      - db: admin
+        name: clusterAdmin
+      - db: admin
+        name: userAdminAnyDatabase
+      - db: admin
+        name: readWrite
+      - db: admin
+        name: userAdminAnyDatabase
+  - username: app-user
+    db: admin
+    password: "%SomeLong%password$"
+    roles:
+      - db: admin
+        name: readWrite
