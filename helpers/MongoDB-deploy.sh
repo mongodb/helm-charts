@@ -18,6 +18,11 @@ OPS_MANAGER_ORG_NAME=DemoOrg
 ## Few hints to automate OpsManager after installation and deploy first cluster
 
 # Before moving on make sure OpsManager CR is running
+until [ $(kubectl get om -n $OPS_MANAGER_NAMESPACE -o=jsonpath='{.items[0].status.applicationDatabase.phase}') == Running ];
+do
+sleep 10s
+done;
+
 until [ $(kubectl get om -n $OPS_MANAGER_NAMESPACE -o=jsonpath='{.items[0].status.opsManager.phase}') == Running ];
 do
 sleep 10s
@@ -70,8 +75,8 @@ kubectl create configmap opsmanager-configmap --from-literal=projectName=$MONGOD
 pushd ../charts/ent-operator-database/
 helm upgrade mongodb . --set opsManager.configMap=opsmanager-configmap --set opsManager.secretRef=opsmanager-org-access-key  -n $MONGODB_NAMESPACE --create-namespace -i
 popd
-
-until [ $(kubectl get mdb -n $MONGODB_NAMESPACE -o=jsonpath='{.items[0].status.phase}') = Running ];
+sleep 10s
+until [ $(kubectl get mdb -n $MONGODB_NAMESPACE -o=jsonpath='{.items[0].status.phase}') == Running ];
 do
 sleep 10s
 done;
