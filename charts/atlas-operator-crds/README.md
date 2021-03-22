@@ -8,12 +8,12 @@ required by the Atlas Operator to work.
 Installing the CRDs into the Kubernetes Cluster:
 
 ```
-helm repo add mongodb https://github.com/mongodb/helm-charts
-helm install atlas-operator-crds mongodb/atlas-operator-crds
+helm repo add mongodb https://mongodb.github.io/helm-charts
+helm install mongodb-atlas-operator-crds mongodb/mongodb-atlas-operator-crds
 ```
 
 Upgrading the CRDs:
 
 ```
-helm upgrade atlas-operator-crds mongodb/atlas-operator-crds
+helm upgrade mongodb-atlas-operator-crds mongodb/mongodb-atlas-operator-crds
 ```
