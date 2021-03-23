@@ -5,7 +5,7 @@ atlasURI: https://cloud.mongodb.com
 # The only possible values are:
 # - empty (watch all namespaces) or
 # - the name of the same namespace where the Operator is installed to.
-watchNamespaces:
+watchNamespaces: ""
 
 image:
   repository: mongodb/mongodb-atlas-kubernetes-operator
@@ -34,12 +34,6 @@ podSecurityContext:
 
 securityContext:
   allowPrivilegeEscalation: false
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 resources:
   limits:
