@@ -1,0 +1,30 @@
+
+mongodb-atlas-operator:
+  enabled: true
+
+# Please provide Atlas API credentials and Organization 
+atlas:
+  orgid: "<Atlas Organization ID>"
+  publicApiKey: "<Atlas_api_public_key>"
+  privateApiKey: "<Atlas_api_private_key>"
+
+  connectionSecretName: ""
+
+project:
+  name: my-project
+  atlasTitle: "Test Atlas Operator Project"
+  
+  projectIpAccessList:
+    - ipAddress: "192.0.2.15"
+      comment: "IP address for Application Server A"
+    - ipAddress: "203.0.113.0/24"
+      comment: "CIDR block for Application Server B - D"
+
+mongodb:
+  name: "Test-cluster"
+  providerSettings:
+    instanceSizeName: M10
+    providerName: AWS
+    regionName: US_EAST_1
+
+users:

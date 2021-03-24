@@ -1,0 +1,15 @@
+apiVersion: atlas.mongodb.com/v1
+kind: AtlasCluster
+metadata:
+  name: {{ include "atlas-cluster.fullname" . }}
+  labels:
+    {{- include "atlas-cluster.labels" . | nindent 4 }}
+
+spec:
+  name: {{ .Values.mongodb.name }}
+  projectRef:
+    name: {{ include "atlas-cluster.fullname" . }}-project
+  providerSettings:
+{{- with .Values.mongodb.providerSettings }}
+{{- toYaml . | nindent 4 }}
+{{- end }}
