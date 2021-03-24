@@ -1,5 +1,27 @@
 apiVersion: v1
 entries:
+  mongodb-atlas-operator:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2021-03-24T14:54:38.262439187Z"
+    description: 'MongoDB Atlas Operator - a Helm chart for installing and upgrading Atlas Operator: the official Kubernetes operator allowing to manage MongoDB Atlas resources from Kubernetes'
+    digest: 0bee67f9036194b3249eb65430460c6ba3ca9dbc1f96772d5059a7c708be195a
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    keywords:
+    - mongodb
+    - atlas
+    - database
+    - cluster
+    - nosql
+    kubeVersion: '>=1.15.0-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-atlas-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-0.1.0/mongodb-atlas-operator-0.1.0.tgz
+    version: 0.1.0
   mongodb-atlas-operator-crds:
   - apiVersion: v2
     appVersion: 0.4.0
@@ -22,6 +44,27 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-crds-0.4.0/mongodb-atlas-operator-crds-0.4.0.tgz
     version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2021-03-24T14:54:38.40008309Z"
+    description: MongoDB Atlas Operator CRDs - Helm chart for installing and upgrading Custom Resource Definitions (CRDs) for the Atlas Operator.
+    digest: fd3bffea102e68c61ec06aa42a9958f6dac976231903149d2f2a2a5ea5c19055
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    keywords:
+    - mongodb
+    - atlas
+    - database
+    - cluster
+    - nosql
+    kubeVersion: '>=1.15.0-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-atlas-operator-crds
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-crds-0.1.0/mongodb-atlas-operator-crds-0.1.0.tgz
+    version: 0.1.0
   mongodb-enterprise-database:
   - apiVersion: v2
     created: "2021-03-02T14:29:41.691015548Z"
