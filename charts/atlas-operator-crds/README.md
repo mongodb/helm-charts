@@ -1,6 +1,6 @@
-# Atlas Operator CRDs Helm Chart
+# MongoDB Atlas Operator CRDs Helm Chart
 
-A Helm chart for installing and upgrading Custom Resource Definitions (CRDs) for the Atlas Operator. These CRDs are 
+A Helm chart for installing and upgrading Custom Resource Definitions (CRDs) for the [MongoDB Atlas Operator](https://github.com/mongodb/mongodb-atlas-kubernetes). These CRDs are 
 required by the Atlas Operator to work. 
 
 ## Usage
