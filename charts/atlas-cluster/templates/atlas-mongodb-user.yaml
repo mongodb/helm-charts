@@ -13,7 +13,7 @@ spec:
   passwordSecretRef:
     name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}-secret
   projectRef:
-    name: {{ include "atlas-cluster.fullname" $ }}-project  
+    name: {{ $.Values.project.name }}
   roles:
     {{- toYaml .roles | nindent 4 }}
   {{- if .deleteAfterDate }}

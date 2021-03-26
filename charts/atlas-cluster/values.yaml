@@ -13,7 +13,7 @@ atlas:
 project:
   enable: true
   name: my-project
-  atlasTitle: "Test Atlas Operator Project"
+  atlasProjectName: "AndreyB"
   
   projectIpAccessList:
     - ipAddress: "192.0.2.15"
