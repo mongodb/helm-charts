@@ -1,8 +1,7 @@
-
 mongodb-atlas-operator:
   enabled: true
 
-# Please provide Atlas API credentials and Organization 
+# Please provide Atlas API credentials and Organization
 atlas:
   orgId: "<Atlas Organization ID>"
   publicApiKey: "<Atlas_api_public_key>"
@@ -14,7 +13,7 @@ project:
   enable: true
   name: my-project
   atlasProjectName: "AndreyB"
-  
+
   projectIpAccessList:
     - ipAddress: "192.0.2.15"
       comment: "IP address for Application Server A"
@@ -29,7 +28,7 @@ mongodb:
 
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
-# # 
+# #
 #   autoScaling:
 #     autoIndexingEnabled: false
 #     compute:
@@ -44,7 +43,7 @@ mongodb:
 #   clusterType: 'REPLICASET'
 #   diskSizeGB: '50'
 #   encryptionAtRestProvider: 'AWS'
-#   labels:     
+#   labels:
 #   mongoDBMajorVersion: '4.4'
 #   numShards: 2
 #   paused: false
@@ -59,5 +58,5 @@ users:
       - databaseName: admin
         roleName: atlasAdmin
     # deleteAfterDate:
-    # labels:    
+    # labels:
     # scopes:
