@@ -11,6 +11,7 @@ atlas:
   connectionSecretName: ""
 
 project:
+  enable: true
   name: my-project
   atlasTitle: "Test Atlas Operator Project"
   

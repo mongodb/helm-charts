@@ -1,7 +1,8 @@
+{{- if .Values.project.enable }}
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
-  name: {{ include "atlas-cluster.fullname" . }}-project
+  name: {{ .Values.project.name }}-project
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
@@ -17,3 +18,4 @@ spec:
   {{- with .Values.project.projectIpAccessList }}
   {{- toYaml . | nindent 2 }}
   {{- end }}
+{{- end }
