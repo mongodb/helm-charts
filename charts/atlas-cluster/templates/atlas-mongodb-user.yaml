@@ -3,7 +3,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasDatabaseUser
 metadata:
-  name: {{ include "atlas-cluster.fullname" $ }}-project
+  name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}-user
   namespace: {{ $.Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
@@ -16,8 +16,14 @@ spec:
     name: {{ include "atlas-cluster.fullname" $ }}-project  
   roles:
     {{- toYaml .roles | nindent 4 }}
+  {{- if .deleteAfterDate }}
   deleteAfterDate: {{ .deleteAfterDate }}
+  {{- end }}
+  {{- if .labels }}
   labels:
     {{- toYaml .labels | nindent 4 }}
+  {{- end }}
+  {{- if .scopes }}
   scopes: {{ .scopes }}
+  {{- end }}
 {{- end }}

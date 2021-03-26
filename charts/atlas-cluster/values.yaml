@@ -55,14 +55,8 @@ users:
     databaseName: admin
     password: "%SomeLong%password$foradmin"
     roles:
-      - db: admin
-        name: clusterAdmin
-      - db: admin
-        name: userAdminAnyDatabase
-      - db: admin
-        name: readWrite
-      - db: admin
-        name: userAdminAnyDatabase    
+      - databaseName: admin
+        roleName: atlasAdmin
     # deleteAfterDate:
     # labels:    
     # scopes:
