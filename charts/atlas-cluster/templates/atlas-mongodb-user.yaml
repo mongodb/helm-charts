@@ -1,0 +1,23 @@
+
+{{- range .Values.users }}
+apiVersion: atlas.mongodb.com/v1
+kind: AtlasDatabaseUser
+metadata:
+  name: {{ include "atlas-cluster.fullname" $ }}-project
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "atlas-cluster.labels" $ | nindent 4 }}
+spec:
+  username: {{ .username }}
+  databaseName: {{ .databaseName }}
+  passwordSecretRef:
+    name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}-secret
+  projectRef:
+    name: {{ include "atlas-cluster.fullname" $ }}-project  
+  roles:
+    {{- toYaml .roles | nindent 4 }}
+  deleteAfterDate: {{ .deleteAfterDate }}
+  labels:
+    {{- toYaml .labels | nindent 4 }}
+  scopes: {{ .scopes }}
+{{- end }}

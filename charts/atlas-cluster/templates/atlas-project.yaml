@@ -2,12 +2,17 @@ apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
   name: {{ include "atlas-cluster.fullname" . }}-project
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
 spec:
   name: {{ .Values.project.atlasTitle }}
   connectionSecretRef:
-    name: {{ .Values.atlas.connectionSecretName }}
+{{- if .Values.atlas.connectionSecretName }}
+    name: {{ .Values.atlas.connectionSecretName}}
+{{- else }}
+    name: {{ include "atlas-cluster.fullname" . }}-secret
+{{- end }}
   projectIpAccessList:
   {{- with .Values.project.projectIpAccessList }}
   {{- toYaml . | nindent 2 }}

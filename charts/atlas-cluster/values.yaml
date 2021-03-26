@@ -4,7 +4,7 @@ mongodb-atlas-operator:
 
 # Please provide Atlas API credentials and Organization 
 atlas:
-  orgid: "<Atlas Organization ID>"
+  orgId: "<Atlas Organization ID>"
   publicApiKey: "<Atlas_api_public_key>"
   privateApiKey: "<Atlas_api_private_key>"
 
@@ -21,10 +21,48 @@ project:
       comment: "CIDR block for Application Server B - D"
 
 mongodb:
-  name: "Test-cluster"
   providerSettings:
     instanceSizeName: M10
     providerName: AWS
     regionName: US_EAST_1
 
+# Optional section. for more information visit
+# https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
+# # 
+#   autoScaling:
+#     autoIndexingEnabled: false
+#     compute:
+#       enabled: false
+#       maxInstanceSize: 'M40'
+#       minInstanceSize: 'M10'
+#       scaleDownEnabled: false
+#     diskGBEnabled: false
+#   biConnector:
+#     enabled: false
+#     readPreference: 'primary'
+#   clusterType: 'REPLICASET'
+#   diskSizeGB: '50'
+#   encryptionAtRestProvider: 'AWS'
+#   labels:     
+#   mongoDBMajorVersion: '4.4'
+#   numShards: 2
+#   paused: false
+#   pitEnabled: false
+#   providerBackupEnabled: false
+#   replicationSpecs:
 users:
+  - username: admin-user
+    databaseName: admin
+    password: "%SomeLong%password$foradmin"
+    roles:
+      - db: admin
+        name: clusterAdmin
+      - db: admin
+        name: userAdminAnyDatabase
+      - db: admin
+        name: readWrite
+      - db: admin
+        name: userAdminAnyDatabase    
+    # deleteAfterDate:
+    # labels:    
+    # scopes:
