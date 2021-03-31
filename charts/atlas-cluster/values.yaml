@@ -12,7 +12,7 @@ atlas:
 project:
   enable: true
   name: my-project
-  atlasProjectName: "AndreyB"
+  atlasProjectName: "Test Project"
 
   projectIpAccessList:
     - ipAddress: "192.0.2.15"
@@ -22,7 +22,7 @@ project:
 
 mongodb:
   providerSettings:
-    instanceSizeName: M10
+    instanceSizeName: M2
     providerName: AWS
     regionName: US_EAST_1
 
