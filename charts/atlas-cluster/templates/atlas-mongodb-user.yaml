@@ -3,7 +3,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasDatabaseUser
 metadata:
-  name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}-user
+  name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}
   namespace: {{ $.Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
