@@ -14,6 +14,7 @@ The MongoDB Atlas Operator provides a native integration between the Kubernetes 
 
 ``` 
 helm repo add mongodb https://mongodb.github.io/helm-charts
+helm repo update
 helm install atlas-operator --namespace=atlas-operator --create-namespace mongodb/mongodb-atlas-operator
 ```
 
@@ -25,7 +26,7 @@ helm install atlas-operator --namespace=atlas-operator --create-namespace mongod
 ```
 helm install atlas-cluster \
 --namespace=my-cluster \
---create-namespace \
+--create-namespace mongodb/atlas-cluster \
 --set project.atlasTitle=’My Project’ \
 --set atlas.orgId=’<orgid>’ \
 --set atlas.publicApiKey=’<publicKey>’ \
