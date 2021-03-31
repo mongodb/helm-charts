@@ -1,3 +1,6 @@
+mongodb-enterprise-operator-crds:
+  enabled: true
+
 # atlasURI is the URI of the MongoDB Atlas
 atlasURI: https://cloud.mongodb.com
 
