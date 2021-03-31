@@ -1,4 +1,3 @@
-# {{- if .Values.project.enable }}
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
@@ -20,4 +19,3 @@ spec:
   {{- with .Values.project.projectIpAccessList }}
   {{- toYaml . | nindent 2 }}
   {{- end }}
-# {{- end }}

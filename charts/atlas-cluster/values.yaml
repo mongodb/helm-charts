@@ -10,7 +10,6 @@ atlas:
   connectionSecretName: ""
 
 project:
-  enable: true
   name: my-project
   atlasProjectName: "Test Project"
 
@@ -22,7 +21,7 @@ project:
 
 mongodb:
   providerSettings:
-    instanceSizeName: M2
+    instanceSizeName: M10
     providerName: AWS
     regionName: US_EAST_1
 
