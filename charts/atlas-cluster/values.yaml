@@ -21,8 +21,9 @@ project:
 
 mongodb:
   providerSettings:
-    instanceSizeName: M10
-    providerName: AWS
+    instanceSizeName: M2
+    providerName: TENANT
+    backingProviderName: AWS
     regionName: US_EAST_1
 
 # Optional section. for more information visit

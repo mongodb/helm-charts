@@ -11,7 +11,7 @@ spec:
   username: {{ .username }}
   databaseName: {{ .databaseName }}
   passwordSecretRef:
-    name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}-secret
+    name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}
   projectRef:
     name: {{ include "atlas-cluster.fullname" $ }}-{{ $.Values.project.name }}
   roles:
