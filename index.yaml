@@ -1,5 +1,20 @@
 apiVersion: v1
 entries:
+  atlas-cluster:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2021-03-31T15:51:40.665536896Z"
+    description: A Helm chart to manage Atlas resources with Atlas operator
+    digest: e9088114d8148a97fec7e849fb9af4d7e65bcd5de7b378e7c93db518fbd7413b
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: atlas-cluster
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/atlas-cluster-0.1.2/atlas-cluster-0.1.2.tgz
+    version: 0.1.2
   mongodb-atlas-operator:
   - apiVersion: v2
     appVersion: 0.4.0
