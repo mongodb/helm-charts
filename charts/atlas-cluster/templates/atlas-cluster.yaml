@@ -1,0 +1,65 @@
+apiVersion: atlas.mongodb.com/v1
+kind: AtlasCluster
+metadata:
+  name: {{ include "atlas-cluster.fullname" . }}
+  labels:
+    {{- include "atlas-cluster.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }} 
+spec:
+  name: {{ include "atlas-cluster.fullname" . }}
+  projectRef:
+    name: {{ include "atlas-cluster.fullname" . }}-{{ .Values.project.name }}
+  providerSettings:
+{{- with .Values.mongodb.providerSettings }}
+{{- toYaml . | nindent 4 }}
+{{- end }}
+{{- if .Values.mongodb.autoScaling }}
+  autoScaling:
+{{- with .Values.mongodb.autoScaling }}  
+{{- toYaml . | nindent 4 }}
+{{- end }}
+{{- end }}
+{{- if .Values.mongodb.autoIndexingEnabled }}
+    autoIndexingEnabled: false
+{{- end }}
+{{- if .Values.mongodb.biConnector }}  
+  biConnector:
+    enabled: {{ .Values.mongodb.biConnector.enabled }}
+    readPreference: {{ .Values.mongodb.biConnector.readPreference }}
+{{- end }}
+{{- if .Values.mongodb.clusterType }}  
+  clusterType: {{ .Values.mongodb.clusterType }}
+{{- end }}
+{{- if .Values.mongodb.diskSizeGB }}  
+  diskSizeGB: {{ .Values.mongodb.diskSizeGB }}
+{{- end }}
+{{- if .Values.mongodb.encryptionAtRestProvider }}  
+  encryptionAtRestProvider: {{ .Values.mongodb.encryptionAtRestProvider }}
+{{- end }}
+{{- if .Values.mongodb.labels }}  
+  labels:
+  {{- with .Values.mongodb.labels }}  
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- if .Values.mongodb.mongoDBMajorVersion }}  
+  mongoDBMajorVersion: {{ .Values.mongodb.mongoDBMajorVersion }}
+{{- end }}
+{{- if .Values.mongodb.numShards }}  
+  numShards: {{ .Values.mongodb.numShards }}
+{{- end }}
+{{- if .Values.mongodb.paused }}  
+  paused: {{ .Values.mongodb.paused }}
+{{- end }}
+{{- if .Values.mongodb.pitEnabled }}  
+  pitEnabled: {{ .Values.mongodb.pitEnabled }}
+{{- end }}
+{{- if .Values.mongodb.providerBackupEnabled }}  
+  providerBackupEnabled: {{ .Values.mongodb.providerBackupEnabled }}
+{{- end }}
+{{- if .Values.mongodb.replicationSpecs }}  
+  replicationSpecs:
+  {{- with .Values.mongodb.replicationSpecs }}  
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

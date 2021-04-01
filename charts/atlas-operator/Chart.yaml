@@ -16,3 +16,8 @@ home: https://github.com/mongodb/mongodb-atlas-kubernetes
 maintainers:
   - name: MongoDB
     email: support@mongodb.com
+dependencies:
+  - name: mongodb-atlas-operator-crds
+    version: "0.1.0"
+    repository: "https://mongodb.github.io/helm-charts"
+    condition: mongodb-enterprise-operator-crds.enabled
