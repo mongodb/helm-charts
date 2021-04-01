@@ -27,7 +27,7 @@ helm install atlas-operator --namespace=atlas-operator --create-namespace mongod
 helm install atlas-cluster \
 --namespace=my-cluster \
 --create-namespace mongodb/atlas-cluster \
---set project.atlasTitle='My Project' \
+--set project.atlasProjectName='My Project' \
 --set atlas.orgId='<orgid>' \
 --set atlas.publicApiKey='<publicKey>' \
 --set atlas.privateApiKey='<privateApiKey>'
