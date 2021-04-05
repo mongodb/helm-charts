@@ -1,4 +1,4 @@
-mongodb-enterprise-operator-crds:
+mongodb-atlas-operator-crds:
   enabled: true
 
 # atlasURI is the URI of the MongoDB Atlas

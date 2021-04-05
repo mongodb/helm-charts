@@ -37,6 +37,8 @@ spec:
           ports:
             - containerPort: 8443
               name: https
+          securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
         - name: manager
           args:
             - --atlas-domain={{ .Values.atlasURI }}
@@ -51,7 +53,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           {{- if .Values.watchNamespaces }}
-          - name: WATCHED_NAMESPACE
+          - name: WATCH_NAMESPACE
             value: "{{- .Values.watchNamespaces }}"
           {{- end }}
           - name: OPERATOR_POD_NAME
