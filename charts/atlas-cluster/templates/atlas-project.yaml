@@ -9,11 +9,13 @@ metadata:
     'helm.sh/hook': post-delete,pre-install,pre-upgrade
 spec:
   name: {{ .Values.project.atlasProjectName }}
+{{- if .Values.atlas }}
   connectionSecretRef:
-{{- if .Values.atlas.connectionSecretName }}
+  {{- if .Values.atlas.connectionSecretName }}
     name: {{ .Values.atlas.connectionSecretName}}
-{{- else }}
+  {{- else }}
     name: {{ include "atlas-cluster.fullname" . }}-secret
+  {{- end }}
 {{- end }}
   projectIpAccessList:
   {{- with .Values.project.projectIpAccessList }}

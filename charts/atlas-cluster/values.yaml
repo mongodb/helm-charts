@@ -2,6 +2,8 @@ mongodb-atlas-operator:
   enabled: true
 
 # Please provide Atlas API credentials and Organization
+# This is optional configuration when Atlas operator is already configured with API Keys.
+# Following parameters should only be provided when Atlas Operator was configured without Atlas Access credentials.
 atlas:
   orgId: "<Atlas Organization ID>"
   publicApiKey: "<Atlas_api_public_key>"
