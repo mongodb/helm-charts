@@ -2,5 +2,5 @@ dependencies:
 - name: mongodb-atlas-operator-crds
   repository: https://mongodb.github.io/helm-charts
   version: 0.1.0
-digest: sha256:a4ca57ea55097c76e2940b2b4146ad672fd093a5b97822bcc5f39c1b2fa536e8
-generated: "2021-03-26T16:16:28.459076Z"
+digest: sha256:3d9c90539bf76c75e41839d45263764263af59f0854283a193d00dcdda36f76e
+generated: "2021-04-05T12:16:25.047057+01:00"
