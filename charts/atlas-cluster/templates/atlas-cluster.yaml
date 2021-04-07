@@ -8,7 +8,7 @@ metadata:
 spec:
   name: {{ include "atlas-cluster.fullname" . }}
   projectRef:
-    name: {{ include "atlas-cluster.fullname" . }}-{{ .Values.project.name }}
+    name: {{ include "atlas-cluster.projectfullname" . }}
   providerSettings:
 {{- with .Values.mongodb.providerSettings }}
 {{- toYaml . | nindent 4 }}

@@ -1,7 +1,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
-  name: {{ include "atlas-cluster.fullname" . }}-{{ .Values.project.name }}
+  name: {{ include "atlas-cluster.projectfullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
