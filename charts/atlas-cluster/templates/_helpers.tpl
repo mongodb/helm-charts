@@ -32,8 +32,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.project.fullnameOverride }}
 {{- .Values.project.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Release.Name }}
-{{- printf "%s-%s" $name .Values.project.name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Values.project.name "atlas-project" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{/*
