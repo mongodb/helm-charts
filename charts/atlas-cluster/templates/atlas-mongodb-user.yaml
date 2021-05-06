@@ -1,5 +1,5 @@
-
 {{- range .Values.users }}
+---
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasDatabaseUser
 metadata:
