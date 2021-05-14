@@ -12,6 +12,7 @@ atlas:
 project:
   name: my-project
   atlasProjectName: "Test Project"
+  # fullnameOverride: ""
 
   projectIpAccessList:
     - ipAddress: "192.0.2.15"
