@@ -1,0 +1,13 @@
+apiVersion: v2
+name: mongodb-enterprise-operator
+description: MongoDB Kubernetes Community Operator deployment
+version: 0.1.0
+kubeVersion: '>=1.16-0'
+keywords:
+- mongodb
+- database
+- nosql
+home: https://github.com/mongodb/helm-charts
+maintainers:
+- name: Jason Mimick 
+  email: jmimick@gmail.com
