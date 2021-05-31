@@ -4,6 +4,15 @@ mongodb-atlas-operator-crds:
 # atlasURI is the URI of the MongoDB Atlas
 atlasURI: https://cloud.mongodb.com
 
+# globalConnectionSecret is a default "global" Secret containing Atlas authentication information
+# It is used if the project-level connection Secret is not provided.
+# It's not recommended to check-in these values as part of values.yaml file to the VCS -
+# try using '--set' operator instead, for example '--set globalConnectionSecret.orgId=<id>'
+globalConnectionSecret:
+  orgId: ""
+  publicApiKey: ""
+  privateApiKey: ""
+
 # watchNamespaces is the set of namespaces that are watched by the Operator.
 # The only possible values are:
 # - empty (watch all namespaces) or
