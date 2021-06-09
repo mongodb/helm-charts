@@ -23,6 +23,13 @@ helm repo add mongodb https://mongodb.github.io/helm-charts
 helm install atlas-operator --namespace=operator --set watchNamespaces=operator --create-namespace mongodb/mongodb-atlas-operator
 ```
 
+### Installing the Operator (in clusterwide mode) and configure the Global API Secret:
+
+```
+helm repo add mongodb https://mongodb.github.io/helm-charts
+helm install atlas-operator --namespace=atlas-operator --create-namespace --set globalConnectionSecret.publicApiKey=<the_public_key> --set globalConnectionSecret.privateApiKey=<the_private_key> --set globalConnectionSecret.orgId=<the_org_id> mongodb/mongodb-atlas-operator
+```
+
 ### Upgrading the Operator:
 
 ```
