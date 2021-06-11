@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongocli
+  namespace: mongodb
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: mongocli-list
+        image: mongocli/mongocli 
+        env:
+        - name: MCLI_PUBLIC_API_KEY 
+          valueFrom:
+            secretKeyRef:
+              name: ops-manager-ops-manager-admin-key
+              key: user
+        - name: MCLI_PRIVATE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ops-manager-ops-manager-admin-key
+              key: publicApiKey
+        - name: MCLI_OPS_MANAGER_URL
+          value: "http://ab56a3a2755244be7a93668ac77c2b26-358544467.us-east-1.elb.amazonaws.com:8080/"
+        - name: MCLI_SERVICE
+          value: ops-manager
+        command:
+        - mongocli
+        - iam
+        - organization
+        - create
+        - "Sample-Org-1"    
+        - --output
+        - json
+        - |
+        - jq 
+        - '.id'
+        - xargs
+        - -I
+        - {}
+        - mongocli
+        - iam
+        - projects
+        - create
+        - "Sample-Project-1"
+        - --orgId
+        - {}

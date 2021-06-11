@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongocli
+  namespace: mongodb
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: ops-manager
+      containers:
+      - name: mongocli-list
+        image: mongocli/mongocli 
+        env:
+        - name: MCLI_PUBLIC_API_KEY 
+          valueFrom:
+            secretKeyRef:
+              name: ops-manager-ops-manager-admin-key
+              key: user
+        - name: MCLI_PRIVATE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ops-manager-ops-manager-admin-key
+              key: publicApiKey
+        - name: MCLI_OPS_MANAGER_URL
+          value: "http://ab56a3a2755244be7a93668ac77c2b26-358544467.us-east-1.elb.amazonaws.com:8080/"
+        - name: MCLI_SERVICE
+          value: ops-manager
+        command: [ "/bin/bash", "-c" ]
+        args:
+        -  echo "mongocli-automation:start";
+           ORG=$(mongocli iam organization create "sample-name-org" --output json);
+           echo "ORG=${ORG}";
+           ID=$(echo "${ORG}" | jq -r '.id');
+           echo "ID=${ID}";
+           PRJ=$(mongocli iam projects create "sample-name-project" --orgId "${ID}" --output json);
+           echo "PRJ=${PRJ}";
+           kubectl create configmap sample-name-opsmanager-project --from-literal="baseUrl=${MCLI_OPS_MANAGER_URL}" --from-literal="projectName=Sample-Name-Project" --from-literal="orgId=${ORG}"; 
+           kubectl get configmaps;
+           PRJ_ID=$(echo "${PRJ}" | jq -r '.id')
+           DESC="mongocli-automation"
+           KEY=$(mongocli iam project apiKeys create --projectId "${PRJ_ID}" --role GROUP_OWNER --desc "${DESC}" --output json);
+           echo "KEY=${KEY}";
+           PUBLIC=$(echo "${KEY}" | jq -r '.publicKey');
+           PRIVATE=$(echo "${KEY}" | jq -r '.privateKey');
+           echo "PUBLIC=${PUBLIC}, PRIVATE=${PRIVATE}";
+           kubectl create secret generic sample-name-opsmanager-apikey --from-literal="user=${PUBLIC}" --from-literal="publicApiKey=${PRIVATE}";
+           kubectl get secrets;
+           echo "mongocli-automation:end";
+

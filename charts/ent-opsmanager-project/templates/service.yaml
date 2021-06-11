@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ent-opsmanager-project.fullname" . }}
+  labels:
+    {{- include "ent-opsmanager-project.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "ent-opsmanager-project.selectorLabels" . | nindent 4 }}
