@@ -28,38 +28,3 @@ subjects:
     namespace: {{ $.Release.Namespace }}
 
 {{- end }}
-
-{{- /* It seems that the rbac-proxy role must be Cluster-scoped to handle requests from different namespaces?
-TODO May make sense in the future to configure a specific namespace where the prometheus server resides to give Role only to that namespace? */}}
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: "{{ $.Release.Namespace }}-{{ $operatorName }}-proxy-role"
-  labels:
-  {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
-rules:
-  - apiGroups: ["authentication.k8s.io"]
-    resources:
-      - tokenreviews
-    verbs: ["create"]
-  - apiGroups: ["authorization.k8s.io"]
-    resources:
-      - subjectaccessreviews
-    verbs: ["create"]
-
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: "{{ $.Release.Namespace }}-{{ $operatorName }}-proxy-role-binding"
-  labels:
-  {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: "{{ $.Release.Namespace }}-{{ $operatorName }}-proxy-role"
-subjects:
-  - kind: ServiceAccount
-    name: {{ include "mongodb-atlas-operator.serviceAccountName" . }}
-    namespace: {{ $.Release.Namespace }}

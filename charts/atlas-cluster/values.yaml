@@ -10,8 +10,8 @@ atlas:
   connectionSecretName: ""
 
 project:
-  name: my-project
-  atlasProjectName: "Test Project"
+  name: "kube-project-1"
+  atlasProjectName: "kube-project-1"
   # fullnameOverride: ""
 
   projectIpAccessList:
