@@ -24,6 +24,7 @@ spec:
     {{- toYaml .labels | nindent 4 }}
   {{- end }}
   {{- if .scopes }}
-  scopes: {{ .scopes }}
+  scopes:
+    {{- toYaml .scopes | nindent 4 }}
   {{- end }}
 {{- end }}

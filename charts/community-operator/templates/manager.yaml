@@ -40,4 +40,4 @@ spec:
         image: quay.io/mongodb/mongodb-kubernetes-operator:0.6.1
         imagePullPolicy: Always
         name: mongodb-kubernetes-operator
-      serviceAccountName: {{ .Release.Name }}
+      serviceAccountName: mongodb-kubernetes-operator

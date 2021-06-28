@@ -23,15 +23,5 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.connectionSecret }} 
-                key: connectionString.standard
-          - name: "MONGODB_USERNAME"
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.connectionSecret }} 
-                key: username
-          - name: "MONGODB_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.connectionSecret }} 
-                key: password 
+                key: connectionString.standardSrv
 
