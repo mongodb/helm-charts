@@ -19,9 +19,21 @@ spec:
         ports:
           - containerPort: 8080
         env:
+{{- if .Values.enterprise }}
+          - name: "MONGODB_USERNAME"
+            value: {{ .Values.enterprise.username }}
+          - name: "MONGODB_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.enterprise.db }}-{{ .Values.enterprise.username }}-secret
+                key: password
+          - name: "MONGODB_URI_SRV"
+            value: "mongodb+srv://{{ .Values.enterprise.db }}-svc.enterprise.svc.cluster.local/test?ssl=false&authSource=admin"
+{{- else }}
           - name: "MONGODB_URI_SRV"
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.connectionSecret }} 
+                name: {{ .Values.connectionSecret }}
                 key: connectionString.standardSrv
+{{- end }}
 

@@ -31,8 +31,8 @@ opsManager:
   APIKey:
   APISecret:
   # Alternatevly an existing secret and config map could be provided directly
-  configMap: opsmanager-configmap
-  secretRef: opsmanager-org-access-key
+  configMap: 
+  secretRef: 
 
 security:
   authentication:
@@ -110,4 +110,4 @@ users:
     password: "%SomeLong%password$"
     roles:
       - db: admin
-        name: readWrite
+        name: readWriteAnyDatabase
