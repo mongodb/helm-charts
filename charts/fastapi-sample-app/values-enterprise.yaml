@@ -1,0 +1,5 @@
+externalLoadBalancerPort: 80
+enterprise:
+    username: app-user
+    db: some-db
+
