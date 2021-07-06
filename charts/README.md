@@ -2,8 +2,8 @@
 
 Please note that Database and OpsManager include an operator as a dependency. There is no need to install is separately.
 
-```helm repo add mongodb https://github.io/mongodb/helm-charts```
-```helm dependency  update```
+```helm repo add mongodb https://mongodb.github.io/helm-charts```
+```helm dependency update```
 
 In order to install Ops Manager run this command
 

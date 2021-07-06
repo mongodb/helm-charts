@@ -6,8 +6,10 @@ name: Release Charts
 # events but only for the main branch
 on:
   push:
-    branches: 
+    branches:
       - main
+    paths-ignore:
+      - '.github/**'
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -24,11 +26,11 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"     
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: v3.4.0 
+          version: v3.4.0
       - name: Add Helm repos
         run: |
           helm repo add mongodb https://mongodb.github.io/helm-charts
@@ -40,4 +42,4 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
-          charts_repo_url: https://mongodb.github.io/helm-charts 
+          charts_repo_url: https://mongodb.github.io/helm-charts
