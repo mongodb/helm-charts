@@ -56,6 +56,18 @@ spec:
           - name: WATCH_NAMESPACE
             value: "{{- .Values.watchNamespaces }}"
           {{- end }}
+          {{- if .Values.disableAtlasClusterReconciler }}
+          - name: DISABLE_ATLAS_CLUSTER_RECONCILER
+            value: "{{- .Values.disableAtlasClusterReconciler }}"
+          {{- end }}
+          {{- if .Values.disableAtlasProjectReconciler }}
+          - name: DISABLE_ATLAS_PROJECT_RECONCILER
+            value: "{{- .Values.disableAtlasProjectReconciler }}"
+          {{- end }}
+          {{- if .Values.disableAtlasDatabaseUserReconciler }}
+          - name: DISABLE_ATLAS_DATABASE_USER_RECONCILER
+            value: "{{- .Values.disableAtlasDatabaseUserReconciler }}"
+          {{- end }}
           - name: OPERATOR_POD_NAME
             valueFrom:
               fieldRef:
