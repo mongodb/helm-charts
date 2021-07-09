@@ -78,12 +78,9 @@ spec:
       spec:
         terminationGracePeriodSeconds: 10
         topologySpreadConstraints:
-        - maxSkew: 1
+        - maxSkew: 2
           topologyKey: zone
           whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-          matchLabels:
-            foo: bar
           # This container will be added to each pod as a sidecar
         containers:
           - name: mongodb-enterprise-database
