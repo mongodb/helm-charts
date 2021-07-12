@@ -1,65 +1,68 @@
+{{- range .Values.clusters }}
+---
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  name: {{ include "atlas-cluster.fullname" . }}
+  name: {{ .name }}
   labels:
-    {{- include "atlas-cluster.labels" . | nindent 4 }}
-  namespace: {{ .Release.Namespace }} 
+    {{- include "atlas-cluster.labels" $ | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
 spec:
-  name: {{ include "atlas-cluster.fullname" . }}
+  name: {{ .name }}
   projectRef:
-    name: {{ include "atlas-cluster.projectfullname" . }}
+    name: {{ include "atlas-cluster.projectfullname" $ }}
   providerSettings:
-{{- with .Values.mongodb.providerSettings }}
+{{- with .providerSettings }}
 {{- toYaml . | nindent 4 }}
 {{- end }}
-{{- if .Values.mongodb.autoScaling }}
+{{- if .autoScaling }}
   autoScaling:
-{{- with .Values.mongodb.autoScaling }}  
+{{- with .autoScaling }}
 {{- toYaml . | nindent 4 }}
 {{- end }}
 {{- end }}
-{{- if .Values.mongodb.autoIndexingEnabled }}
+{{- if .autoIndexingEnabled }}
     autoIndexingEnabled: false
 {{- end }}
-{{- if .Values.mongodb.biConnector }}  
+{{- if .biConnector }}
   biConnector:
-    enabled: {{ .Values.mongodb.biConnector.enabled }}
-    readPreference: {{ .Values.mongodb.biConnector.readPreference }}
+    enabled: {{ .biConnector.enabled }}
+    readPreference: {{ .biConnector.readPreference }}
 {{- end }}
-{{- if .Values.mongodb.clusterType }}  
-  clusterType: {{ .Values.mongodb.clusterType }}
+{{- if .clusterType }}
+  clusterType: {{ .clusterType }}
 {{- end }}
-{{- if .Values.mongodb.diskSizeGB }}  
-  diskSizeGB: {{ .Values.mongodb.diskSizeGB }}
+{{- if .diskSizeGB }}
+  diskSizeGB: {{ .diskSizeGB }}
 {{- end }}
-{{- if .Values.mongodb.encryptionAtRestProvider }}  
-  encryptionAtRestProvider: {{ .Values.mongodb.encryptionAtRestProvider }}
+{{- if .encryptionAtRestProvider }}
+  encryptionAtRestProvider: {{ .encryptionAtRestProvider }}
 {{- end }}
-{{- if .Values.mongodb.labels }}  
+{{- if .labels }}
   labels:
-  {{- with .Values.mongodb.labels }}  
+  {{- with .labels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}
-{{- if .Values.mongodb.mongoDBMajorVersion }}  
-  mongoDBMajorVersion: {{ .Values.mongodb.mongoDBMajorVersion }}
+{{- if .mongoDBMajorVersion }}
+  mongoDBMajorVersion: {{ .mongoDBMajorVersion }}
 {{- end }}
-{{- if .Values.mongodb.numShards }}  
-  numShards: {{ .Values.mongodb.numShards }}
+{{- if .numShards }}
+  numShards: {{ .numShards }}
 {{- end }}
-{{- if .Values.mongodb.paused }}  
-  paused: {{ .Values.mongodb.paused }}
+{{- if .paused }}
+  paused: {{ .paused }}
 {{- end }}
-{{- if .Values.mongodb.pitEnabled }}  
-  pitEnabled: {{ .Values.mongodb.pitEnabled }}
+{{- if .pitEnabled }}
+  pitEnabled: {{ .pitEnabled }}
 {{- end }}
-{{- if .Values.mongodb.providerBackupEnabled }}  
-  providerBackupEnabled: {{ .Values.mongodb.providerBackupEnabled }}
+{{- if .providerBackupEnabled }}
+  providerBackupEnabled: {{ .providerBackupEnabled }}
 {{- end }}
-{{- if .Values.mongodb.replicationSpecs }}  
+{{- if .replicationSpecs }}
   replicationSpecs:
-  {{- with .Values.mongodb.replicationSpecs }}  
+  {{- with .replicationSpecs }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
+{{- end }}
 {{- end }}

@@ -20,13 +20,13 @@ project:
     - ipAddress: "203.0.113.0/24"
       comment: "CIDR block for Application Server B - D"
 
-mongodb:
-  providerSettings:
-    instanceSizeName: M2
-    providerName: TENANT
-    backingProviderName: AWS
-    regionName: US_EAST_1
-
+clusters:
+  - name: cluster-name
+    providerSettings:
+      instanceSizeName: M2
+      providerName: TENANT
+      backingProviderName: AWS
+      regionName: US_EAST_1
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
 # #
