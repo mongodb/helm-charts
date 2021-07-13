@@ -1,3 +1,4 @@
+{{- if .Values.project.create }}
 {{- range .Values.users }}
 ---
 apiVersion: atlas.mongodb.com/v1
@@ -27,4 +28,5 @@ spec:
   scopes:
     {{- toYaml .scopes | nindent 4 }}
   {{- end }}
+{{- end }}
 {{- end }}

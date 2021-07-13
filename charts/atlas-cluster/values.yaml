@@ -12,6 +12,7 @@ atlas:
   connectionSecretName: ""
 
 project:
+  create: true
   name: my-project
   atlasProjectName: "Test Project"
   annotations: {}
