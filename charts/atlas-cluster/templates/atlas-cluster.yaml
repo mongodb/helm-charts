@@ -7,6 +7,10 @@ metadata:
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
+  {{- if .annotations }}
+  annotations:
+{{ toYaml .annotations | indent 4 }}
+  {{- end }}
 spec:
   name: {{ .name }}
   projectRef:
