@@ -77,11 +77,6 @@ spec:
     podTemplate:
       spec:
         terminationGracePeriodSeconds: 10
-        topologySpreadConstraints:
-        - maxSkew: 2
-          topologyKey: zone
-          whenUnsatisfiable: DoNotSchedule
-          # This container will be added to each pod as a sidecar
         containers:
           - name: mongodb-enterprise-database
             resources:

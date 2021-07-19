@@ -28,7 +28,7 @@ spec:
                 name: {{ .Values.enterprise.db }}-{{ .Values.enterprise.username }}-secret
                 key: password
           - name: "MONGODB_URI_SRV"
-            value: "mongodb+srv://{{ .Values.enterprise.db }}-svc.enterprise.svc.cluster.local/test?ssl=false&authSource=admin"
+            value: "mongodb+srv://{{ .Values.enterprise.db }}-svc.{{ .Values.enterprise.namespace }}.svc.cluster.local/test?ssl=false&authSource=admin"
 {{- else }}
           - name: "MONGODB_URI_SRV"
             valueFrom:

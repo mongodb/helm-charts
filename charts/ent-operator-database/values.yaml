@@ -44,8 +44,8 @@ security:
 
 resources:
   limits:
-    cpu: 2
-    memory: 1.5G
+    cpu: 1
+    memory: 1G
   requests:
     cpu: 1
     memory: 1G
@@ -58,7 +58,7 @@ agent:
 
 persistence:
   single:
-    storage: 10Gi
+    storage: 1Gi
 #   storageClass: standard
 # multiple:
 #   data:
