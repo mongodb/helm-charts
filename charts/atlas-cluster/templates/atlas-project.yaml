@@ -1,3 +1,4 @@
+{{- if .Values.project.create }}
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
@@ -7,11 +8,16 @@ metadata:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
   annotations:
     'helm.sh/hook': post-delete,pre-install,pre-upgrade
+  {{- if .Values.project.annotations }}
+{{ toYaml .Values.project.annotations | indent 4 }}
+  {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
   connectionSecretRef:
 {{- if .Values.atlas.connectionSecretName }}
     name: {{ .Values.atlas.connectionSecretName}}
+{{- else if and (not .Values.atlas.create) .Values.atlas.existingSecretName  }}
+    name: {{ .Values.atlas.existingSecretName }}
 {{- else }}
     name: {{ include "atlas-cluster.fullname" . }}-secret
 {{- end }}
@@ -19,3 +25,4 @@ spec:
   {{- with .Values.project.projectIpAccessList }}
   {{- toYaml . | nindent 2 }}
   {{- end }}
+{{- end }}
