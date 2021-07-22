@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: mongodb-atlas-fastapi
+        image: public.ecr.aws/u1r4t8v5/mongodb-atlas-fastapi
+        ports:
+          - containerPort: 8080
+        env:
+{{- if .Values.enterprise }}
+          - name: "MONGODB_USERNAME"
+            value: {{ .Values.enterprise.username }}
+          - name: "MONGODB_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.enterprise.db }}-{{ .Values.enterprise.username }}-secret
+                key: password
+          - name: "MONGODB_URI_SRV"
+            value: "mongodb+srv://{{ .Values.enterprise.db }}-svc.{{ .Values.enterprise.namespace }}.svc.cluster.local/test?ssl=false&authSource=admin"
+{{- else }}
+          - name: "MONGODB_URI_SRV"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.connectionSecret }}
+                key: connectionString.standardSrv
+{{- end }}
+

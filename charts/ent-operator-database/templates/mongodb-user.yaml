@@ -3,7 +3,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
 metadata:
-  name: {{ $.Values.name }}-{{ .username }}-mongodbuser
+  name: {{ $.Release.Name }}-{{ .username }}-mongodbuser
   namespace: {{ $.Release.Namespace }}
   annotations:
     "meta.helm.sh/release-name": {{ $.Release.Name }}
@@ -13,12 +13,12 @@ metadata:
     "app.kubernetes.io/managed-by": {{ $.Release.Service }}
 spec:
   passwordSecretKeyRef:
-    name: {{ $.Values.name }}-{{ .username }}-secret # the name of the secret that stores this user's password
+    name: {{ $.Release.Name }}-{{ .username }}-secret # the name of the secret that stores this user's password
     key: password # the key in the secret that stores the password
   username: {{ .username }}
   db: {{ .db }}
   mongodbResourceRef:
-    name: {{ $.Values.name }} # The name of the MongoDB resource this user will be added to
+    name: {{ $.Release.Name }} # The name of the MongoDB resource this user will be added to
   roles:
     {{- toYaml .roles | nindent 6 }}
 {{- end }}

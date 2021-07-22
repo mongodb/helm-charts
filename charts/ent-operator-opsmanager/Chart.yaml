@@ -13,8 +13,3 @@ icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d
 maintainers:
 - name: theburi
   email: belika@hotmail.com
-dependencies:
-  - name: mongodb-enterprise-operator
-    version: "0.3.0"
-    repository: "https://mongodb.github.io/helm-charts"
-    condition: mongodb-enterprise-operator.enabled
