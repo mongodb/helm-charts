@@ -4,6 +4,5 @@ env:
   - name: "MONGODB_URI_SRV"
     valueFrom:
       secretKeyRef:
-        name: "some-secret" 
+        name: "some-secret"
         key: connectionString.standardSrv
-
