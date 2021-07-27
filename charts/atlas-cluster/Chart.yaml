@@ -16,4 +16,3 @@ appVersion: "0.5.0"
 maintainers:
   - name: MongoDB
     email: support@mongodb.com
-home: https://github.com/mongodb/mongodb-atlas-kubernetes
