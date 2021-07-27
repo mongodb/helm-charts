@@ -26,13 +26,13 @@ replicaSet:
 opsManager:
   # Ops Manager connection could be configured  with Values and This HELM chart will create
   # nesessary Secret and Config Map.
-  URL:
-  orgid:
-  APIKey:
-  APISecret:
+  URL: ""
+  orgid: ""
+  APIKey: ""
+  APISecret: ""
   # Alternatevly an existing secret and config map could be provided directly
-  configMap: 
-  secretRef: 
+  configMap:
+  secretRef:
 
 security:
   authentication:
