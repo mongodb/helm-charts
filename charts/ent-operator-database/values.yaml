@@ -26,13 +26,13 @@ replicaSet:
 opsManager:
   # Ops Manager connection could be configured  with Values and This HELM chart will create
   # nesessary Secret and Config Map.
-  URL:
-  orgid:
-  APIKey:
-  APISecret:
+  URL: ""
+  orgid: ""
+  APIKey: ""
+  APISecret: ""
   # Alternatevly an existing secret and config map could be provided directly
-  configMap: opsmanager-configmap
-  secretRef: opsmanager-org-access-key
+  configMap:
+  secretRef:
 
 security:
   authentication:
@@ -44,8 +44,8 @@ security:
 
 resources:
   limits:
-    cpu: 2
-    memory: 1.5G
+    cpu: 1
+    memory: 1G
   requests:
     cpu: 1
     memory: 1G
@@ -58,7 +58,7 @@ agent:
 
 persistence:
   single:
-    storage: 10Gi
+    storage: 1Gi
 #   storageClass: standard
 # multiple:
 #   data:
@@ -110,4 +110,4 @@ users:
     password: "%SomeLong%password$"
     roles:
       - db: admin
-        name: readWrite
+        name: readWriteAnyDatabase

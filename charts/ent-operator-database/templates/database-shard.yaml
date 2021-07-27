@@ -3,7 +3,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   annotations:
     "meta.helm.sh/release-name": {{ .Release.Name }}
@@ -36,12 +36,12 @@ spec:
 {{- if .Values.opsManager.configMap }}      
       name: {{ .Values.opsManager.configMap }}
 {{- else }}
-      name: {{ .Values.name }}-configmap
+      name: {{ .Release.Name }}-configmap
 {{- end }}
 {{- if .Values.opsManager.secretRef }}
   credentials: {{ .Values.opsManager.secretRef }}
 {{- else }}
-  credentials: {{ .Values.name }}-credential
+  credentials: {{ .Release.Name }}-credential
 {{- end }}
 
   security:
