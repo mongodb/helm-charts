@@ -16,8 +16,13 @@ spec:
   projectRef:
     name: {{ include "atlas-cluster.projectfullname" $ }}
   providerSettings:
-{{- with .providerSettings }}
-{{- toYaml . | nindent 4 }}
+{{- with .providerSettings -}}
+  {{- $provider := .providerName -}}
+  {{- range $key, $val := . }}
+  {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
+    {{- $key | indent 2 }}: {{ $val }}
+  {{- end }}
+  {{- end }}
 {{- end }}
 {{- if .autoScaling }}
   autoScaling:
