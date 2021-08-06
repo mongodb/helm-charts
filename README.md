@@ -1,5 +1,5 @@
 
-## MongoDB Helm Charts repositry for Kubernetes
+## MongoDB Helm Charts repository for Kubernetes
 
 ## Charts
 
