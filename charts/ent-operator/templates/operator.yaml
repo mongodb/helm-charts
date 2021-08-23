@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}  
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
@@ -41,7 +41,7 @@ spec:
           {{- if .Values.watchOpsManager   }}
           - "-watch-resource=opsmanagers"
           {{- end }}
-          {{- if .Values.watchDatabase }}          
+          {{- if .Values.watchDatabase }}
           - "-watch-resource=mongodb"
           - "-watch-resource=mongodbusers"
           {{- end }}

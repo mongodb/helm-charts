@@ -15,6 +15,11 @@ jobs:
       - name: Fetch history
         run: git fetch --prune --unshallow
 
+      - name: Test dependencies
+        run: |
+          chmod 755 .github/dependency_as_file.sh
+          .github/dependency_as_file.sh atlas-operator-crds atlas-operator
+
       - name: Run chart-testing (lint)
         id: lint
         uses: helm/chart-testing-action@v1.0.0
@@ -35,6 +40,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
+      - name: Test dependencies
+        run: |
+          chmod 755 .github/dependency_as_file.sh
+          .github/dependency_as_file.sh atlas-operator-crds atlas-operator
+
       - name: Run kubeval
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
