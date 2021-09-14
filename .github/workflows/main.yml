@@ -11,7 +11,6 @@ on:
     paths-ignore:
       - '.github/**'
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -27,7 +26,7 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          
+
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
@@ -36,6 +35,24 @@ jobs:
       - name: Add Helm repos
         run: |
           helm repo add mongodb https://mongodb.github.io/helm-charts
+
+      - name: Prepare dependencies first
+        id: dependencies
+        run: |
+          # move all dependencies into folder
+          folder="dependencies"
+          mkdir -p $folder
+          cp charts/atlas-operator-crds $folder/atlas-operator-crds
+          echo "::set-output name=folder::$folder"
+
+      - name: Helm Chart Releaser. Dependencies first
+        uses: helm/chart-releaser-action@v1.2.1
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
+          charts_dir: ${{ steps.dependencies.outputs.folder }}
+          charts_repo_url: https://mongodb.github.io/helm-charts
 
       - name: Helm Chart Releaser
         # You may pin to the exact commit or the version.
