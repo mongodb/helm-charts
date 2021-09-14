@@ -10,6 +10,7 @@ on:
       - main
     paths-ignore:
       - '.github/**'
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -42,7 +43,7 @@ jobs:
           # move all dependencies into folder
           folder="dependencies"
           mkdir -p $folder
-          cp charts/atlas-operator-crds $folder/atlas-operator-crds
+          mv charts/atlas-operator-crds $folder/atlas-operator-crds
           echo "::set-output name=folder::$folder"
 
       - name: Helm Chart Releaser. Dependencies first
