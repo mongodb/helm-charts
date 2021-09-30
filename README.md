@@ -2,13 +2,14 @@
 
 ## Trial Version of Helm Charts
 
-This repository contains Helm Charts for different MongoDB products.
+This repository contains Helm Charts for different MongoDB products. Currently,
+only the MongoDB Atlas Operator is supported (in _Trial mode_).
 
-| Charts                                            | Description                                                 |
-| ------------------------------------------------- | ----------------------------------------------------------- |
-| [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart                           |
-| [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart |
-| [atlas-cluster](charts/atlas-cluster)             | MongoDB Atlas Cluster Helm Chart                            |
+| Charts                                                         | Description                                                                                                                      |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [atlas-operator](charts/atlas-operator)                        | MongoDB Atlas Operator Helm Chart. _Start Here!_                                                                                 |
+| [atlas-cluster](charts/atlas-cluster)                          | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources.                                                               |
+| (_Optional_) [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart. Installed automatically by [atlas-operator](charts/atlas-operator). |
 
 ## Adding the MongoDB Helm Repo
 
