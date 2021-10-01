@@ -1,20 +1,34 @@
+# MongoDB Helm Charts repository for Kubernetes
 
-## MongoDB Helm Charts repository for Kubernetes
+## Trial Version of Helm Charts
 
-## Charts
+This repository contains Helm Charts for different MongoDB products. Currently,
+only the MongoDB Atlas Operator is supported (in _Trial mode_).
 
-This repository contains sample HELM charts for different MongoDB products
+| Charts                                            | Description                                                               |
+| ------------------------------------------------- | ------------------------------------------------------------------------- |
+| [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart. [_Start Here!_](charts/atlas-operator) |
+| [atlas-cluster](charts/atlas-cluster)             | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources.        |
+| [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.              |
 
-| Charts                  | Description                                        |
-|-------------------------|----------------------------------------------------|
-| atlas-operator          | MongoDB Atlas Helm Chart. Install Operator Chart   |
-| atlas-operator-crds     | MongoDB Atlas Collection of CRD's                  |
-|-------------------------|----------------------------------------------------|
-| ent-operator            | MongoDB Enterprise Kubernetes operator.            |
-| ent-operator-database   | Deploy MongoDB Enterprise DataBase.                |
-| ent-operator-opsmanager | Deploy MongoDB Enterprise OpsManager.              |
+- Please note that the [atlas-operator-crds](charts/atlas-operator-crds) Helm
+  chart, will be installed, by default, as a dependency by the
+  [atlas-operator](charts/atlas-operator).
 
+## Adding the MongoDB Helm Repo
 
+The MongoDB Helm repository can be added using the `helm repo add` command, like
+in the following example:
 
+```
+$ helm repo add mongodb https://mongodb.github.io/helm-charts
+"mongodb" has been added to your repositories
+```
 
+## Additional Charts
 
+All of MongoDB Helm charts will be moved into this repository. In the meantime,
+please find them on their own repositories:
+
+- [MongoDB Enterprise Kubernetes Operator](https://github.com/mongodb/mongodb-enterprise-kubernetes)
+- [MongoDB Community Operator](https://github.com/mongodb/mongodb-kubernetes-operator)

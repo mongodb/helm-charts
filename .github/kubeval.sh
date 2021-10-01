@@ -1,11 +1,11 @@
 #!/bin/bash
-set -euxo pipefail
+set -uxo pipefail
 
 # forked
 git remote add mongo https://github.com/mongodb/helm-charts.git
 git fetch mongo
 
-CHART_DIRS="$(git diff --find-renames --name-only "$(git rev-parse --abbrev-ref HEAD)" mongo/main -- charts | grep '[cC]hart.yaml' | sed -e 's#/[Cc]hart.yaml##g')"
+CHART_DIRS="$(git diff --find-renames --name-only $(git rev-parse --abbrev-ref HEAD) mongo/main -- charts | grep -i chart.yaml | xargs -r dirname)"
 KUBEVAL_VERSION="0.15.0"
 SCHEMA_LOCATION="https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/"
 

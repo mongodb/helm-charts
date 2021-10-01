@@ -1,51 +1,91 @@
-# Helm Chart: MongoDB Atlas Operator (trial version)
+# MongoDB Atlas Cluster Helm Chart
 
-The MongoDB Atlas Operator provides a native integration between the Kubernetes orchestration platform and MongoDB Atlas — the only multi-cloud document database service that gives you the versatility you need to build sophisticated and resilient applications that can adapt to changing customer demands and market trends.
+The MongoDB Atlas Operator provides a native integration between the Kubernetes
+orchestration platform and MongoDB Atlas — the only multi-cloud document
+database service that gives you the versatility you need to build sophisticated
+and resilient applications that can adapt to changing customer demands and
+market trends.
 
-## Quick start
+The Atlas Cluster Helm Chart knows how to manager Atlas resources bound to
+Custom Resources in your Kubernetes Cluster. These resources are:
 
-**1.** Register for an Atlas account or log in
+- Atlas Projects: An Atlas Project is a place to create your MongoDB clusters,
+  think of it as a _Folder_ for your clusters.
+- Atlas Clusters: A MongoDB Database hosted in Atlas. An Atlas Cluster lives
+  inside an Atlas Project.
+- Atlas Database User: An Atlas Database User is a User you can authenticate as
+  and login into an Atlas Cluster.
 
-**2.** Create API Keys for your organization
-    
-    [Manage Programmatic Access to One Organization.] (https://docs.atlas.mongodb.com/configure-api-access)
+By default the `atlas-cluster` Helm Chart will create a user to connect to the
+newly deployed Atlas Cluster, avoiding having to do this from the Atlas UI.
 
-**3.** Deploy Atlas Kubernetes Operator
+## Prerequisites
 
-``` 
-helm repo add mongodb https://mongodb.github.io/helm-charts
-helm repo update
-helm install atlas-operator --namespace=atlas-operator --create-namespace mongodb/mongodb-atlas-operator
+In order to use this chart, the [Atlas Operator Helm Chart](../atlas-operator)
+needs to be installed already.
+
+## Usage
+
+1. Register or login to [Atlas](https://cloud.mongodb.com).
+
+2. Create API Keys for your organization. You can find more information in
+   [here](https://docs.atlas.mongodb.com/configure-api-access). Make sure you
+   write down your:
+
+   - Public API Key: `publicApiKey`,
+   - Private API Key: `privateApiKey` and
+   - Organization ID: `orgId`.
+
+3. Deploy MongoDB Atlas Cluster
+
+In the following example you have to set the correct `<orgId>`, `publicKey` and `privateKey`.
+
+```shell
+helm install atlas-cluster mongodb/atlas-cluster\
+    --namespace=my-cluster \
+    --create-namespace  \
+    --set project.atlasProjectName='My Project' \
+    --set atlas.orgId='<orgid>' \
+    --set atlas.publicApiKey='<publicKey>' \
+    --set atlas.privateApiKey='<privateApiKey>'
 ```
 
-> Note. Operator will watch all available namespaces. In order to watch current namespace only set value `--set watchNamespaces=atlas-operator`
-> operator could only watch all namespaces or just its own namespace. Currently watching other namespaces is not supported
+## Connecting to MongoDB Atlas Cluster
 
-**4.** Deploy MongoDB Atlas Cluster
+The current state of your new Atlas cluster can be found in the
+`status.conditions` array from the `AtlasCluster` resource:
 
-```
-helm install atlas-cluster \
---namespace=my-cluster \
---create-namespace mongodb/atlas-cluster \
---set project.atlasProjectName='My Project' \
---set atlas.orgId='<orgid>' \
---set atlas.publicApiKey='<publicKey>' \
---set atlas.privateApiKey='<privateApiKey>'
+```shell
+kubectl get atlasdatabaseusers atlas-cluster-admin-user -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}'
 ```
 
-**5.** Connect to MongoDB Atlas Cluster
+Default HELM Chart values will create single Atlas Admin user with name
+`atlas-cluster-admin-user`. Check the status of `AtlasDatabaseUser` resource for
+Ready state.
 
-Default HELM Chart values will create single Atlas Admin user with name `atlas-cluster-admin-user`
-Check the status of `AtlasDatabaseUser` resource for Ready state
+You can test that the configuration is correct with the following command:
 
-```kubectl get atlasdatabaseusers atlas-cluster-admin-user -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}'```
-
-In order for Application to access connection string and password, Atlas Operator creates secret Object for each MongoDB User
-```
-kubectl get secret my-project-atlas-cluster-admin-user -n my-cluster
+```shell
+mongo $(kubectl -n my-cluster get secrets/my-project-atlas-cluster-admin-user -o jsonpath='{.data.connectionString\.standardSrv}' | base64 -d)
 ```
 
-You could use this secret to mount to an application, for example:
+And Mongo Shell (`mongo`) should be able to connect and output something like:
+
+```shell
+MongoDB shell version v4.4.3
+connecting to: mongodb://connection-string
+Implicit session: session { "id" : UUID("xxx") }
+MongoDB server version: 5.0.1
+MongoDB Enterprise atlas-test-shard-0:PRIMARY> _
+```
+
+You have successfully connected to your Atlas instance!
+
+## Example: Mounting Connection String to a Pod
+
+You could use this secret to mount to an application, for example, the
+_Connection String_ could be added as an environmental variable, that can be
+easily consumed by your application.
 
 ```
 containers:
@@ -56,6 +96,4 @@ containers:
          secretKeyRef:
            name: my-project-atlas-cluster-admin-user
            key: connectionString.standardSrv
-`` 
-
-
+```

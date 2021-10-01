@@ -1,19 +1,14 @@
-# Quick Start
+# MongoDB Charts Repo
 
-Please note that Database and OpsManager include an operator as a dependency. There is no need to install is separately.
+To use these charts the MongoDB Helm repository needs to be added with:
 
-```helm repo add mongodb https://mongodb.github.io/helm-charts```
-```helm dependency update```
+```shell
+helm repo add mongodb https://mongodb.github.io/helm-charts
+```
 
-In order to install Ops Manager run this command
+There are many Helm charts in this repository, please read each Chart's README
+file for instructions on how to install each particular Helm Chart and its
+capabilities.
 
-```helm upgrade opsmanager . -n opsmanager --create-namespace  -i```
-
-In order to install MongoDB DataBase:
-
-```helm upgrade mongodb . --set opsManager.configMap=opsmanager-configmap --set opsManager.secretRef=opsmanager-org-access-key  -n $MONGODB_NAMESPACE --create-namespace -i```
-
-Where `opsmanager-configmap` and `opsmanager-org-access-key` contain OpsManager connection properties
-
-Helper script could be found at ../helpers/MongoDB-deploy.sh It contains an example that automates MongoDB Deployment using mongocli
-
+Currently, only the [Atlas Operator Helm Chart](./atlas-operator) should be
+installed from this repository and it is considered a _Trial_.
