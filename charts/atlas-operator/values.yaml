@@ -1,7 +1,7 @@
 mongodb-atlas-operator-crds:
   # Make this disabled if you don't want to install
   # the CRD dependency automatically.
-  enabled: true
+  enabled: false
 
 # atlasURI is the URI of the MongoDB Atlas
 atlasURI: https://cloud.mongodb.com
