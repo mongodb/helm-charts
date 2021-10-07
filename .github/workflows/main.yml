@@ -44,6 +44,7 @@ jobs:
           folder="dependencies"
           mkdir -p $folder
           mv charts/atlas-operator-crds $folder/atlas-operator-crds
+          mv charts/atlas-cluster $folder/atlas-cluster
           echo "::set-output name=folder::$folder"
 
       - name: Helm Chart Releaser. Dependencies first
