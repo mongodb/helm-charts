@@ -676,4 +676,24 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-enterprise-opsmanager-0.1.1/mongodb-enterprise-opsmanager-0.1.1.tgz
     version: 0.1.1
-generated: "2021-10-07T15:46:39.918196+03:00"
+  mongodb-kubernetes-operator:
+  - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2021-10-13T10:06:31.147927254Z"
+    description: MongoDB Kubernetes Community Operator
+    digest: c8fefae643aa272134b4394a9d10315b6570befbbb5057969e544c9854c6b6d3
+    home: https://github.com/mongodb/mongodb-kubernetes-operator
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-kubernetes-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-operator-0.7.0/mongodb-kubernetes-operator-0.7.0.tgz
+    version: 0.7.0
+generated: "2021-10-13T10:06:31.14839286Z"
