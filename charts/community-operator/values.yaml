@@ -17,6 +17,9 @@ operator:
   # Version of mongodb-kubernetes-operator
   version: 0.7.0
 
+  # Uncomment this line to watch all namespaces
+  # watchNamespace: "*"
+
   # Resources allocated to Operator Pod
   resources:
     limits:
