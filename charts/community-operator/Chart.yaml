@@ -2,9 +2,9 @@
 apiVersion: "v2"
 name: mongodb-kubernetes-operator
 description: MongoDB Kubernetes Community Operator
-version: 0.7.0
+version: 0.7.1
 type: application
-appVersion: "0.7.0"
+appVersion: "0.7.1"
 kubeVersion: ">=1.16-0"
 keywords:
   - mongodb
@@ -15,3 +15,8 @@ home: https://github.com/mongodb/mongodb-kubernetes-operator
 maintainers:
   - name: MongoDB
     email: support@mongodb.com
+dependencies:
+  - name: community-operator-crds
+    version: "0.7.1"
+    repository: "https://mongodb.github.io/helm-charts"
+    condition: community-operator-crds.enabled
