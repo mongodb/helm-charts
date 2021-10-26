@@ -42,7 +42,7 @@ main() {
     mapfile -t all_charts_folders< <(find "$charts_dir" -maxdepth 2 -type f -name Chart.yaml | awk -F / '{print $2}')
 
     print_line_separator
-    echo "Realise dependencies first: " "${dependencies[@]}"
+    echo "Release dependencies first: " "${dependencies[@]}"
     release_charts_inside_folders "${dependencies[@]}"
     release_charts_inside_folders "${all_charts_folders[@]}"
 }
