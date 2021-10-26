@@ -1,7 +1,8 @@
 ---
 apiVersion: "v2"
-name: mongodb-kubernetes-operator
-description: MongoDB Kubernetes Community Operator
+name: community-operator
+description: |-
+  MongoDB Community Operator - a Helm chart for installing and upgrading Community Operator: the official Kubernetes operator allowing to manage MongoDB Community resources from Kubernetes
 version: 0.7.0
 type: application
 appVersion: "0.7.0"

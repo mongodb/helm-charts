@@ -1,6 +1,6 @@
 apiVersion: v2
-name: atlas-cluster
-description: A Helm chart to manage Atlas resources with Atlas operator
+name: atlas-database
+description: A Helm chart to manage Atlas database resources with Atlas operator
 
 type: application
 

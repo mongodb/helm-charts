@@ -1,5 +1,5 @@
 apiVersion: v2
-name: community-operator
+name: community-database
 description: |-
   MongoDB Community Operator - a Helm chart for installing and upgrading Community Operator: the official Kubernetes operator allowing to manage MongoDB Community resources from Kubernetes
 type: application
