@@ -41,6 +41,17 @@ jobs:
         run: |
           chmod +x ./.github/actions/releaser/cr.sh
 
+      - name: Helm Chart Dependency Releaser
+        uses: ./.github/actions/releaser
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
+          charts_repo_url: https://mongodb.github.io/helm-charts
+          target_folders: |
+            atlas-operator-crd
+            ent-operator
+
       - name: Helm Chart Releaser
         uses: ./.github/actions/releaser
         env:

@@ -34,30 +34,21 @@ main() {
 
     : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
 
-    local target_folders=()
+    print_line_separator
+    echo 'Found target folders for release...'
+    if [[ -n "${INPUT_TARGET_FOLDERS:-}" ]]; then
+        mapfile -t target< <(echo "${INPUT_TARGET_FOLDERS}")
+    else
+        mapfile -t target< <(find "$charts_dir" -maxdepth 2 -type f -name Chart.yaml | awk -F / '{print $2}')
+    fi
 
     print_line_separator
-    echo 'Find all dependencies. Split folders in two lists'
-    mapfile -t dependencies< <(find_dependency_folders)
-    mapfile -t all_charts_folders< <(find "$charts_dir" -maxdepth 2 -type f -name Chart.yaml | awk -F / '{print $2}')
-
-    print_line_separator
-    echo "Release dependencies first: " "${dependencies[@]}"
-    release_charts_inside_folders "${dependencies[@]}"
-    release_charts_inside_folders "${all_charts_folders[@]}"
+    echo "Target folders: " "${target[@]}"
+    release_charts_inside_folders "${target[@]}"
 }
 
 print_line_separator() {
     echo "============================================="
-}
-
-# find_dependencies names in $charts_dir folder and print multiline
-find_dependency_folders() {
-    mapfile -t dependencies< <(awk '/dependencies:/,/name:/{print $0}' $charts_dir/*/Chart.yaml | awk -F ": " '/name/{print $2}')
-    for dependency in "${dependencies[@]}"; do
-        folder_name=$(grep "^name: $dependency" $charts_dir/*/Chart.yaml | awk -F / '{print $2}')
-        [[ ! "${target_folders[*]}" =~  $folder_name ]] && target_folders+=("$folder_name") && echo "$folder_name"
-    done
 }
 
 release_charts_inside_folders() {
