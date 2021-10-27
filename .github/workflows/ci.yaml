@@ -19,6 +19,7 @@ jobs:
         run: |
           chmod 755 .github/dependency_as_file.sh
           .github/dependency_as_file.sh atlas-operator-crds atlas-operator
+          .github/dependency_as_file.sh community-operator-crds community-operator
 
       - name: Run chart-testing (lint)
         id: lint
@@ -45,6 +46,7 @@ jobs:
         run: |
           chmod 755 .github/dependency_as_file.sh
           .github/dependency_as_file.sh atlas-operator-crds atlas-operator
+          .github/dependency_as_file.sh community-operator-crds community-operator
 
       - name: Run kubeval
         env:

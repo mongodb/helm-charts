@@ -15,10 +15,12 @@ inputs:
   target:
     description: "Specific charts folder inside <charts_dir> for releasing"
     required: false
+
 runs:
   using: composite
   steps:
-    - run: |
+    - shell: bash
+      run: |
         export VERSION="${{ inputs.version }}"
         export CHART_DIR="${{ inputs.charts_dir }}"
         export CHARTS_REPO_URL="${{ inputs.charts_repo_url }}"
@@ -30,4 +32,3 @@ runs:
 
         mapfile -t target< <(echo ${{ inputs.target }})
         "$GITHUB_ACTION_PATH/cr.sh" "${target[@]}"
-      shell: bash
