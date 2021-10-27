@@ -49,6 +49,7 @@ jobs:
           charts_repo_url: https://mongodb.github.com/helm-chart
           target: |
             atlas-operator-crds
+            community-operator-crds
 
       - name: Helm Chart Releaser
         uses: ./.github/actions/releaser
