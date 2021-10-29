@@ -88,7 +88,7 @@ get_latest_tag(){
     local name=$1
 
     git fetch --tags > /dev/null 2>&1
-    git describe --tags --abbrev=0 --match="$name*" "$(git rev-list --tags --max-count=1)"
+    git describe --tags --abbrev=0 --match="$name-[0-9.]*" "$(git rev-list --tags --max-count=1)"
 }
 
 install_chart_releaser() {
@@ -111,8 +111,8 @@ install_chart_releaser() {
         rm -f cr.tar.gz
 
         echo 'Adding cr directory to PATH...'
-        export PATH="$cache_dir:$PATH"
     fi
+    export PATH="$cache_dir:$PATH"
 }
 
 cleanup_releaser() {

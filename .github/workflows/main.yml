@@ -46,7 +46,7 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          charts_repo_url: https://mongodb.github.com/helm-chart
+          charts_repo_url: https://mongodb.github.io/helm-charts
           target: |
             atlas-operator-crds
             community-operator-crds
@@ -56,4 +56,4 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          charts_repo_url: https://mongodb.github.com/helm-chart
+          charts_repo_url: https://mongodb.github.io/helm-charts
