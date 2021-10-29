@@ -30,5 +30,4 @@ runs:
         export OWNER=$owner
         export REPO=$repo
 
-        mapfile -t target< <(echo ${{ inputs.target }})
-        "$GITHUB_ACTION_PATH/cr.sh" "${target[@]}"
+        "$GITHUB_ACTION_PATH/cr.sh" "${{ inputs.target }}"

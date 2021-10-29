@@ -37,6 +37,7 @@ release_charts_inside_folders() {
 
     # form list of folder which was changed
     for folder in "${folders[@]}"; do
+        [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
         print_line_separator
         local chart_name
         local tag
@@ -87,7 +88,7 @@ get_latest_tag(){
     local name=$1
 
     git fetch --tags > /dev/null 2>&1
-    git describe --tags --abbrev=0 --match="$name*"
+    git describe --tags --abbrev=0 --match="$name*" "$(git rev-list --tags --max-count=1)"
 }
 
 install_chart_releaser() {
@@ -152,4 +153,5 @@ update_index() {
     cr index "${args[@]}"
 }
 
-main "$@"
+mapfile -t target< <(echo "$1" )
+main "${target[@]}"
