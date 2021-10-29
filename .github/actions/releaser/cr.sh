@@ -37,6 +37,7 @@ release_charts_inside_folders() {
 
     # form list of folder which was changed
     for folder in "${folders[@]}"; do
+        [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
         print_line_separator
         local chart_name
         local tag
@@ -152,4 +153,5 @@ update_index() {
     cr index "${args[@]}"
 }
 
-main "$@"
+mapfile -t target< <(echo "$1" )
+main "${target[@]}"
