@@ -90,7 +90,73 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/atlas-cluster-0.1.2/atlas-cluster-0.1.2.tgz
     version: 0.1.2
+  community-operator-crds:
+  - apiVersion: v2
+    appVersion: 0.7.1
+    created: "2021-10-29T09:33:10.064949897Z"
+    description: MongoDB Kubernetes Community Operator - CRDs
+    digest: 08023cf13a9e4ce9893063991fe2265ea8b7e5ad45ea720d6cb456091d80ffe1
+    home: https://github.com/mongodb/mongodb-kubernetes-operator
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: community-operator-crds
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/community-operator-crds-0.7.1/community-operator-crds-0.7.1.tgz
+    version: 0.7.1
+  fastapi-sample-app:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-10-29T15:47:52.972961442Z"
+    description: A Helm chart for Kubernetes
+    digest: c7ef0eaf6f614ba5e25cc99638bba1594229bbc1c521c5b4353f7b3da4a72361
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: fastapi-sample-app
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/fastapi-sample-app-0.1.0/fastapi-sample-app-0.1.0.tgz
+    version: 0.1.0
   mongodb-atlas-operator:
+  - apiVersion: v2
+    appVersion: 0.6.1
+    created: "2021-10-29T15:47:53.12573411Z"
+    dependencies:
+    - condition: mongodb-atlas-operator-crds.enabled
+      name: mongodb-atlas-operator-crds
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.2.1
+    description: 'MongoDB Atlas Operator - a Helm chart for installing and upgrading
+      Atlas Operator: the official Kubernetes operator allowing to manage MongoDB
+      Atlas resources from Kubernetes'
+    digest: a35d538e12d20f34d742f1d37030b6115b075dc9aca966c1f182f94d5536fd12
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - mongodb
+    - atlas
+    - database
+    - cluster
+    - nosql
+    kubeVersion: '>=1.15.0-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-atlas-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-0.2.5/mongodb-atlas-operator-0.2.5.tgz
+    version: 0.2.5
   - apiVersion: v2
     appVersion: 0.6.1
     created: "2021-10-07T15:46:39.7104993+03:00"
@@ -678,6 +744,31 @@ entries:
     version: 0.1.1
   mongodb-kubernetes-operator:
   - apiVersion: v2
+    appVersion: 0.7.1
+    created: "2021-10-29T15:47:53.282617413Z"
+    dependencies:
+    - condition: community-operator-crds.enabled
+      name: community-operator-crds
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.7.1
+    description: MongoDB Kubernetes Community Operator
+    digest: 21c62447a5c0d2bdd09146144acb88324677ce184518bdcd3cf789a2861b78be
+    home: https://github.com/mongodb/mongodb-kubernetes-operator
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-kubernetes-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-operator-0.7.1/mongodb-kubernetes-operator-0.7.1.tgz
+    version: 0.7.1
+  - apiVersion: v2
     appVersion: 0.7.0
     created: "2021-10-13T10:06:31.147927254Z"
     description: MongoDB Kubernetes Community Operator
@@ -696,25 +787,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-operator-0.7.0/mongodb-kubernetes-operator-0.7.0.tgz
     version: 0.7.0
-  community-operator-crds:
-  - apiVersion: v2
-    appVersion: 0.7.1
-    created: "2021-10-29T09:33:10.064949897Z"
-    description: MongoDB Kubernetes Community Operator - CRDs
-    digest: 08023cf13a9e4ce9893063991fe2265ea8b7e5ad45ea720d6cb456091d80ffe1
-    home: https://github.com/mongodb/mongodb-kubernetes-operator
-    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
-    keywords:
-    - mongodb
-    - database
-    - nosql
-    kubeVersion: '>=1.16-0'
-    maintainers:
-    - email: support@mongodb.com
-      name: MongoDB
-    name: community-operator-crds
-    type: application
-    urls:
-    - https://github.com/mongodb/helm-charts/releases/download/community-operator-crds-0.7.1/community-operator-crds-0.7.1.tgz
-    version: 0.7.1
-generated: "2021-10-29T09:33:10.064955197Z"
+generated: "2021-10-29T15:47:53.282699613Z"
