@@ -1,4 +1,4 @@
-{{- if and .Values.createResource .Values.resource.tls.enabled .Values.resource.tls.useCertManager }}
+{{- if and .Values.resource.tls.enabled .Values.resource.tls.useCertManager }}
 # cert-manager resources
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -50,7 +50,9 @@ spec:
   commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
   dnsNames:
     - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+{{- end }}
 
+{{- if .Values.createResource }}
 # mongodb resources
 ---
 apiVersion: mongodbcommunity.mongodb.com/v1
