@@ -53,6 +53,13 @@ registry:
   operator: quay.io/mongodb
   pullPolicy: Always
 
+# Set to false if CRDs have been installed already. The CRDs can be installed
+# manually from the code repo: github.com/mongodb/mongodb-kubernetes-operator or
+# using the `community-operator-crds` Helm chart.
+community-operator-crds:
+  enabled: true
+
+# Deploys MongoDB with `resource` attributes.
 createResource: false
 resource:
   name: mongodb-replica-set
@@ -60,6 +67,8 @@ resource:
   members: 3
   tls:
     enabled: true
+
+    # Installs Cert-Manager in this cluster.
     useCertManager: true
     certificateKeySecretRef: tls-certificate
     caCertificateSecretRef: tls-ca-key-pair
