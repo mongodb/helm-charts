@@ -6,7 +6,7 @@ Operator](https://github.com/mongodb/mongodb-atlas-kubernetes).
 ## Prerequisites
 
 If required, you can install the Atlas Custom Resource Definitions [Helm
-Chart](../atlas-operator-crds/) separatelly or as a dependency of this Chart.
+Chart](../atlas-operator-crds/) separately or as a dependency of this Chart.
 
 If the `atlas-operator-crds` Helm chart has been installed already, or if you
 don't want to install the CRDs (because you have already installed them), then

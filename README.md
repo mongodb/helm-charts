@@ -2,18 +2,20 @@
 
 ## Trial Version of Helm Charts
 
-This repository contains Helm Charts for different MongoDB products. Currently,
-only the MongoDB Atlas Operator is supported (in _Trial mode_).
+This repository contains Helm Charts for different MongoDB products.
 
 | Charts                                            | Description                                                               |
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
 | [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart. [_Start Here!_](charts/atlas-operator) |
 | [atlas-cluster](charts/atlas-cluster)             | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources.        |
 | [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.              |
+| [community-operator](charts/community-operator)   | MongoDB Community Operator Helm Chart.                                    |
+| [community-operator-crds](charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.  |
 
-- Please note that the [atlas-operator-crds](charts/atlas-operator-crds) Helm
-  chart, will be installed, by default, as a dependency by the
-  [atlas-operator](charts/atlas-operator).
+- Please note that the `CRD` Charts ([Community](charts/community-operator-crds)
+  and [Atlas](charts/atlas-operator-crds)) will be installed, by default,
+  as a dependency by the corresponding [Community](charts/community-operator)
+  and [Atlas](charts/atlas-operator) Charts.
 
 ## Adding the MongoDB Helm Repo
 
@@ -31,4 +33,3 @@ All of MongoDB Helm charts will be moved into this repository. In the meantime,
 please find them on their own repositories:
 
 - [MongoDB Enterprise Kubernetes Operator](https://github.com/mongodb/mongodb-enterprise-kubernetes)
-- [MongoDB Community Operator](https://github.com/mongodb/mongodb-kubernetes-operator)
