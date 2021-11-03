@@ -62,9 +62,14 @@ deployment of the MongoDB resource. Each `Secret` will contain a _Connection
 String_ that can be mounted into a client application to connect to this MongoDB
 instance.
 
-The name of this `Secret` object follows the convention:
+The name of this `Secret` object follows the convention[^1]:
 
 - `<mongodb-resource-name>-<database>-<username>`.
+
+[^1]: Please note that the MongoDB `username` should comply with
+    [DNS-1123](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names)
+    for the Operator to be able to create this Secret. This is a known issue
+    with the Community Operator.
 
 In our example, the above `kubectl apply` command will create a MongoDB resource
 with name `example-mongodb`, with a user `my-user` on the Database `admin`. The
