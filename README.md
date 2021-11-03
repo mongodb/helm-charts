@@ -11,6 +11,7 @@ This repository contains Helm Charts for different MongoDB products.
 | [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.              |
 | [community-operator](charts/community-operator)   | MongoDB Community Operator Helm Chart.                                    |
 | [community-operator-crds](charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.  |
+| [sample-app](charts/sample-app)                   | A Sample Front/Back-end application backed by a MongoDB Database.         |
 
 - Please note that the `CRD` Charts ([Community](charts/community-operator-crds)
   and [Atlas](charts/atlas-operator-crds)) will be installed, by default,
