@@ -787,4 +787,26 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-operator-0.7.0/mongodb-kubernetes-operator-0.7.0.tgz
     version: 0.7.0
-generated: "2021-10-29T15:47:53.282699613Z"
+  sample-app:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-11-03T15:39:59.46460653Z"
+    description: 'A sample application to install in your Kubernetes cluster that
+      uses a Secret containing a connection string to your Mongo Database. '
+    digest: f266b55b9b23639c0c65747ac3e477f79a58af27df675e3ce5742fcec0114fa0
+    home: https://github.com/mongodb/helm-charts
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: sample-app
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-11-03T15:39:59.464691231Z"
