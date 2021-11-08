@@ -7,11 +7,12 @@ Kubernetes Operator](https://github.com/mongodb/mongodb-enterprise-kubernetes).
 
 The installation of this Chart does not have prerequisites. However, in order to
 create a Mongo Database in your Kubernetes cluster, you'll need a [Cloud
-Manager](https://cloud.mongodb.com) account.
+Manager](https://cloud.mongodb.com) account or an [Ops
+Manager](https://www.mongodb.com/products/ops-manager) installation.
 
 ## Installing Enterprise Operator
 
-You can install the MongoDB Community Operator easily with:
+You can install the MongoDB Enterprise Operator easily with:
 
 ``` shell
 helm install enterprise-operator mongodb/enterprise-operator
@@ -68,4 +69,4 @@ my-replica-set    Running   4.4.0-ent
 
 Please follow the [Official MongoDB Enterprise Kubernetes
 Operator](https://docs.mongodb.com/kubernetes-operator/stable/) for additional
-deployment topologies and multitude of MongoDB options.
+deployment topologies and multitude of other MongoDB options.
