@@ -4,7 +4,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: tls-selfsigned-issuer
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selfSigned: {}
 ---
@@ -12,12 +12,12 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: tls-selfsigned-ca
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   isCA: true
-  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
   dnsNames:
-    - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+    - "*.{{ .Values.resource.name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
   secretName: {{ .Values.resource.tls.caCertificateSecretRef }}
   privateKey:
     algorithm: ECDSA
@@ -30,7 +30,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: tls-ca-issuer
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   ca:
     secretName: {{ .Values.resource.tls.caCertificateSecretRef }}
@@ -39,7 +39,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: cert-manager-tls-certificate
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   secretName: {{ .Values.resource.tls.certificateKeySecretRef }}
   issuerRef:
@@ -47,9 +47,9 @@ spec:
     kind: Issuer
   duration: 8760h   # 365 days
   renewBefore: 720h # 30 days
-  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
   dnsNames:
-    - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+    - "*.{{ .Values.resource.name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
 {{- end }}
 
 {{- if .Values.createResource }}
@@ -59,7 +59,7 @@ apiVersion: mongodbcommunity.mongodb.com/v1
 kind: MongoDBCommunity
 metadata:
   name: {{ .Values.resource.name }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   members: {{ .Values.resource.members }}
   type: ReplicaSet
