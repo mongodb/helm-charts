@@ -18,19 +18,17 @@ installing the Operator.
 You can install the MongoDB Community Operator easily with:
 
 ``` shell
-helm install community-operator mongodb/community-operator
+helm install mongodb-kubernetes-operator mongodb/mongodb-kubernetes-operator
 ```
 
-This will install `CRD`s and Community Operator in the current namespace
-(`default` by _default_). You can pass a different namespace with:
+This will install `CRD`s and Community Operator in the `mongodb` namespace by _default_). You can pass a different namespace with:
 
 ``` shell
-helm install community-operator mongodb/community-operator --namespace mongodb [--create-namespace]
+helm install mongodb-kubernetes-operator mongodb/mongodb-kubernetes-operator --namespace my-namespace --create-namespace
 ```
 
-To install the Community Operator in a namespace called `mongodb` with the
-optional `--create-namespace` in case `mongodb` didn't exist yet.
-
+To install the Community Operator in a namespace called `my-namespace` with the
+optional `--create-namespace` in case `my-namespace` didn't exist yet.
 
 ## Deploying a MongoDB Replica Set
 
