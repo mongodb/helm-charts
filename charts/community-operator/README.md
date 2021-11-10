@@ -25,7 +25,7 @@ This will install `CRD`s and Community Operator in the current namespace
 (`default` by _default_). You can pass a different namespace with:
 
 ``` shell
-helm install  mongodb-kubernetes-operator mongodb/mongodb-kubernetes-operator --namespace mongodb [--create-namespace]
+helm install mongodb-kubernetes-operator mongodb/mongodb-kubernetes-operator --namespace mongodb [--create-namespace]
 ```
 
 To install the Community Operator in a namespace called `mongodb` with the
