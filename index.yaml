@@ -90,6 +90,32 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/atlas-cluster-0.1.2/atlas-cluster-0.1.2.tgz
     version: 0.1.2
+  community-operator:
+  - apiVersion: v2
+    appVersion: 0.7.2
+    created: "2021-11-18T16:37:11.735183362Z"
+    dependencies:
+    - condition: community-operator-crds.enabled
+      name: community-operator-crds
+      repository: https://mongodb.github.io/helm-charts
+      version: 0.7.2
+    description: MongoDB Kubernetes Community Operator
+    digest: 29e786b596b318248f5766a74393c2d2d7a8237fdc860c7077b38f69c900de4a
+    home: https://github.com/mongodb/mongodb-kubernetes-operator
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: community-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/community-operator-0.7.2/community-operator-0.7.2.tgz
+    version: 0.7.2
   community-operator-crds:
   - apiVersion: v2
     appVersion: 0.7.2
@@ -849,4 +875,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-17T17:09:20.511706435Z"
+generated: "2021-11-18T16:37:11.735261163Z"
