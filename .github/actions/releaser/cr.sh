@@ -46,7 +46,7 @@ release_charts_inside_folders() {
         chart_name=$(awk '/^name/{print $2}' "$charts_dir/$folder/Chart.yaml")
 
         # if chart is not released or folder has change, then remember as changed_charts
-        if [[ ! "$(git tag -l "$chart_name*")" ]] || has_changed "$folder"; then
+        if [[ ! "$(git tag -l "$chart_name-[0-9.]*")" ]] || has_changed "$folder"; then
             changed_charts+=("$folder")
         fi
     done
