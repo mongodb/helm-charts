@@ -6,9 +6,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
-  annotations:
-    'helm.sh/hook': post-delete,pre-install,pre-upgrade
   {{- if .Values.project.annotations }}
+  annotations:
 {{ toYaml .Values.project.annotations | indent 4 }}
   {{- end }}
 spec:
