@@ -31,9 +31,9 @@ operator:
 
   # Additional environment variables
   extraEnvs: []
-  #environment:
-  #  - name: CLUSTER_DOMAIN
-  #    value: my-cluster.domain
+  # environment:
+  # - name: CLUSTER_DOMAIN
+  #   value: my-cluster.domain
 
 ## Operator's database
 database:
