@@ -38,6 +38,9 @@ spec:
         - command:
             - /usr/local/bin/entrypoint
           env:
+{{- if .Values.operator.extraEnvs }}
+            {{ toYaml .Values.operator.extraEnvs | nindent 12 }}
+{{- end }}
             - name: WATCH_NAMESPACE
 {{- if .Values.operator.watchNamespace}}
               value: "{{ .Values.operator.watchNamespace }}"

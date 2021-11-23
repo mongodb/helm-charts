@@ -28,6 +28,12 @@ operator:
       cpu: 500m
       memory: 200Mi
 
+  # Additional environment variables
+  extraEnvs: []
+  # environment:
+  # - name: CLUSTER_DOMAIN
+  #   value: my-cluster.domain
+
 ## Operator's database
 database:
   name: mongodb-database
