@@ -60,7 +60,7 @@ clusters:
 users:
   - username: admin-user
     databaseName: admin
-    password: 
+    password:
     roles:
       - databaseName: admin
         roleName: atlasAdmin
