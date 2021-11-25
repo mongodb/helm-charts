@@ -102,7 +102,7 @@ containers:
 
 Atlas-operator version 0.6.1+ has to delete finalizers - this change requires additional steps.
 
-Manually workaround for the update from Atlas-cluster-0.1.7:
+Manual workaround for the update from Atlas-cluster-0.1.7:
 1) need to remove manually the "helm.sh/hook" from Atlasproject
 
 ```bash
