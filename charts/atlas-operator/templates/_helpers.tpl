@@ -139,6 +139,14 @@ RBAC permissions
 - apiGroups:
   - atlas.mongodb.com
   resources:
+  - atlasprojects/finalizers
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
   - atlasprojects/status
   verbs:
   - get
