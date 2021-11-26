@@ -98,25 +98,25 @@ containers:
            key: connectionString.standardSrv
 ```
 
-## Notes:
+## Upgrade Notes
 
 Atlas-operator version 0.6.1+ has to delete finalizers - this change requires additional steps.
 
 Manual workaround for the update from Atlas-cluster-0.1.7:
-1) need to remove manually the "helm.sh/hook" from Atlasproject
+1. Need to remove manually the "helm.sh/hook" from Atlasproject
 
 ```bash
-kubectl annotate atlasproject/opib6d6o6k helm.sh/hook-
+kubectl annotate atlasproject helm.sh/hook- --selector app.kubernetes.io/instance=<release-name>
 ```
 
-2) need to add helm ownership annotation "meta.helm.sh/release-name" and "meta.helm.sh/release-namespace"
+2. Need to add helm ownership annotation "meta.helm.sh/release-name" and "meta.helm.sh/release-namespace"
 
 ```bash
-kubectl annotate atlasproject/opib6d6o6k meta.helm.sh/release-name=<release-name>
-kubectl annotate atlasproject/opib6d6o6k meta.helm.sh/release-namespace=<namespace>
+kubectl annotate atlasproject meta.helm.sh/release-name=<release-name> --selector app.kubernetes.io/instance=<release-name>
+kubectl annotate atlasproject meta.helm.sh/release-namespace=<namespace> --selector app.kubernetes.io/instance=<release-name>
 ```
 
-3) run update:
+3. Run update
 
 ```bash
 helm upgrade <release-name> mongodb/atlas-cluster <set variables>
