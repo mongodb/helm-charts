@@ -1,12 +1,12 @@
 # MongoDB Atlas Cluster Helm Chart
 
-The MongoDB Atlas Operator provides a native integration between the Kubernetes
+The MongoDB Atlas Operator provides native integration between the Kubernetes
 orchestration platform and MongoDB Atlas — the only multi-cloud document
 database service that gives you the versatility you need to build sophisticated
 and resilient applications that can adapt to changing customer demands and
 market trends.
 
-The Atlas Cluster Helm Chart knows how to manager Atlas resources bound to
+The Atlas Cluster Helm Chart knows how to manage Atlas resources bound to
 Custom Resources in your Kubernetes Cluster. These resources are:
 
 - Atlas Projects: An Atlas Project is a place to create your MongoDB clusters,
@@ -16,7 +16,7 @@ Custom Resources in your Kubernetes Cluster. These resources are:
 - Atlas Database User: An Atlas Database User is a User you can authenticate as
   and login into an Atlas Cluster.
 
-By default the `atlas-cluster` Helm Chart will create a user to connect to the
+By default, the `atlas-cluster` Helm Chart will create a user to connect to the
 newly deployed Atlas Cluster, avoiding having to do this from the Atlas UI.
 
 ## Prerequisites
@@ -38,7 +38,7 @@ needs to be installed already.
 
 3. Deploy MongoDB Atlas Cluster
 
-In the following example you have to set the correct `<orgId>`, `publicKey` and `privateKey`.
+In the following example, you have to set the correct `<orgId>`, `publicKey` and `privateKey`.
 
 ```shell
 helm install atlas-cluster mongodb/atlas-cluster\
@@ -68,7 +68,7 @@ The current state of your new Atlas cluster can be found in the
 kubectl get atlasdatabaseusers atlas-cluster-admin-user -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}'
 ```
 
-Default HELM Chart values will create single Atlas Admin user with name
+Default HELM Chart values will create a single Atlas Admin user with the name
 `atlas-cluster-admin-user`. Check the status of `AtlasDatabaseUser` resource for
 Ready state.
 
