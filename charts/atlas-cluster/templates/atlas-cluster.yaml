@@ -1,4 +1,5 @@
-{{- range .Values.clusters }}
+{{- with .Values.clusters }}
+{{- range . }}
 ---
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
@@ -73,5 +74,6 @@ spec:
   {{- with .replicationSpecs }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

@@ -23,6 +23,8 @@ project:
     - ipAddress: "0.0.0.0/1"
       comment: "REMOVE ME"
 
+# Skip clusters creation
+# clusters: [] 
 clusters:
   - name: cluster-name
     annotations: {}
@@ -57,6 +59,9 @@ clusters:
 #   pitEnabled: false
 #   providerBackupEnabled: false
 #   replicationSpecs:
+
+# Skip users creation
+# users: [] 
 users:
   - username: admin-user
     databaseName: admin
