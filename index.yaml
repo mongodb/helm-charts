@@ -177,22 +177,6 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/enterprise-operator-1.13.0/enterprise-operator-1.13.0.tgz
     version: 1.13.0
-  fastapi-sample-app:
-  - apiVersion: v2
-    appVersion: 1.0.0
-    created: "2021-10-29T15:47:52.972961442Z"
-    description: A Helm chart for Kubernetes
-    digest: c7ef0eaf6f614ba5e25cc99638bba1594229bbc1c521c5b4353f7b3da4a72361
-    home: https://github.com/mongodb/mongodb-atlas-kubernetes
-    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
-    maintainers:
-    - email: support@mongodb.com
-      name: MongoDB
-    name: fastapi-sample-app
-    type: application
-    urls:
-    - https://github.com/mongodb/helm-charts/releases/download/fastapi-sample-app-0.1.0/fastapi-sample-app-0.1.0.tgz
-    version: 0.1.0
   mongodb-atlas-operator:
   - apiVersion: v2
     appVersion: 0.6.1
