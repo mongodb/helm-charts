@@ -44,12 +44,16 @@ In the following example you have to set the correct `<orgId>`, `publicKey` and 
 helm install atlas-cluster mongodb/atlas-cluster\
     --namespace=my-cluster \
     --create-namespace  \
+    --values values-sample.yaml \
     --set project.atlasProjectName='My Project' \
     --set atlas.orgId='<orgid>' \
     --set atlas.publicApiKey='<publicKey>' \
     --set atlas.privateApiKey='<privateApiKey>'
 ```
-Note, by default a random password will be generated. You can optionally also pass in a random username, however since this value is shared across templates this must be passed in, for example:
+
+Note, by default a random password will be generated.
+This behavior is controlled in the "values-sample.yaml" you pass to a chart.
+You can optionally also pass in a random username, however since this value is shared across templates this must be passed in, for example:
 
 ```shell
 helm template --set "users[0].username=$(mktemp | cut -f2 -d.)" my-cluster mongodb/atlas-cluster 
