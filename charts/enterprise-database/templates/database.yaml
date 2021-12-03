@@ -1,0 +1,30 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.mongodb.type }}
+  members: {{ .Values.mongodb.members | default 3 }}
+  version: {{ .Values.mongodb.version | default "5.0.4" }}
+
+  opsManager:
+    configMapRef:
+      name: {{ .Values.manager.configMapRef }}
+  credentials: {{ .Values.manager.credentials }}
+
+  security:
+    authentication:
+      enabled: true
+      modes: ["SCRAM"]
+
+      ignoreUnknownUsers: true
+
+  backup:
+    mode: {{ .Values.backup.mode | default "disabled" }}
+
+  # You can change podSpec for the Pods holding the database using
+  # `values.yaml` as a reference.
+  podSpec:
+{{ toYaml .Values.podSpec | indent 4 }}

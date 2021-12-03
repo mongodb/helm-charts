@@ -1,0 +1,41 @@
+---
+mongodb:
+  type: ReplicaSet
+  members: 3
+  version: 5.0.4
+
+  authentication:
+    - SCRAM
+    - X509
+    - LDAP
+
+manager:
+  configMapRef:
+  credentials:
+
+backup:
+  mode: disabled
+
+podSpec:
+  # This is a corev1.PodTemplate resource structure that will be used
+  # by the Operator to override the default configuration for Pods in the
+  # StatefulSets.
+  podTemplate:
+    spec:
+      containers:
+        - name: mongodb-enterprise-database
+          # For more information about Pod and container resource management, see:
+          # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+          resources:
+            limits:
+              cpu: "0.25"
+              memory: 512M
+
+  persistence:
+    multiple:
+      data:
+        storage: 10Gi
+      journal:
+        storage: 1Gi
+      logs:
+        storage: 500M
