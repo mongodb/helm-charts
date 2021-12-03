@@ -1,6 +1,3 @@
-mongodb-atlas-operator:
-  enabled: true
-
 # Please provide Atlas API credentials and Organization
 atlas:
   create: true
@@ -15,7 +12,8 @@ project:
   create: true
   name: my-project
   atlasProjectName: "Test Project"
-  annotations: {}
+  annotations:
+    {}
     # mongodb.com/atlas-resource-policy: keep
   # fullnameOverride: ""
 
@@ -25,7 +23,8 @@ project:
 
 clusters:
   - name: cluster-name
-    annotations: {}
+    annotations:
+      {}
       # mongodb.com/atlas-resource-policy: keep
     providerSettings:
       instanceSizeName: M2
