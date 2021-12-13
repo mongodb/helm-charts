@@ -61,7 +61,7 @@ spec:
                 type: integer
               automationConfigOverride:
                 description: AutomationConfigOverride is merged on top of the operator
-                  created automation config. Process names are merged by name.
+                  created automation config. Processes names are merged by name.
                 properties:
                   automationConfig:
                     type: object
