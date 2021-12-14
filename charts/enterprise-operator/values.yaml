@@ -30,6 +30,12 @@ operator:
   # Create operator-service account
   createOperatorServiceAccount: true
 
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
 ## Database
 database:
   name: mongodb-enterprise-database
