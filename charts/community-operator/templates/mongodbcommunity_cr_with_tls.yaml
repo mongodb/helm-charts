@@ -52,8 +52,8 @@ spec:
     - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
 {{- end }}
 
-# mongodb resources
 {{- if .Values.createResource }}
+# mongodb resources
 ---
 apiVersion: mongodbcommunity.mongodb.com/v1
 kind: MongoDBCommunity

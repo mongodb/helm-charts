@@ -37,30 +37,23 @@ jobs:
         run: |
           helm repo add mongodb https://mongodb.github.io/helm-charts
 
-      - name: Prepare dependencies first
-        id: dependencies
+      - name: Allow script
         run: |
-          # move all dependencies into folder
-          folder="dependencies"
-          mkdir -p $folder
-          mv charts/atlas-operator-crds $folder/atlas-operator-crds
-          echo "::set-output name=folder::$folder"
+          chmod +x ./.github/actions/releaser/cr.sh
 
-      - name: Helm Chart Releaser. Dependencies first
-        uses: helm/chart-releaser-action@v1.2.1
+      - name: Helm Chart Dependency Releaser
+        uses: ./.github/actions/releaser
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
-          charts_dir: ${{ steps.dependencies.outputs.folder }}
           charts_repo_url: https://mongodb.github.io/helm-charts
+          target: |
+            atlas-operator-crds
+            community-operator-crds
 
       - name: Helm Chart Releaser
-        # You may pin to the exact commit or the version.
-        # uses: helm/chart-releaser-action@97237943efb7a48269d47a642ec5fdff675aa55f
-        uses: helm/chart-releaser-action@v1.2.1
+        uses: ./.github/actions/releaser
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
           charts_repo_url: https://mongodb.github.io/helm-charts

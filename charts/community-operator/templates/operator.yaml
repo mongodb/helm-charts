@@ -38,6 +38,9 @@ spec:
         - command:
             - /usr/local/bin/entrypoint
           env:
+{{- if .Values.operator.extraEnvs }}
+            {{ toYaml .Values.operator.extraEnvs | nindent 12 }}
+{{- end }}
             - name: WATCH_NAMESPACE
 {{- if .Values.operator.watchNamespace}}
               value: "{{ .Values.operator.watchNamespace }}"
@@ -66,12 +69,7 @@ spec:
           imagePullPolicy: {{ .Values.registry.pullPolicy}}
           name: {{ .Values.operator.deploymentName }}
           resources:
-            limits:
-              cpu: 1100m
-              memory: 1Gi
-            requests:
-              cpu: 500m
-              memory: 200Mi
+            {{- toYaml .Values.operator.resources | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
             runAsUser: 2000
