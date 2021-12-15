@@ -19,8 +19,13 @@ mongodb:
     configServerCount: 3
 
 manager:
-  configMapRef:
-  credentials:
+  # Corresponds to `spec.opsManager.configMapRef.name`
+  # More info: https://docs.mongodb.com/kubernetes-operator/stable/reference/k8s-operator-specification/#spec.opsManager.configMapRef.name
+  configMapRef: my-project
+
+  # Corresponds to `spec.credentials`
+  # More info: https://docs.mongodb.com/kubernetes-operator/stable/reference/k8s-operator-specification/#spec.credentials
+  credentials: my-credentials
 
 backup:
   mode: disabled
