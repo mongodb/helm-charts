@@ -54,6 +54,23 @@ helm install my-database mongodb/enterprise-database \
   --set manager.credentials=<credentials>
 ```
 
-In this case, you'll change `<projet>` to the name of the `ConfigMap` you just
+In this case, you'll change `<project>` to the name of the `ConfigMap` you just
 created, and `<credentials>` to the `Secret` you also just created in the
-previous step.
+previous step. Both `manager.configMap` and `manager.credentials` are required!
+
+## Deploying a Sample Sharded Cluster
+
+You can follow a similar approach to deploy a [Sharded
+Cluster](https://docs.mongodb.com/manual/core/sharded-cluster-components/),
+setting the `mongodb.type` attribute to `ShardedCluster`.
+
+```
+helm install my-database mongodb/enterprise-database \
+  --set mongodb.type=ShardedCluster \
+  --set manager.configMapRef=<project> \
+  --set manager.credentials=<credentials>
+```
+
+There are many options in `values.yaml` that can be set with `--set` commands. A
+reference to each one of these commands can be found in the
+[documentation](https://docs.mongodb.com/kubernetes-operator/stable/reference/k8s-operator-specification).

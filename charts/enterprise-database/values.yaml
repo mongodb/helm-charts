@@ -9,6 +9,15 @@ mongodb:
     - X509
     - LDAP
 
+  # These values will be used if `mongodb.type` is "ShardedCluster".
+  # For more information about these values please visit:
+  # https://docs.mongodb.com/kubernetes-operator/stable/reference/k8s-operator-specification
+  sharding:
+    shardCount: 2
+    mongodsPerShardCount: 3
+    mongosCount: 2
+    configServerCount: 3
+
 manager:
   configMapRef:
   credentials:
@@ -39,3 +48,17 @@ podSpec:
         storage: 1Gi
       logs:
         storage: 500M
+
+# The following attributes allow you to change the configuration of a
+# MongoDB Sharded Cluster.
+# Find more information about Sharded Clusters here:
+# - https://docs.mongodb.com/manual/core/sharded-cluster-components/
+#
+# You can learn about these attributes and how the change the structure
+# of your Sharded Cluster in here:
+# - https://docs.mongodb.com/kubernetes-operator/stable/reference/k8s-operator-specification
+configSrvPodSpec: {}
+
+shardPodSpec: {}
+
+mongosPodSpec: {}
