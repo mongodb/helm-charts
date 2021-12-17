@@ -3,7 +3,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  name: {{ $.Release.Name }}
+  name: {{ $.Release.Name }}-{{ .name }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}

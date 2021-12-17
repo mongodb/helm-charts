@@ -14,7 +14,7 @@ atlas:
 project:
   create: true
   annotations: {}
-  # mongodb.com/atlas-resource-policy: keep
+    # mongodb.com/atlas-resource-policy: keep
   # fullnameOverride: ""
 
   projectIpAccessList:
@@ -22,7 +22,7 @@ project:
       comment: "REMOVE ME"
 
 clusters:
-  - name: cluster-name
+  - name: cluster-1
     annotations: {}
       # mongodb.com/atlas-resource-policy: keep
     providerSettings:
