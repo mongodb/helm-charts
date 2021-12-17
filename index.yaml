@@ -157,6 +157,26 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/community-operator-crds-0.7.1/community-operator-crds-0.7.1.tgz
     version: 0.7.1
+  enterprise-database:
+  - apiVersion: v2
+    created: "2021-12-17T17:18:03.327184985Z"
+    description: MongoDB Kubernetes Enterprise Database.
+    digest: f1d6f5b0615a8c7d544aeb49c1f964f362357c67876ae01e9218e3cbc965169e
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: enterprise-database
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/enterprise-database-1.13.0/enterprise-database-1.13.0.tgz
+    version: 1.13.0
   enterprise-operator:
   - apiVersion: v2
     created: "2021-12-15T16:57:53.677046789Z"
@@ -452,4 +472,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-12-15T16:57:53.67708329Z"
+generated: "2021-12-17T17:18:03.327243289Z"
