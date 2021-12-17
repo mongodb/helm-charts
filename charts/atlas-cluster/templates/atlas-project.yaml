@@ -2,7 +2,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
-  name: {{ include "atlas-cluster.projectfullname" . }}
+  name: {{ $.Release.Name }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "atlas-cluster.labels" . | nindent 4 }}
@@ -11,7 +11,7 @@ metadata:
 {{ toYaml .Values.project.annotations | indent 4 }}
   {{- end }}
 spec:
-  name: {{ .Values.project.atlasProjectName }}
+  name: {{ $.Release.Name }}
   connectionSecretRef:
 {{- if .Values.atlas.connectionSecretName }}
     name: {{ .Values.atlas.connectionSecretName}}

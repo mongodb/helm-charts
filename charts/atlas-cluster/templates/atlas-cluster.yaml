@@ -3,7 +3,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  name: {{ .name }}
+  name: {{ $.Release.Name }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
@@ -12,9 +12,9 @@ metadata:
 {{ toYaml .annotations | indent 4 }}
   {{- end }}
 spec:
-  name: {{ include "atlas-cluster.projectfullname" $ }}
+  name: {{ $.Release.Name }}
   projectRef:
-    name: {{ include "atlas-cluster.projectfullname" $ }}
+    name: {{ $.Release.Name }}
   providerSettings:
 {{- with .providerSettings -}}
   {{- $provider := .providerName -}}
