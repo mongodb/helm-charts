@@ -64,15 +64,15 @@ kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ .Values.operator.name }}
-  {{- if .Values.namespace }}
-  namespace: {{ .Values.namespace }}
+  {{- if ne (.Values.operator.watchNamespace | default "*") "*" }}
+  namespace: {{ .Values.operator.watchNamespace }}
   {{- end }}
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.operator.name }}
-{{ if eq (.Values.operator.watchNamespace | default "") "*" }}
+  {{- if .Values.namespace }}
   namespace: {{ .Values.namespace }}
-{{ end }}
+  {{- end }}
 roleRef:
   kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
   name: {{ .Values.operator.name }}
