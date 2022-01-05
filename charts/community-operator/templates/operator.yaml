@@ -7,9 +7,7 @@ metadata:
   labels:
     owner: mongodb
   name: {{ .Values.operator.name }}
-  {{- if .Values.namespace }}
-  namespace: {{ .Values.namespace }}
-  {{- end }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
