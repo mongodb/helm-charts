@@ -4,9 +4,9 @@ echo "PROJECT_NAME=${PROJECT_NAME}"
 PROJECT_ID=$(mongocli iam project list --output=json | jq --arg name "${PROJECT_NAME}" -r '.results[] | select(.name==$name) | .id')
 CLUSTER_NAME="${2:-none}"
 if [[ "${CLUSTER_NAME}" == "none" ]]; then
-    CLUSTER_INFO=$(mongocli atlas clusters list --projectId ${PROJECT_ID} --output=json | jq '.[0]')
+    CLUSTER_INFO=$(mongocli atlas clusters list --projectId "${PROJECT_ID}" --output=json | jq '.[0]')
 else
-    CLUSTER_INFO=$(mongocli atlas clusters list --projectsId ${PROJECT_ID} --output=json | jq --arg name "${CLUSTER_NAME}" -r '.[] | select(.name==$name) | .')
+    CLUSTER_INFO=$(mongocli atlas clusters list --projectsId "${PROJECT_ID}" --output=json | jq --arg name "${CLUSTER_NAME}" -r '.[] | select(.name==$name) | .')
 fi
 echo "CLUSTER_INFO=${CLUSTER_INFO}"
 
