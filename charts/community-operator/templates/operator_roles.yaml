@@ -64,6 +64,8 @@ metadata:
   name: {{ .Values.operator.name }}
   {{- if ne (.Values.operator.watchNamespace | default "*") "*" }}
   namespace: {{ .Values.operator.watchNamespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace }}
   {{- end }}
 subjects:
 - kind: ServiceAccount
