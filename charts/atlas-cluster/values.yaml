@@ -1,5 +1,6 @@
 mongodb-atlas-operator:
   enabled: true
+  clusterWide: false
 
 # Please provide Atlas API credentials and Organization
 atlas:

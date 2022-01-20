@@ -12,6 +12,7 @@ metadata:
   {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
+{{- if ( not .Values.mongodb-atlas-operator.clusterWide) }}
   connectionSecretRef:
 {{- if .Values.atlas.connectionSecretName }}
     name: {{ .Values.atlas.connectionSecretName}}
@@ -19,6 +20,7 @@ spec:
     name: {{ .Values.atlas.existingSecretName }}
 {{- else }}
     name: {{ include "atlas-cluster.fullname" . }}-secret
+{{- end }}
 {{- end }}
   projectIpAccessList:
   {{- with .Values.project.projectIpAccessList }}
