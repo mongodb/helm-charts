@@ -97,7 +97,7 @@ spec:
       containers:
         - name: post-install-job
           imagePullPolicy: Always
-          image: "quay.io/chatton/test:helm-post-install"
+          image: "{{ .Values.postInstallHook.registry }}/{{ .Values.postInstallHook.image }}:{{ .Values.postInstallHook.version }}"
           env:
             - name: "CLUSTER_NAME"
               value: "{{ .name }}"

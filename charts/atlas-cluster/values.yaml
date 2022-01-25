@@ -1,6 +1,11 @@
 mongodb-atlas-operator:
   enabled: true
 
+postInstallHook:
+  version: 1.0.0
+  registry: quay.io/mongodb
+  image: atlas-operator-post-install-hook
+
 # Please provide Atlas API credentials and Organization
 atlas:
   create: true
