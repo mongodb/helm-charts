@@ -74,4 +74,31 @@ spec:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .name | quote }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ .name | quote }}
+      labels:
+        app.kubernetes.io/managed-by: {{ .name | quote }}
+        app.kubernetes.io/instance: {{ .name | quote }}
+    spec:
+      serviceAccountName: mongodb-atlas-operator
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          imagePullPolicy: Always
+          image: "quay.io/chatton/test:helm-post-install"
+          env:
+            - name: "CLUSTER_NAME"
+              value: "{{ .name }}"
 {{- end }}
