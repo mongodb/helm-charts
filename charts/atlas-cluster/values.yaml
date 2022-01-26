@@ -32,6 +32,9 @@ clusters:
   - name: cluster-name
     annotations: {}
       # mongodb.com/atlas-resource-policy: keep
+    # waitForCompletion "true" will create a post install job which waits for the cluster
+    # to reach the ready state.
+    waitForCompletion: false
     providerSettings:
       instanceSizeName: M2
       providerName: TENANT

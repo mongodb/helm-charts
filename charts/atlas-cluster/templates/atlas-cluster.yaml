@@ -75,6 +75,7 @@ spec:
   {{- end }}
 {{- end }}
 
+{{- if .waitForCompletion }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -101,4 +102,5 @@ spec:
           env:
             - name: "CLUSTER_NAME"
               value: "{{ .name }}"
+{{- end }}
 {{- end }}
