@@ -102,5 +102,7 @@ spec:
           env:
             - name: "CLUSTER_NAME"
               value: "{{ .name }}"
+            - name: "NAMESPACE"
+              value: "{{ $.Release.Namespace }}"
 {{- end }}
 {{- end }}
