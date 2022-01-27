@@ -28,25 +28,23 @@ spec:
   scopes:
     {{- toYaml .scopes | nindent 4 }}
   {{- end }}
-{{- end }}
-
 {{- if $.Values.postInstallHook.enabled }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .name | quote }}
+  name: {{ .username | quote }}
   annotations:
     "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "1"
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
 spec:
   template:
     metadata:
-      name: {{ .name | quote }}
+      name: {{ .username | quote }}
       labels:
-        app.kubernetes.io/managed-by: {{ .name | quote }}
-        app.kubernetes.io/instance: {{ .name | quote }}
+        app.kubernetes.io/managed-by: {{ .username | quote }}
+        app.kubernetes.io/instance: {{ .username | quote }}
     spec:
       serviceAccountName: mongodb-atlas-operator
       restartPolicy: Never
@@ -56,6 +54,8 @@ spec:
           image: "{{ $.Values.postInstallHook.registry }}/{{ $.Values.postInstallHook.image }}:{{ $.Values.postInstallHook.version }}"
           env:
             - name: "USER_NAME"
-              value: "{{ .name }}"
+              value: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}
 {{- end }}
+{{- end }}
+
 {{- end }}
