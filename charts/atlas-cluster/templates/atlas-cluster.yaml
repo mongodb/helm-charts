@@ -75,7 +75,7 @@ spec:
   {{- end }}
 {{- end }}
 
-{{- if .waitForCompletion }}
+{{- if $.Values.postInstallHook.enabled }}
 ---
 apiVersion: batch/v1
 kind: Job

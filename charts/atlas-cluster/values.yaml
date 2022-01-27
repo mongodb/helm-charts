@@ -5,6 +5,9 @@ postInstallHook:
   version: 1.0.0
   registry: quay.io/mongodb
   image: atlas-operator-post-install-hook
+  # enabled "true" will create a post install job which waits for the created
+  # resources to reach the ready state.
+  enabled: false
 
 # Please provide Atlas API credentials and Organization
 atlas:
@@ -32,9 +35,6 @@ clusters:
   - name: cluster-name
     annotations: {}
       # mongodb.com/atlas-resource-policy: keep
-    # waitForCompletion "true" will create a post install job which waits for the cluster
-    # to reach the ready state.
-    waitForCompletion: false
     providerSettings:
       instanceSizeName: M2
       providerName: TENANT
