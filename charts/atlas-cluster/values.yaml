@@ -1,5 +1,6 @@
 mongodb-atlas-operator:
   enabled: true
+  clusterWide: false
 
 postInstallHook:
   version: 1.0.0
