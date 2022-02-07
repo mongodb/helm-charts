@@ -1,4 +1,4 @@
-mongodb-atlas-operator:
+mongodbAtlasOperator:
   enabled: true
   clusterWide: false
 

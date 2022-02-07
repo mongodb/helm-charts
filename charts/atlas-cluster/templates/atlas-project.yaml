@@ -12,7 +12,7 @@ metadata:
   {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
-{{- if (not ".Values.mongodb-atlas-operator.clusterWide") }}
+{{- if not .Values.mongodbAtlasOperator.clusterWide }}
   connectionSecretRef:
 {{- if .Values.atlas.connectionSecretName }}
     name: {{ .Values.atlas.connectionSecretName}}
