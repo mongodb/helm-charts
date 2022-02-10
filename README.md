@@ -4,20 +4,20 @@
 
 This repository contains Helm Charts for different MongoDB products.
 
-| Charts                                            | Description                                                               |
-| ------------------------------------------------- | ------------------------------------------------------------------------- |
-| [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                        |
-| [atlas-cluster](charts/atlas-cluster)             | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources.        |
-| [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.              |
-| [community-operator](charts/community-operator)   | MongoDB Community Operator Helm Chart.                                    |
-| [community-operator-crds](charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.  |
-| [enterprise-operator](charts/enterprise-operator) | MongoDB Enterprise Kubernetes Operator Helm Chart.                        |
-| [sample-app](charts/sample-app)                   | A Sample Front/Back-end application backed by a MongoDB Database.         |
+| Charts                                                                                                     | Description                                                        |
+|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| [atlas-operator](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator)                   | MongoDB Atlas Operator Helm Chart.                                 |
+| [atlas-cluster](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-cluster)                     | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources. |
+| [atlas-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds)         | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.       |
+| [community-operator](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator)           | MongoDB Community Operator Helm Chart.                             |
+| [community-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.   |
+| [enterprise-operator](https://github.com/mongodb/helm-charts/tree/main/charts/enterprise-operator)         | MongoDB Enterprise Kubernetes Operator Helm Chart.                 |
+| [sample-app](https://github.com/mongodb/helm-charts/tree/main/charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.  |
 
-- Please note that the `CRD` Charts ([Community](charts/community-operator-crds)
-  and [Atlas](charts/atlas-operator-crds)) will be installed, by default,
-  as a dependency by the corresponding [Community](charts/community-operator)
-  and [Atlas](charts/atlas-operator) Charts.
+- Please note that the `CRD` Charts ([Community](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds)
+  and [Atlas](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds)) will be installed, by default,
+  as a dependency by the corresponding [Community](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator)
+  and [Atlas](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator) Charts.
 
 ## Adding the MongoDB Helm Repo
 
