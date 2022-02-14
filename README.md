@@ -46,3 +46,9 @@ in the following example:
 $ helm repo add mongodb https://mongodb.github.io/helm-charts
 "mongodb" has been added to your repositories
 ```
+
+## Contribute
+
+Please file issues before filing PRs. For PRs to be accepted, contributors must sign our [CLA](https://www.mongodb.com/legal/contributor-agreement).
+
+Reviewers, please ensure that the CLA has been signed by referring to [the contributors tool](https://contributors.corp.mongodb.com/) (internal link).
