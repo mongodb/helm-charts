@@ -12,68 +12,69 @@ metadata:
 {{ toYaml .annotations | indent 4 }}
   {{- end }}
 spec:
-  name: {{ .name }}
   projectRef:
     name: {{ include "atlas-cluster.projectfullname" $ }}
-  providerSettings:
-{{- with .providerSettings -}}
-  {{- $provider := .providerName -}}
-  {{- range $key, $val := . }}
-  {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
-    {{- $key | indent 2 }}: {{ $val }}
+  clusterSpec:
+    name: {{ .name }}
+    providerSettings:
+  {{- with .providerSettings -}}
+    {{- $provider := .providerName -}}
+    {{- range $key, $val := . }}
+    {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
+      {{- $key | indent 2 }}: {{ $val }}
+    {{- end }}
+    {{- end }}
   {{- end }}
-  {{- end }}
-{{- end }}
-{{- if .autoScaling }}
-  autoScaling:
-{{- with .autoScaling }}
-{{- toYaml . | nindent 4 }}
-{{- end }}
-{{- end }}
-{{- if .autoIndexingEnabled }}
-    autoIndexingEnabled: false
-{{- end }}
-{{- if .biConnector }}
-  biConnector:
-    enabled: {{ .biConnector.enabled }}
-    readPreference: {{ .biConnector.readPreference }}
-{{- end }}
-{{- if .clusterType }}
-  clusterType: {{ .clusterType }}
-{{- end }}
-{{- if .diskSizeGB }}
-  diskSizeGB: {{ .diskSizeGB }}
-{{- end }}
-{{- if .encryptionAtRestProvider }}
-  encryptionAtRestProvider: {{ .encryptionAtRestProvider }}
-{{- end }}
-{{- if .labels }}
-  labels:
-  {{- with .labels }}
+  {{- if .autoScaling }}
+    autoScaling:
+  {{- with .autoScaling }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
-{{- if .mongoDBMajorVersion }}
-  mongoDBMajorVersion: {{ .mongoDBMajorVersion }}
-{{- end }}
-{{- if .numShards }}
-  numShards: {{ .numShards }}
-{{- end }}
-{{- if .paused }}
-  paused: {{ .paused }}
-{{- end }}
-{{- if .pitEnabled }}
-  pitEnabled: {{ .pitEnabled }}
-{{- end }}
-{{- if .providerBackupEnabled }}
-  providerBackupEnabled: {{ .providerBackupEnabled }}
-{{- end }}
-{{- if .replicationSpecs }}
-  replicationSpecs:
-  {{- with .replicationSpecs }}
-  {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
+  {{- if .autoIndexingEnabled }}
+      autoIndexingEnabled: false
+  {{- end }}
+  {{- if .biConnector }}
+    biConnector:
+      enabled: {{ .biConnector.enabled }}
+      readPreference: {{ .biConnector.readPreference }}
+  {{- end }}
+  {{- if .clusterType }}
+    clusterType: {{ .clusterType }}
+  {{- end }}
+  {{- if .diskSizeGB }}
+    diskSizeGB: {{ .diskSizeGB }}
+  {{- end }}
+  {{- if .encryptionAtRestProvider }}
+    encryptionAtRestProvider: {{ .encryptionAtRestProvider }}
+  {{- end }}
+  {{- if .labels }}
+    labels:
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- if .mongoDBMajorVersion }}
+    mongoDBMajorVersion: {{ .mongoDBMajorVersion }}
+  {{- end }}
+  {{- if .numShards }}
+    numShards: {{ .numShards }}
+  {{- end }}
+  {{- if .paused }}
+    paused: {{ .paused }}
+  {{- end }}
+  {{- if .pitEnabled }}
+    pitEnabled: {{ .pitEnabled }}
+  {{- end }}
+  {{- if .providerBackupEnabled }}
+    providerBackupEnabled: {{ .providerBackupEnabled }}
+  {{- end }}
+  {{- if .replicationSpecs }}
+    replicationSpecs:
+    {{- with .replicationSpecs }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
 
 {{- if $.Values.postInstallHook.enabled }}
 ---

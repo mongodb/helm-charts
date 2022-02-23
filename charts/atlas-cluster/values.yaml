@@ -66,6 +66,12 @@ clusters:
 #   pitEnabled: false
 #   providerBackupEnabled: false
 #   replicationSpecs:
+
+#advancedClusters:
+#  - name: cluster-name
+#    annotations: {}
+
+
 users:
   - username: admin-user
     databaseName: admin
