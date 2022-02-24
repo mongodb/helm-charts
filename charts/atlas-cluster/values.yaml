@@ -33,14 +33,15 @@ project:
       comment: "REMOVE ME"
 
 clusters:
-  - name: cluster-name
-    annotations: {}
-      # mongodb.com/atlas-resource-policy: keep
-    providerSettings:
-      instanceSizeName: M2
-      providerName: TENANT
-      backingProviderName: AWS
-      regionName: US_EAST_1
+  - clusterSpec:
+      name: cluster-name
+      annotations: {}
+        # mongodb.com/atlas-resource-policy: keep
+      providerSettings:
+        instanceSizeName: M2
+        providerName: TENANT
+        backingProviderName: AWS
+        regionName: US_EAST_1
 
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
@@ -66,10 +67,6 @@ clusters:
 #   pitEnabled: false
 #   providerBackupEnabled: false
 #   replicationSpecs:
-
-#advancedClusters:
-#  - name: cluster-name
-#    annotations: {}
 
 
 users:

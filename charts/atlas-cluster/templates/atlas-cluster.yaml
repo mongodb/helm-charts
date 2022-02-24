@@ -3,7 +3,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  name: {{ .name }}
+  name: {{ .clusterSpec.name }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
@@ -15,9 +15,9 @@ spec:
   projectRef:
     name: {{ include "atlas-cluster.projectfullname" $ }}
   clusterSpec:
-    name: {{ .name }}
+    name: {{ .clusterSpec.name }}
     providerSettings:
-  {{- with .providerSettings -}}
+  {{- with .clusterSpec.providerSettings -}}
     {{- $provider := .providerName -}}
     {{- range $key, $val := . }}
     {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
@@ -25,7 +25,7 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-  {{- if .autoScaling }}
+  {{- if .clusterSpec.autoScaling }}
     autoScaling:
   {{- with .autoScaling }}
   {{- toYaml . | nindent 4 }}
@@ -34,44 +34,44 @@ spec:
   {{- if .autoIndexingEnabled }}
       autoIndexingEnabled: false
   {{- end }}
-  {{- if .biConnector }}
+  {{- if .clusterSpec.biConnector }}
     biConnector:
-      enabled: {{ .biConnector.enabled }}
-      readPreference: {{ .biConnector.readPreference }}
+      enabled: {{ .clusterSpec.biConnector.enabled }}
+      readPreference: {{ .clusterSpec.biConnector.readPreference }}
   {{- end }}
-  {{- if .clusterType }}
-    clusterType: {{ .clusterType }}
+  {{- if .clusterSpec.clusterType }}
+    clusterType: {{ .clusterSpec.clusterType }}
   {{- end }}
-  {{- if .diskSizeGB }}
-    diskSizeGB: {{ .diskSizeGB }}
+  {{- if .clusterSpec.diskSizeGB }}
+    diskSizeGB: {{ .clusterSpec.diskSizeGB }}
   {{- end }}
-  {{- if .encryptionAtRestProvider }}
-    encryptionAtRestProvider: {{ .encryptionAtRestProvider }}
+  {{- if .clusterSpec.encryptionAtRestProvider }}
+    encryptionAtRestProvider: {{ .clusterSpec.encryptionAtRestProvider }}
   {{- end }}
-  {{- if .labels }}
+  {{- if .clusterSpec.labels }}
     labels:
-    {{- with .labels }}
+    {{- with .clusterSpec.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
-  {{- if .mongoDBMajorVersion }}
-    mongoDBMajorVersion: {{ .mongoDBMajorVersion }}
+  {{- if .clusterSpec.mongoDBMajorVersion }}
+    mongoDBMajorVersion: {{ .clusterSpec.mongoDBMajorVersion }}
   {{- end }}
-  {{- if .numShards }}
-    numShards: {{ .numShards }}
+  {{- if .clusterSpec.numShards }}
+    numShards: {{ .clusterSpec.numShards }}
   {{- end }}
-  {{- if .paused }}
-    paused: {{ .paused }}
+  {{- if .clusterSpec.paused }}
+    paused: {{ .clusterSpec.paused }}
   {{- end }}
-  {{- if .pitEnabled }}
-    pitEnabled: {{ .pitEnabled }}
+  {{- if .clusterSpec.pitEnabled }}
+    pitEnabled: {{ .clusterSpec.pitEnabled }}
   {{- end }}
-  {{- if .providerBackupEnabled }}
-    providerBackupEnabled: {{ .providerBackupEnabled }}
+  {{- if .clusterSpec.providerBackupEnabled }}
+    providerBackupEnabled: {{ .clusterSpec.providerBackupEnabled }}
   {{- end }}
-  {{- if .replicationSpecs }}
+  {{- if .clusterSpec.replicationSpecs }}
     replicationSpecs:
-    {{- with .replicationSpecs }}
+    {{- with .clusterSpec.replicationSpecs }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
