@@ -12,15 +12,15 @@ metadata:
   {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
-{{- if .Values.atlas.connectionSecretName }}
+{{- if not .Values.atlas.globalSecret }}
   connectionSecretRef:
-    name: {{ .Values.atlas.connectionSecretName}}
-{{- else if and (not .Values.atlas.create) .Values.atlas.existingSecretName  }}
-  connectionSecretRef:
+{{- if .Values.atlas.existingSecretName  }}
     name: {{ .Values.atlas.existingSecretName }}
-{{- else if .Values.atlas.create }}
-  connectionSecretRef:
+{{- else if .Values.atlas.setCustomSecretName }}
+    name: {{ .Values.atlas.setCustomSecretName }}
+{{- else }}
     name: {{ include "atlas-cluster.fullname" . }}-secret
+{{- end }}
 {{- end }}
   projectIpAccessList:
   {{- with .Values.project.projectIpAccessList }}
