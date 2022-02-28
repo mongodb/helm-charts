@@ -1,9 +1,15 @@
+#{{- $root := . -}}
+
 {{- range .Values.clusters }}
 ---
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
+  {{- if .advancedClusterSpec }}
+  name: {{ .advancedClusterSpec.name }}
+  {{- else if .clusterSpec }}
   name: {{ .clusterSpec.name }}
+  {{- end }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
@@ -14,6 +20,7 @@ metadata:
 spec:
   projectRef:
     name: {{ include "atlas-cluster.projectfullname" $ }}
+  {{- if .clusterSpec }}
   clusterSpec:
     name: {{ .clusterSpec.name }}
     providerSettings:
@@ -74,6 +81,11 @@ spec:
     {{- with .clusterSpec.replicationSpecs }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if .advancedClusterSpec }}
+  advancedClusterSpec:
+  {{- toYaml .advancedClusterSpec | nindent 4}}
   {{- end }}
 
 {{- if $.Values.postInstallHook.enabled }}

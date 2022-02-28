@@ -32,6 +32,9 @@ project:
     - ipAddress: "0.0.0.0/1"
       comment: "REMOVE ME"
 
+# include either clusterSpec or advancedClusterSpec
+# see https://docs.atlas.mongodb.com/reference/api/cluster-advanced/create-one-cluster-advanced/ for
+# options for creating advanced clusters.
 clusters:
   - clusterSpec:
       name: cluster-name
@@ -42,6 +45,18 @@ clusters:
         providerName: TENANT
         backingProviderName: AWS
         regionName: US_EAST_1
+
+#  - advancedClusterSpec:
+#      clusterType: REPLICASET
+#      name: advanced-cluster
+#      replicationSpecs:
+#        - regionConfigs:
+#            - electableSpecs:
+#                instanceSize: M5
+#              providerName: TENANT
+#              backingProviderName: AWS
+#              regionName: US_EAST_1
+
 
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
