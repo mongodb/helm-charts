@@ -14,10 +14,10 @@ spec:
   name: {{ .Values.project.atlasProjectName }}
 {{- if not .Values.atlas.globalSecret }}
   connectionSecretRef:
-{{- if .Values.atlas.existingSecretName  }}
-    name: {{ .Values.atlas.existingSecretName }}
-{{- else if .Values.atlas.setCustomSecretName }}
-    name: {{ .Values.atlas.setCustomSecretName }}
+{{- if .Values.atlas.secret.existing }}
+    name: {{ .Values.atlas.secret.existing }}
+{{- else if .Values.atlas.secret.setCustomName }}
+    name: {{ .Values.atlas.secret.setCustomName }}
 {{- else }}
     name: {{ include "atlas-cluster.fullname" . }}-secret
 {{- end }}
