@@ -12,7 +12,7 @@ metadata:
   {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
-{{- if not .Values.atlas.globalSecret }}
+{{- if not .Values.atlas.secret.global }}
   connectionSecretRef:
 {{- if .Values.atlas.secret.existing }}
     name: {{ .Values.atlas.secret.existing }}
