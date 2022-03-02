@@ -57,8 +57,6 @@ clusters:
 #              backingProviderName: AWS
 #              regionName: US_EAST_1
 
-
-
 # Additional clusterSpec values
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
