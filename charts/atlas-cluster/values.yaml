@@ -58,6 +58,8 @@ clusters:
 #              regionName: US_EAST_1
 
 
+
+# Additional clusterSpec values
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
 # #
@@ -82,8 +84,6 @@ clusters:
 #   pitEnabled: false
 #   providerBackupEnabled: false
 #   replicationSpecs:
-
-
 users:
   - username: admin-user
     databaseName: admin
