@@ -2,7 +2,7 @@ mongodbAtlasOperator:
   enabled: true
 
 postInstallHook:
-  version: 1.0.0
+  version: 1.0.1
   registry: quay.io/mongodb
   image: atlas-operator-post-install-hook
   # enabled "true" will create a post install job which waits for the created
