@@ -1,5 +1,3 @@
-#{{- $root := . -}}
-
 {{- range .Values.clusters }}
 ---
 apiVersion: atlas.mongodb.com/v1
