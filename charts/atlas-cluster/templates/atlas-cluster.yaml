@@ -3,7 +3,11 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  name: {{ .name }}
+  {{- if .advancedClusterSpec }}
+  name: {{ .advancedClusterSpec.name }}
+  {{- else if .clusterSpec }}
+  name: {{ .clusterSpec.name }}
+  {{- end }}
   labels:
     {{- include "atlas-cluster.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
@@ -12,68 +16,75 @@ metadata:
 {{ toYaml .annotations | indent 4 }}
   {{- end }}
 spec:
-  name: {{ .name }}
   projectRef:
     name: {{ include "atlas-cluster.projectfullname" $ }}
-  providerSettings:
-{{- with .providerSettings -}}
-  {{- $provider := .providerName -}}
-  {{- range $key, $val := . }}
-  {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
-    {{- $key | indent 2 }}: {{ $val }}
+  {{- if .clusterSpec }}
+  clusterSpec:
+    name: {{ .clusterSpec.name }}
+    providerSettings:
+  {{- with .clusterSpec.providerSettings -}}
+    {{- $provider := .providerName -}}
+    {{- range $key, $val := . }}
+    {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
+      {{- $key | indent 2 }}: {{ $val }}
+    {{- end }}
+    {{- end }}
   {{- end }}
-  {{- end }}
-{{- end }}
-{{- if .autoScaling }}
-  autoScaling:
-{{- with .autoScaling }}
-{{- toYaml . | nindent 4 }}
-{{- end }}
-{{- end }}
-{{- if .autoIndexingEnabled }}
-    autoIndexingEnabled: false
-{{- end }}
-{{- if .biConnector }}
-  biConnector:
-    enabled: {{ .biConnector.enabled }}
-    readPreference: {{ .biConnector.readPreference }}
-{{- end }}
-{{- if .clusterType }}
-  clusterType: {{ .clusterType }}
-{{- end }}
-{{- if .diskSizeGB }}
-  diskSizeGB: {{ .diskSizeGB }}
-{{- end }}
-{{- if .encryptionAtRestProvider }}
-  encryptionAtRestProvider: {{ .encryptionAtRestProvider }}
-{{- end }}
-{{- if .labels }}
-  labels:
-  {{- with .labels }}
+  {{- if .clusterSpec.autoScaling }}
+    autoScaling:
+  {{- with .autoScaling }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
-{{- if .mongoDBMajorVersion }}
-  mongoDBMajorVersion: {{ .mongoDBMajorVersion }}
-{{- end }}
-{{- if .numShards }}
-  numShards: {{ .numShards }}
-{{- end }}
-{{- if .paused }}
-  paused: {{ .paused }}
-{{- end }}
-{{- if .pitEnabled }}
-  pitEnabled: {{ .pitEnabled }}
-{{- end }}
-{{- if .providerBackupEnabled }}
-  providerBackupEnabled: {{ .providerBackupEnabled }}
-{{- end }}
-{{- if .replicationSpecs }}
-  replicationSpecs:
-  {{- with .replicationSpecs }}
-  {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
+  {{- if .autoIndexingEnabled }}
+      autoIndexingEnabled: false
+  {{- end }}
+  {{- if .clusterSpec.biConnector }}
+    biConnector:
+      enabled: {{ .clusterSpec.biConnector.enabled }}
+      readPreference: {{ .clusterSpec.biConnector.readPreference }}
+  {{- end }}
+  {{- if .clusterSpec.clusterType }}
+    clusterType: {{ .clusterSpec.clusterType }}
+  {{- end }}
+  {{- if .clusterSpec.diskSizeGB }}
+    diskSizeGB: {{ .clusterSpec.diskSizeGB }}
+  {{- end }}
+  {{- if .clusterSpec.encryptionAtRestProvider }}
+    encryptionAtRestProvider: {{ .clusterSpec.encryptionAtRestProvider }}
+  {{- end }}
+  {{- if .clusterSpec.labels }}
+    labels:
+    {{- with .clusterSpec.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- if .clusterSpec.mongoDBMajorVersion }}
+    mongoDBMajorVersion: {{ .clusterSpec.mongoDBMajorVersion }}
+  {{- end }}
+  {{- if .clusterSpec.numShards }}
+    numShards: {{ .clusterSpec.numShards }}
+  {{- end }}
+  {{- if .clusterSpec.paused }}
+    paused: {{ .clusterSpec.paused }}
+  {{- end }}
+  {{- if .clusterSpec.pitEnabled }}
+    pitEnabled: {{ .clusterSpec.pitEnabled }}
+  {{- end }}
+  {{- if .clusterSpec.providerBackupEnabled }}
+    providerBackupEnabled: {{ .clusterSpec.providerBackupEnabled }}
+  {{- end }}
+  {{- if .clusterSpec.replicationSpecs }}
+    replicationSpecs:
+    {{- with .clusterSpec.replicationSpecs }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if .advancedClusterSpec }}
+  advancedClusterSpec:
+  {{- toYaml .advancedClusterSpec | nindent 4}}
+  {{- end }}
 
 {{- if $.Values.postInstallHook.enabled }}
 ---
