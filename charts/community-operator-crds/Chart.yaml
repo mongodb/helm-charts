@@ -2,8 +2,8 @@ apiVersion: v2
 name: community-operator-crds
 description: MongoDB Kubernetes Community Operator - CRDs
 type: application
-version: 0.7.2
-appVersion: 0.7.2
+version: 0.7.3
+appVersion: 0.7.3
 kubeVersion: ">=1.16-0"
 keywords:
   - mongodb
