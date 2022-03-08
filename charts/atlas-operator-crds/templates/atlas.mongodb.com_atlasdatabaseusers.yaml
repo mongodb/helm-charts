@@ -86,6 +86,9 @@ spec:
                   name:
                     description: Name is the name of the Kubernetes Resource
                     type: string
+                  namespace:
+                    description: Namespace is the namespace of the Kubernetes Resource
+                    type: string
                 required:
                 - name
                 type: object
@@ -146,8 +149,11 @@ spec:
               username:
                 description: Username is a username for authenticating to MongoDB.
                 type: string
+              x509Type:
+                description: X509Type is X.509 method by which the database authenticates
+                  the provided username
+                type: string
             required:
-            - passwordSecretRef
             - projectRef
             - roles
             - username

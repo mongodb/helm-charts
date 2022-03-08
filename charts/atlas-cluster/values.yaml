@@ -1,15 +1,28 @@
-mongodb-atlas-operator:
+mongodbAtlasOperator:
   enabled: true
+
+postInstallHook:
+  version: 1.0.1
+  registry: quay.io/mongodb
+  image: atlas-operator-post-install-hook
+  # enabled "true" will create a post install job which waits for the created
+  # resources to reach the ready state.
+  enabled: false
 
 # Please provide Atlas API credentials and Organization
 atlas:
-  create: true
-  existingSecretName: ""
-  orgId: "<Atlas Organization ID>"
-  publicApiKey: "<Atlas_api_public_key>"
-  privateApiKey: "<Atlas_api_private_key>"
+  secret:
+    # project uses Global Key (highest priority)
+    global: false
+    # secret already exist in the same namespace
+    existing: ""
 
-  connectionSecretName: ""
+    orgId: "<Atlas Organization ID>"
+    publicApiKey: "<Atlas_api_public_key>"
+    privateApiKey: "<Atlas_api_private_key>"
+    # use custom secret name during new secret creation
+    setCustomName: ""
+
 
 project:
   create: true
@@ -23,16 +36,32 @@ project:
     - ipAddress: "0.0.0.0/1"
       comment: "REMOVE ME"
 
+# include either clusterSpec or advancedClusterSpec
+# see https://docs.atlas.mongodb.com/reference/api/cluster-advanced/create-one-cluster-advanced/ for
+# options for creating advanced clusters.
 clusters:
-  - name: cluster-name
-    annotations: {}
-      # mongodb.com/atlas-resource-policy: keep
-    providerSettings:
-      instanceSizeName: M2
-      providerName: TENANT
-      backingProviderName: AWS
-      regionName: US_EAST_1
+  - clusterSpec:
+      name: cluster-name
+      annotations: {}
+        # mongodb.com/atlas-resource-policy: keep
+      providerSettings:
+        instanceSizeName: M2
+        providerName: TENANT
+        backingProviderName: AWS
+        regionName: US_EAST_1
 
+#  - advancedClusterSpec:
+#      clusterType: REPLICASET
+#      name: advanced-cluster
+#      replicationSpecs:
+#        - regionConfigs:
+#            - electableSpecs:
+#                instanceSize: M5
+#              providerName: TENANT
+#              backingProviderName: AWS
+#              regionName: US_EAST_1
+
+# Additional clusterSpec values
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
 # #
