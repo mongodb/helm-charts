@@ -5,6 +5,12 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
+    service.binding/type: 'mongodb'
+    service.binding/provider: 'community'
+    service.binding: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret'
+    service.binding/connectionString: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=connectionString.standardSrv'
+    service.binding/username: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=username'
+    service.binding/password: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=password'
   creationTimestamp: null
   name: mongodbcommunity.mongodbcommunity.mongodb.com
 spec:
@@ -88,6 +94,53 @@ spec:
               members:
                 description: Members is the number of members in the replica set
                 type: integer
+              prometheus:
+                description: Prometheus configurations.
+                properties:
+                  metricsPath:
+                    description: Indicates path to the metrics endpoint.
+                    pattern: ^\/[a-z0-9]+$
+                    type: string
+                  passwordSecretRef:
+                    description: Name of a Secret containing a HTTP Basic Auth Password.
+                    properties:
+                      key:
+                        description: Key is the key in the secret storing this password.
+                          Defaults to "password"
+                        type: string
+                      name:
+                        description: Name is the name of the secret storing this user's
+                          password
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  port:
+                    description: Port where metrics endpoint will bind to. Defaults
+                      to 9216.
+                    type: integer
+                  tlsSecretKeyRef:
+                    description: Name of a Secret (type kubernetes.io/tls) holding
+                      the certificates to use in the Prometheus endpoint.
+                    properties:
+                      key:
+                        description: Key is the key in the secret storing this password.
+                          Defaults to "password"
+                        type: string
+                      name:
+                        description: Name is the name of the secret storing this user's
+                          password
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  username:
+                    description: HTTP Basic Auth Username for metrics endpoint.
+                    type: string
+                required:
+                - passwordSecretRef
+                - username
+                type: object
               replicaSetHorizons:
                 description: ReplicaSetHorizons Add this parameter and values if you
                   need your database to be accessed outside of Kubernetes. This setting
@@ -325,7 +378,8 @@ spec:
                     scramCredentialsSecretName:
                       description: ScramCredentialsSecretName appended by string "scram-credentials"
                         is the name of the secret object created by the mongoDB operator
-                        for storing SCRAM credentials
+                        for storing SCRAM credentials These secrets names must be
+                        different for each user in a deployment.
                       pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                       type: string
                   required:
@@ -363,9 +417,7 @@ spec:
               version:
                 type: string
             required:
-            - currentMongoDBArbiters
             - currentMongoDBMembers
-            - currentStatefulSetArbitersReplicas
             - currentStatefulSetReplicas
             - mongoUri
             - phase
