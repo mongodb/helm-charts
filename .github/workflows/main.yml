@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-        
+
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
@@ -51,6 +51,10 @@ jobs:
           target: |
             atlas-operator-crds
             community-operator-crds
+
+      - name: Get latest charts from repo
+        run: |
+          helm repo update
 
       - name: Helm Chart Releaser
         uses: ./.github/actions/releaser
