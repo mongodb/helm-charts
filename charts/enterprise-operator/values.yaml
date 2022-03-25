@@ -34,6 +34,12 @@ operator:
     enabled: false
     tlsSecretRef: ''
 
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
 ## Database
 database:
   name: mongodb-enterprise-database
