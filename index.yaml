@@ -243,6 +243,25 @@ entries:
     version: 1.13.0
   enterprise-operator:
   - apiVersion: v2
+    created: "2022-03-25T17:10:49.086212616Z"
+    description: MongoDB Kubernetes Enterprise Operator
+    digest: ca42c93d5c0c36929719a2df471152a05e937bdc73d3fbbf214b52a078f05bfb
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: enterprise-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/enterprise-operator-1.15.2/enterprise-operator-1.15.2.tgz
+    version: 1.15.2
+  - apiVersion: v2
     created: "2022-03-03T20:04:11.966949573Z"
     description: MongoDB Kubernetes Enterprise Operator
     digest: 915b85d0d385cc3798c655f917ceff4205c264df3d86908eb7d996c0ab4855a6
@@ -655,4 +674,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-14T09:32:54.315869982Z"
+generated: "2022-03-25T17:10:49.086393331Z"
