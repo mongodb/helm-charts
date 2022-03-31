@@ -6,7 +6,6 @@ metadata:
   {{- if .serverlessSpec }}
   name: {{ .serverlessSpec.name }}
   {{- else if .advancedClusterSpec }}
-  {{- if .advancedClusterSpec }}
   name: {{ .advancedClusterSpec.name }}
   {{- else if .clusterSpec }}
   name: {{ .clusterSpec.name }}
