@@ -20,5 +20,5 @@ maintainers:
 dependencies:
   - name: mongodb-atlas-operator-crds
     version: "0.2.2"
-    repository:  "file://../../helm-charts/charts/atlas-operator-crds"
+    repository: "https://mongodb.github.io/helm-charts"
     condition: mongodb-atlas-operator-crds.enabled
