@@ -3,7 +3,9 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasCluster
 metadata:
-  {{- if .advancedClusterSpec }}
+  {{- if .serverlessSpec }}
+  name: {{ .serverlessSpec.name }}
+  {{- else if .advancedClusterSpec }}
   name: {{ .advancedClusterSpec.name }}
   {{- else if .clusterSpec }}
   name: {{ .clusterSpec.name }}
@@ -84,6 +86,10 @@ spec:
   {{- if .advancedClusterSpec }}
   advancedClusterSpec:
   {{- toYaml .advancedClusterSpec | nindent 4}}
+  {{- end }}
+  {{- if .serverlessSpec }}
+  serverlessSpec:
+  {{- toYaml .serverlessSpec | nindent 4}}
   {{- end }}
 
 {{- if $.Values.postInstallHook.enabled }}

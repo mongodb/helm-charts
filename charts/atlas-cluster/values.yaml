@@ -50,17 +50,6 @@ clusters:
         backingProviderName: AWS
         regionName: US_EAST_1
 
-#  - advancedClusterSpec:
-#      clusterType: REPLICASET
-#      name: advanced-cluster
-#      replicationSpecs:
-#        - regionConfigs:
-#            - electableSpecs:
-#                instanceSize: M5
-#              providerName: TENANT
-#              backingProviderName: AWS
-#              regionName: US_EAST_1
-
 # Additional clusterSpec values
 # Optional section. for more information visit
 # https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
@@ -86,6 +75,31 @@ clusters:
 #   pitEnabled: false
 #   providerBackupEnabled: false
 #   replicationSpecs:
+
+# Configure a Serverless Instance
+# https://www.mongodb.com/docs/atlas/reference/api/serverless/create-one-serverless-instance/
+
+#  - serverlessSpec:
+#      name: serverless-instance
+#      providerSettings:
+#        providerName: SERVERLESS
+#        backingProviderName: AWS
+#        regionName: US_EAST_1
+
+# Configure an Advanced Cluster
+# https://www.mongodb.com/docs/atlas/reference/api/cluster-advanced/create-one-cluster-advanced/
+
+#  - advancedClusterSpec:
+#      clusterType: REPLICASET
+#      name: advanced-cluster
+#      replicationSpecs:
+#        - regionConfigs:
+#            - electableSpecs:
+#                instanceSize: M5
+#              providerName: TENANT
+#              backingProviderName: AWS
+#              regionName: US_EAST_1
+
 users:
   - username: admin-user
     databaseName: admin
