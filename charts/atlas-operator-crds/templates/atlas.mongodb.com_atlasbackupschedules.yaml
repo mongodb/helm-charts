@@ -52,6 +52,7 @@ spec:
                       cloud backup snapshot to.
                     type: string
                   frequencyType:
+                    default: MONTHLY
                     enum:
                     - MONTHLY
                     type: string
