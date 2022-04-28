@@ -112,22 +112,6 @@ spec:
                 x-kubernetes-preserve-unknown-fields: true
               configSrvPodSpec:
                 properties:
-                  cpu:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  cpuRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memory:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memoryRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
                   nodeAffinity:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
@@ -242,22 +226,6 @@ spec:
                 type: integer
               mongosPodSpec:
                 properties:
-                  cpu:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  cpuRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memory:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memoryRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
                   nodeAffinity:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
@@ -328,22 +296,6 @@ spec:
                 type: boolean
               podSpec:
                 properties:
-                  cpu:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  cpuRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memory:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memoryRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
                   nodeAffinity:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
@@ -640,14 +592,12 @@ spec:
                           instead SecretRef points to a Secret object containing the
                           certificates to use when enabling TLS.
                         properties:
-                          name:
-                            description: DEPRECATED please use security.certsSecretPrefix
-                              instead
-                            type: string
                           prefix:
                             description: DEPRECATED please use security.certsSecretPrefix
                               instead
                             type: string
+                        required:
+                        - prefix
                         type: object
                     type: object
                 type: object
@@ -673,22 +623,6 @@ spec:
                 type: integer
               shardPodSpec:
                 properties:
-                  cpu:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  cpuRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memory:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
-                  memoryRequests:
-                    description: DEPRECATED. Please set this value using `spec.podTemplate`
-                      instead.
-                    type: string
                   nodeAffinity:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
