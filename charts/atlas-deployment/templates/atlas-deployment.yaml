@@ -11,7 +11,7 @@ metadata:
   name: {{ .deploymentSpec.name }}
   {{- end }}
   labels:
-    {{- include "atlas-cluster.labels" $ | nindent 4 }}
+    {{- include "atlas-deployment.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
   {{- if .annotations }}
   annotations:
@@ -19,7 +19,7 @@ metadata:
   {{- end }}
 spec:
   projectRef:
-    name: {{ include "atlas-cluster.projectfullname" $ }}
+    name: {{ include "atlas-deployment.projectfullname" $ }}
   {{- if .deploymentSpec }}
   deploymentSpec:
     name: {{ .deploymentSpec.name }}
