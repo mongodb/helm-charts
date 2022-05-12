@@ -2,10 +2,10 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
-  name: {{ include "atlas-cluster.projectfullname" . }}
+  name: {{ include "atlas-deployment.projectfullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "atlas-cluster.labels" . | nindent 4 }}
+    {{- include "atlas-deployment.labels" . | nindent 4 }}
   {{- if .Values.project.annotations }}
   annotations:
 {{ toYaml .Values.project.annotations | indent 4 }}
@@ -19,7 +19,7 @@ spec:
 {{- else if .Values.atlas.secret.setCustomName }}
     name: {{ .Values.atlas.secret.setCustomName }}
 {{- else }}
-    name: {{ include "atlas-cluster.fullname" . }}-secret
+    name: {{ include "atlas-deployment.fullname" . }}-secret
 {{- end }}
 {{- end }}
   projectIpAccessList:

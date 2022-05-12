@@ -1,17 +1,17 @@
-{{- range .Values.clusters }}
+{{- range .Values.deployments }}
 ---
 apiVersion: atlas.mongodb.com/v1
-kind: AtlasCluster
+kind: AtlasDeployment
 metadata:
   {{- if .serverlessSpec }}
   name: {{ .serverlessSpec.name }}
-  {{- else if .advancedClusterSpec }}
-  name: {{ .advancedClusterSpec.name }}
-  {{- else if .clusterSpec }}
-  name: {{ .clusterSpec.name }}
+  {{- else if .advancedDeploymentSpec }}
+  name: {{ .advancedDeploymentSpec.name }}
+  {{- else if .deploymentSpec }}
+  name: {{ .deploymentSpec.name }}
   {{- end }}
   labels:
-    {{- include "atlas-cluster.labels" $ | nindent 4 }}
+    {{- include "atlas-deployment.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
   {{- if .annotations }}
   annotations:
@@ -19,12 +19,12 @@ metadata:
   {{- end }}
 spec:
   projectRef:
-    name: {{ include "atlas-cluster.projectfullname" $ }}
-  {{- if .clusterSpec }}
-  clusterSpec:
-    name: {{ .clusterSpec.name }}
+    name: {{ include "atlas-deployment.projectfullname" $ }}
+  {{- if .deploymentSpec }}
+  deploymentSpec:
+    name: {{ .deploymentSpec.name }}
     providerSettings:
-  {{- with .clusterSpec.providerSettings -}}
+  {{- with .deploymentSpec.providerSettings -}}
     {{- $provider := .providerName -}}
     {{- range $key, $val := . }}
     {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
@@ -32,7 +32,7 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-  {{- if .clusterSpec.autoScaling }}
+  {{- if .deploymentSpec.autoScaling }}
     autoScaling:
   {{- with .autoScaling }}
   {{- toYaml . | nindent 4 }}
@@ -41,51 +41,51 @@ spec:
   {{- if .autoIndexingEnabled }}
       autoIndexingEnabled: false
   {{- end }}
-  {{- if .clusterSpec.biConnector }}
+  {{- if .deploymentSpec.biConnector }}
     biConnector:
-      enabled: {{ .clusterSpec.biConnector.enabled }}
-      readPreference: {{ .clusterSpec.biConnector.readPreference }}
+      enabled: {{ .deploymentSpec.biConnector.enabled }}
+      readPreference: {{ .deploymentSpec.biConnector.readPreference }}
   {{- end }}
-  {{- if .clusterSpec.clusterType }}
-    clusterType: {{ .clusterSpec.clusterType }}
+  {{- if .deploymentSpec.clusterType }}
+    clusterType: {{ .deploymentSpec.clusterType }}
   {{- end }}
-  {{- if .clusterSpec.diskSizeGB }}
-    diskSizeGB: {{ .clusterSpec.diskSizeGB }}
+  {{- if .deploymentSpec.diskSizeGB }}
+    diskSizeGB: {{ .deploymentSpec.diskSizeGB }}
   {{- end }}
-  {{- if .clusterSpec.encryptionAtRestProvider }}
-    encryptionAtRestProvider: {{ .clusterSpec.encryptionAtRestProvider }}
+  {{- if .deploymentSpec.encryptionAtRestProvider }}
+    encryptionAtRestProvider: {{ .deploymentSpec.encryptionAtRestProvider }}
   {{- end }}
-  {{- if .clusterSpec.labels }}
+  {{- if .deploymentSpec.labels }}
     labels:
-    {{- with .clusterSpec.labels }}
+    {{- with .deploymentSpec.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
-  {{- if .clusterSpec.mongoDBMajorVersion }}
-    mongoDBMajorVersion: {{ .clusterSpec.mongoDBMajorVersion }}
+  {{- if .deploymentSpec.mongoDBMajorVersion }}
+    mongoDBMajorVersion: {{ .deploymentSpec.mongoDBMajorVersion }}
   {{- end }}
-  {{- if .clusterSpec.numShards }}
-    numShards: {{ .clusterSpec.numShards }}
+  {{- if .deploymentSpec.numShards }}
+    numShards: {{ .deploymentSpec.numShards }}
   {{- end }}
-  {{- if .clusterSpec.paused }}
-    paused: {{ .clusterSpec.paused }}
+  {{- if .deploymentSpec.paused }}
+    paused: {{ .deploymentSpec.paused }}
   {{- end }}
-  {{- if .clusterSpec.pitEnabled }}
-    pitEnabled: {{ .clusterSpec.pitEnabled }}
+  {{- if .deploymentSpec.pitEnabled }}
+    pitEnabled: {{ .deploymentSpec.pitEnabled }}
   {{- end }}
-  {{- if .clusterSpec.providerBackupEnabled }}
-    providerBackupEnabled: {{ .clusterSpec.providerBackupEnabled }}
+  {{- if .deploymentSpec.providerBackupEnabled }}
+    providerBackupEnabled: {{ .deploymentSpec.providerBackupEnabled }}
   {{- end }}
-  {{- if .clusterSpec.replicationSpecs }}
+  {{- if .deploymentSpec.replicationSpecs }}
     replicationSpecs:
-    {{- with .clusterSpec.replicationSpecs }}
+    {{- with .deploymentSpec.replicationSpecs }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
   {{- end }}
-  {{- if .advancedClusterSpec }}
-  advancedClusterSpec:
-  {{- toYaml .advancedClusterSpec | nindent 4}}
+  {{- if .advancedDeploymentSpec }}
+  advancedDeploymentSpec:
+  {{- toYaml .advancedDeploymentSpec | nindent 4}}
   {{- end }}
   {{- if .serverlessSpec }}
   serverlessSpec:

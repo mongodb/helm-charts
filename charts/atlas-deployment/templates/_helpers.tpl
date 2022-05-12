@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "atlas-cluster.name" -}}
+{{- define "atlas-deployment.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "atlas-cluster.fullname" -}}
+{{- define "atlas-deployment.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -28,7 +28,7 @@ Create a default fully qualified Atlas Project name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "atlas-cluster.projectfullname" -}}
+{{- define "atlas-deployment.projectfullname" -}}
 {{- if .Values.project.fullnameOverride }}
 {{- .Values.project.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -39,16 +39,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "atlas-cluster.chart" -}}
+{{- define "atlas-deployment.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "atlas-cluster.labels" -}}
-helm.sh/chart: {{ include "atlas-cluster.chart" . }}
-{{ include "atlas-cluster.selectorLabels" . }}
+{{- define "atlas-deployment.labels" -}}
+helm.sh/chart: {{ include "atlas-deployment.chart" . }}
+{{ include "atlas-deployment.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -58,17 +58,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "atlas-cluster.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "atlas-cluster.name" . }}
+{{- define "atlas-deployment.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "atlas-deployment.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "atlas-cluster.serviceAccountName" -}}
+{{- define "atlas-deployment.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "atlas-cluster.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "atlas-deployment.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

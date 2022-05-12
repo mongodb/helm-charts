@@ -1,5 +1,5 @@
 apiVersion: v2
-name: atlas-cluster
+name: atlas-deployment
 description: A Helm chart to manage Atlas resources with Atlas operator
 
 type: application
