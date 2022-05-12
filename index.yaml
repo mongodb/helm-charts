@@ -128,6 +128,26 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/atlas-cluster-0.1.2/atlas-cluster-0.1.2.tgz
     version: 0.1.2
+  atlas-deployment:
+  - apiVersion: v2
+    appVersion: 0.8.1
+    created: "2022-05-12T09:17:08.048478423Z"
+    description: A Helm chart to manage Atlas resources with Atlas operator
+    digest: 86b99079ecb648530a03545531b5133736438aac681e0c26184876a2e0e056e4
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: atlas-deployment
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/atlas-deployment-0.1.9/atlas-deployment-0.1.9.tgz
+    version: 0.1.9
   community-operator:
   - apiVersion: v2
     appVersion: 0.7.3
@@ -741,4 +761,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-05T16:30:33.27364576Z"
+generated: "2022-05-12T09:17:08.048594923Z"
