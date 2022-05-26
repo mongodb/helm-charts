@@ -59,5 +59,5 @@ helm upgrade atlas-operator mongodb/mongodb-atlas-operator
 ## Creating Atlas Resources
 
 After the `atlas-operator` Helm Chart has been installed, you can proceed to
-[Atlas Cluster](../atlas-cluster) Helm Chart to create your first Atlas
+[Atlas Cluster](../atlas-deployment) Helm Chart to create your first Atlas
 database.
