@@ -9,14 +9,14 @@ market trends.
 The Atlas Cluster Helm Chart knows how to manager Atlas resources bound to
 Custom Resources in your Kubernetes Cluster. These resources are:
 
-- Atlas Projects: An Atlas Project is a place to create your MongoDB clusters,
-  think of it as a _Folder_ for your clusters.
-- Atlas Clusters: A MongoDB Database hosted in Atlas. An Atlas Cluster lives
+- Atlas Projects: An Atlas Project is a place to create your MongoDB deployments,
+  think of it as a _Folder_ for your deployments.
+- Atlas Deployments: A MongoDB Database hosted in Atlas. An Atlas Cluster lives
   inside an Atlas Project.
 - Atlas Database User: An Atlas Database User is a User you can authenticate as
   and login into an Atlas Cluster.
 
-By default the `atlas-cluster` Helm Chart will create a user to connect to the
+By default the `atlas-deployment` Helm Chart will create a user to connect to the
 newly deployed Atlas Cluster, avoiding having to do this from the Atlas UI.
 
 ## Prerequisites
@@ -41,8 +41,8 @@ needs to be installed already.
 In the following example you have to set the correct `<orgId>`, `publicKey` and `privateKey`.
 
 ```shell
-helm install atlas-cluster mongodb/atlas-cluster\
-    --namespace=my-cluster \
+helm install atlas-deployment mongodb/atlas-deployment\
+    --namespace=my-deployment \
     --create-namespace  \
     --set project.atlasProjectName='My Project' \
     --set atlas.orgId='<orgid>' \
@@ -52,26 +52,26 @@ helm install atlas-cluster mongodb/atlas-cluster\
 Note, by default a random password will be generated. You can optionally also pass in a random username, however since this value is shared across templates this must be passed in, for example:
 
 ```shell
-helm template --set "users[0].username=$(mktemp | cut -f2 -d.)" my-cluster mongodb/atlas-cluster 
+helm template --set "users[0].username=$(mktemp | cut -f2 -d.)" my-deployment mongodb/atlas-deployment 
 ```
 
 ## Connecting to MongoDB Atlas Cluster
 
-The current state of your new Atlas cluster can be found in the
+The current state of your new Atlas deployment can be found in the
 `status.conditions` array from the `AtlasCluster` resource:
 
 ```shell
-kubectl get atlasdatabaseusers atlas-cluster-admin-user -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}'
+kubectl get atlasdatabaseusers atlas-deployment-admin-user -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}'
 ```
 
 Default HELM Chart values will create single Atlas Admin user with name
-`atlas-cluster-admin-user`. Check the status of `AtlasDatabaseUser` resource for
+`atlas-deployment-admin-user`. Check the status of `AtlasDatabaseUser` resource for
 Ready state.
 
 You can test that the configuration is correct with the following command:
 
 ```shell
-mongo $(kubectl -n my-cluster get secrets/my-project-atlas-cluster-admin-user -o jsonpath='{.data.connectionString\.standardSrv}' | base64 -d)
+mongo $(kubectl -n my-deployment get secrets/my-project-atlas-deployment-admin-user -o jsonpath='{.data.connectionString\.standardSrv}' | base64 -d)
 ```
 
 And Mongo Shell (`mongo`) should be able to connect and output something like:
@@ -99,7 +99,7 @@ containers:
      - name: "CONNECTION_STRING"
        valueFrom:
          secretKeyRef:
-           name: my-project-atlas-cluster-admin-user
+           name: my-project-atlas-deployment-admin-user
            key: connectionString.standardSrv
 ```
 
@@ -107,7 +107,7 @@ containers:
 
 Atlas-operator version 0.6.1+ has to delete finalizers - this change requires additional steps.
 
-Manual workaround for the update from Atlas-cluster-0.1.7:
+Manual workaround for the update from Atlas-deployment-0.1.7:
 1. Need to remove manually the "helm.sh/hook" from Atlasproject
 
 ```bash
@@ -124,5 +124,5 @@ kubectl annotate atlasproject meta.helm.sh/release-namespace=<namespace> --selec
 3. Run update
 
 ```bash
-helm upgrade <release-name> mongodb/atlas-cluster <set variables>
+helm upgrade <release-name> mongodb/atlas-deployment <set variables>
 ```
