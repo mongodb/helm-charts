@@ -7,7 +7,7 @@ This repository contains Helm Charts for different MongoDB products.
 | Charts                                                                                                     | Description                                                        |
 |------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
 | [atlas-operator](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator)                   | MongoDB Atlas Operator Helm Chart.                                 |
-| [atlas-cluster](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-cluster)                     | MongoDB Atlas Cluster Helm Chart. Create Mongo Database resources. |
+| [atlas-deployment](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-deployment)               | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources. |
 | [atlas-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds)         | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.       |
 | [community-operator](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator)           | MongoDB Community Operator Helm Chart.                             |
 | [community-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.   |
