@@ -45,9 +45,9 @@ helm install atlas-deployment mongodb/atlas-deployment\
     --namespace=my-deployment \
     --create-namespace  \
     --set project.atlasProjectName='My Project' \
-    --set atlas.orgId='<orgid>' \
-    --set atlas.publicApiKey='<publicKey>' \
-    --set atlas.privateApiKey='<privateApiKey>'
+    --set atlas.secret.orgId='<orgid>' \
+    --set atlas.secret.publicApiKey='<publicKey>' \
+    --set atlas.secret.privateApiKey='<privateApiKey>'
 ```
 Note, by default a random password will be generated. You can optionally also pass in a random username, however since this value is shared across templates this must be passed in, for example:
 
