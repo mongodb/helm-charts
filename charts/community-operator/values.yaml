@@ -34,6 +34,14 @@ operator:
 ## Operator's database
 database:
   name: mongodb-database
+  # set this to the namespace where you would like
+  # to deploy the MongoDB database,
+  # Note if the database namespace is not same
+  # as the operator namespace,
+  # make sure to set "watchNamespace" to "*"
+  # to ensure that the operator has the
+  # permission to reconcile resources in other namespaces
+  # namespace: mongodb-database
 
 agent:
   name: mongodb-agent
