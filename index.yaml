@@ -239,6 +239,26 @@ entries:
     version: 0.7.2
   community-operator-crds:
   - apiVersion: v2
+    appVersion: 0.7.4
+    created: "2022-06-14T11:16:58.075251902Z"
+    description: MongoDB Kubernetes Community Operator - CRDs
+    digest: 91be269c61391c5575f5898a927918eda989e56c5b52763562500be7982d76b9
+    home: https://github.com/mongodb/mongodb-kubernetes-operator
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: community-operator-crds
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/community-operator-crds-0.7.4/community-operator-crds-0.7.4.tgz
+    version: 0.7.4
+  - apiVersion: v2
     appVersion: 0.7.3
     created: "2022-03-09T11:19:51.943419859Z"
     description: MongoDB Kubernetes Community Operator - CRDs
@@ -870,4 +890,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2022-06-01T15:07:40.976896744Z"
+generated: "2022-06-14T11:16:58.075341204Z"
