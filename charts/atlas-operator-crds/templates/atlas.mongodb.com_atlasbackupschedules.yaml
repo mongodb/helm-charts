@@ -6,6 +6,8 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
+  labels:
+    {{- include "mongodb-atlas-operator.labels" . | nindent 4 }}
   name: atlasbackupschedules.atlas.mongodb.com
 spec:
   group: atlas.mongodb.com
