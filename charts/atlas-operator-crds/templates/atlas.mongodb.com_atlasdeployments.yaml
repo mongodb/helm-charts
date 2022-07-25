@@ -5,7 +5,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
-  abels:
+  labels:
     {{- include "mongodb-atlas-operator.labels" . | nindent 4 }}
   creationTimestamp: null
   name: atlasdeployments.atlas.mongodb.com
