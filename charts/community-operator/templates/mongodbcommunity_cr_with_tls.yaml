@@ -45,8 +45,8 @@ spec:
   issuerRef:
     name: tls-ca-issuer
     kind: Issuer
-  duration: 8760h   # 365 days
-  renewBefore: 720h # 30 days
+  duration: {{ .Values.resource.tls.certManager.certDuration | default "8760h" }}   # default to 365 days
+  renewBefore: {{ .Values.resource.tls.certManager.renewCertBefore | default "720h" }} # default to 30 days
   commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
   dnsNames:
     - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
