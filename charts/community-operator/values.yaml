@@ -11,7 +11,7 @@ operator:
   deploymentName: mongodb-kubernetes-operator
 
   # Version of mongodb-kubernetes-operator
-  version: 0.7.3
+  version: 0.7.5
 
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
@@ -34,16 +34,24 @@ operator:
 ## Operator's database
 database:
   name: mongodb-database
+  # set this to the namespace where you would like
+  # to deploy the MongoDB database,
+  # Note if the database namespace is not same
+  # as the operator namespace,
+  # make sure to set "watchNamespace" to "*"
+  # to ensure that the operator has the
+  # permission to reconcile resources in other namespaces
+  # namespace: mongodb-database
 
 agent:
   name: mongodb-agent
   version: 11.12.0.7388-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
-  version: 1.0.4
+  version: 1.0.5
 readinessProbe:
   name: mongodb-kubernetes-readinessprobe
-  version: 1.0.8
+  version: 1.0.11
 mongodb:
   name: mongo
   repo: docker.io
