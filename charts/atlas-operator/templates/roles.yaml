@@ -5,7 +5,7 @@
 {{- /* so far we support only a single namespace but otherwise should iterate over the watchNamespaces */}}
 {{- if .Values.watchNamespaces }}
 {{- range $namespace := .Values.watchNamespaces }}
-
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -19,7 +19,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $operatorName }}
+  name: "{{ $operatorName }}"
   namespace: {{ $namespace }}
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
@@ -41,7 +41,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $operatorName }}
+  name: "{{ $operatorName }}"
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
