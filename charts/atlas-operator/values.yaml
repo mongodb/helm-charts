@@ -16,7 +16,7 @@ mongodb-atlas-operator-crds:
   enabled: true
 
 # atlasURI is the URI of the MongoDB Atlas. You should not change this value.
-atlasURI: https://cloud.mongodb.com
+atlasURI: https://cloud.mongodb.com/
 
 # globalConnectionSecret is a default "global" Secret containing Atlas
 # authentication information.

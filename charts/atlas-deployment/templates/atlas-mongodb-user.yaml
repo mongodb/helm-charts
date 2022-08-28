@@ -4,17 +4,17 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasDatabaseUser
 metadata:
-  name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}
+  name: {{ include "atlas-deployment.fullname" $ }}-{{ .username }}
   namespace: {{ $.Release.Namespace }}
   labels:
-    {{- include "atlas-cluster.labels" $ | nindent 4 }}
+    {{- include "atlas-deployment.labels" $ | nindent 4 }}
 spec:
   username: {{ .username }}
   databaseName: {{ .databaseName }}
   passwordSecretRef:
-    name: {{ include "atlas-cluster.fullname" $ }}-{{ .username }}
+    name: {{ include "atlas-deployment.fullname" $ }}-{{ .username }}
   projectRef:
-    name: {{ include "atlas-cluster.projectfullname" $ }}
+    name: {{ include "atlas-deployment.projectfullname" $ }}
   roles:
     {{- toYaml .roles | nindent 4 }}
   {{- if .deleteAfterDate }}

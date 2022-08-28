@@ -18,13 +18,19 @@ operator:
   deployment_name: mongodb-enterprise-operator
 
   # Version of mongodb-enterprise-operator
-  version: 1.15.0
+  version: 1.16.4
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
   - mongodb
   - opsmanagers
   - mongodbusers
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
 
   # Create operator-service account
   createOperatorServiceAccount: true
@@ -34,12 +40,6 @@ operator:
     enabled: false
     tlsSecretRef: ''
 
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
-
 ## Database
 database:
   name: mongodb-enterprise-database
@@ -47,7 +47,7 @@ database:
 
 initDatabase:
   name: mongodb-enterprise-init-database
-  version: 1.0.7
+  version: 1.0.11
 
 ## Ops Manager
 opsManager:
@@ -55,16 +55,16 @@ opsManager:
 
 initOpsManager:
   name: mongodb-enterprise-init-ops-manager
-  version: 1.0.6
+  version: 1.0.8
 
 ## Application Database
 initAppDb:
   name: mongodb-enterprise-init-appdb
-  version: 1.0.9
+  version: 1.0.11
 
 agent:
   name: mongodb-agent
-  version: 11.0.11.7036-1
+  version: 11.12.0.7388-1
 
 mongodb:
   name: mongodb-enterprise-appdb-database

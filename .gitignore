@@ -3,3 +3,4 @@ private/
 *.key
 *.tgz
 .DS_Store
+.idea

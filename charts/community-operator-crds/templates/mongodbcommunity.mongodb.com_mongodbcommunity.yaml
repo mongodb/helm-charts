@@ -5,6 +5,12 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
+    service.binding/type: 'mongodb'
+    service.binding/provider: 'community'
+    service.binding: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret'
+    service.binding/connectionString: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=connectionString.standardSrv'
+    service.binding/username: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=username'
+    service.binding/password: 'path={.metadata.name}-{.spec.users[0].db}-{.spec.users[0].name},objectType=Secret,sourceKey=password'
   creationTimestamp: null
   name: mongodbcommunity.mongodbcommunity.mongodb.com
 spec:
@@ -50,14 +56,14 @@ spec:
               additionalMongodConfig:
                 description: 'AdditionalMongodConfig is additional configuration that
                   can be passed to each data-bearing mongod at runtime. Uses the same
-                  structure as the mongod configuration file: https://docs.mongodb.com/manual/reference/configuration-options/'
+                  structure as the mongod configuration file: https://www.mongodb.com/docs/manual/reference/configuration-options/'
                 nullable: true
                 type: object
                 x-kubernetes-preserve-unknown-fields: true
               arbiters:
                 description: 'Arbiters is the number of arbiters to add to the Replica
                   Set. It is not recommended to have more than one arbiter per Replica
-                  Set. More info: https://docs.mongodb.com/manual/tutorial/add-replica-set-arbiter/'
+                  Set. More info: https://www.mongodb.com/docs/manual/tutorial/add-replica-set-arbiter/'
                 type: integer
               automationConfig:
                 description: AutomationConfigOverride is merged on top of the operator
@@ -88,6 +94,53 @@ spec:
               members:
                 description: Members is the number of members in the replica set
                 type: integer
+              prometheus:
+                description: Prometheus configurations.
+                properties:
+                  metricsPath:
+                    description: Indicates path to the metrics endpoint.
+                    pattern: ^\/[a-z0-9]+$
+                    type: string
+                  passwordSecretRef:
+                    description: Name of a Secret containing a HTTP Basic Auth Password.
+                    properties:
+                      key:
+                        description: Key is the key in the secret storing this password.
+                          Defaults to "password"
+                        type: string
+                      name:
+                        description: Name is the name of the secret storing this user's
+                          password
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  port:
+                    description: Port where metrics endpoint will bind to. Defaults
+                      to 9216.
+                    type: integer
+                  tlsSecretKeyRef:
+                    description: Name of a Secret (type kubernetes.io/tls) holding
+                      the certificates to use in the Prometheus endpoint.
+                    properties:
+                      key:
+                        description: Key is the key in the secret storing this password.
+                          Defaults to "password"
+                        type: string
+                      name:
+                        description: Name is the name of the secret storing this user's
+                          password
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  username:
+                    description: HTTP Basic Auth Username for metrics endpoint.
+                    type: string
+                required:
+                - passwordSecretRef
+                - username
+                type: object
               replicaSetHorizons:
                 description: ReplicaSetHorizons Add this parameter and values if you
                   need your database to be accessed outside of Kubernetes. This setting
@@ -165,7 +218,7 @@ spec:
                                 type: array
                               resource:
                                 description: Resource specifies specifies the resources
-                                  upon which a privilege permits actions. See https://docs.mongodb.com/manual/reference/resource-document
+                                  upon which a privilege permits actions. See https://www.mongodb.com/docs/manual/reference/resource-document
                                   for more.
                                 properties:
                                   anyResource:
@@ -284,7 +337,14 @@ spec:
                   in your deployment
                 items:
                   properties:
+                    connectionStringSecretName:
+                      description: ConnectionStringSecretName is the name of the secret
+                        object created by the operator which exposes the connection
+                        strings for the user. If provided, this secret must be different
+                        for each user in a deployment.
+                      type: string
                     db:
+                      default: admin
                       description: DB is the database the user is stored in. Defaults
                         to "admin"
                       type: string
@@ -325,7 +385,8 @@ spec:
                     scramCredentialsSecretName:
                       description: ScramCredentialsSecretName appended by string "scram-credentials"
                         is the name of the secret object created by the mongoDB operator
-                        for storing SCRAM credentials
+                        for storing SCRAM credentials These secrets names must be
+                        different for each user in a deployment.
                       pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                       type: string
                   required:
@@ -363,9 +424,7 @@ spec:
               version:
                 type: string
             required:
-            - currentMongoDBArbiters
             - currentMongoDBMembers
-            - currentStatefulSetArbitersReplicas
             - currentStatefulSetReplicas
             - mongoUri
             - phase

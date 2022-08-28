@@ -7,7 +7,7 @@ Your release is named {{ .Release.Name }}.
 User connection secrets are:
 {{- range $index, $user := .Values.users }}
 User {{ $index }}: {{ $user.username }}
-    Secret name: {{ include "atlas-cluster.fullname" $ }}-{{ $user.username }}
+    Secret name: {{ include "atlas-deployment.fullname" $ }}-{{ $user.username }}
     Secret namespace: {{ $.Release.Namespace }}
 
 {{- end }}

@@ -87,7 +87,7 @@ RBAC permissions
 - apiGroups:
   - atlas.mongodb.com
   resources:
-  - atlasclusters
+  - atlasdeployments
   verbs:
   - create
   - delete
@@ -99,7 +99,7 @@ RBAC permissions
 - apiGroups:
   - atlas.mongodb.com
   resources:
-  - atlasclusters/status
+  - atlasdeployments/status
   verbs:
   - get
   - patch
@@ -148,6 +148,46 @@ RBAC permissions
   - atlas.mongodb.com
   resources:
   - atlasprojects/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasbackuppolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasbackuppolicies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasbackupschedules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasbackupschedules/status
   verbs:
   - get
   - patch

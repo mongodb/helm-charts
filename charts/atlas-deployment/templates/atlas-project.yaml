@@ -2,24 +2,24 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasProject
 metadata:
-  name: {{ include "atlas-cluster.projectfullname" . }}
+  name: {{ include "atlas-deployment.projectfullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "atlas-cluster.labels" . | nindent 4 }}
+    {{- include "atlas-deployment.labels" . | nindent 4 }}
   {{- if .Values.project.annotations }}
   annotations:
 {{ toYaml .Values.project.annotations | indent 4 }}
   {{- end }}
 spec:
   name: {{ .Values.project.atlasProjectName }}
-{{- if not .Values.mongodbAtlasOperator.clusterWide }}
+{{- if not .Values.atlas.secret.global }}
   connectionSecretRef:
-{{- if .Values.atlas.connectionSecretName }}
-    name: {{ .Values.atlas.connectionSecretName}}
-{{- else if and (not .Values.atlas.create) .Values.atlas.existingSecretName  }}
-    name: {{ .Values.atlas.existingSecretName }}
+{{- if .Values.atlas.secret.existing }}
+    name: {{ .Values.atlas.secret.existing }}
+{{- else if .Values.atlas.secret.setCustomName }}
+    name: {{ .Values.atlas.secret.setCustomName }}
 {{- else }}
-    name: {{ include "atlas-cluster.fullname" . }}-secret
+    name: {{ include "atlas-deployment.fullname" . }}-secret
 {{- end }}
 {{- end }}
   projectIpAccessList:

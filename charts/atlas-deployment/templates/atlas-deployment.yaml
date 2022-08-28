@@ -1,0 +1,125 @@
+{{- range .Values.deployments }}
+---
+apiVersion: atlas.mongodb.com/v1
+kind: AtlasDeployment
+metadata:
+  {{- if .serverlessSpec }}
+  name: {{ .serverlessSpec.name }}
+  {{- else if .advancedDeploymentSpec }}
+  name: {{ .advancedDeploymentSpec.name }}
+  {{- else if .deploymentSpec }}
+  name: {{ .deploymentSpec.name }}
+  {{- end }}
+  labels:
+    {{- include "atlas-deployment.labels" $ | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+  {{- if .annotations }}
+  annotations:
+{{ toYaml .annotations | indent 4 }}
+  {{- end }}
+spec:
+  projectRef:
+    name: {{ include "atlas-deployment.projectfullname" $ }}
+  {{- if .deploymentSpec }}
+  deploymentSpec:
+    name: {{ .deploymentSpec.name }}
+    providerSettings:
+  {{- with .deploymentSpec.providerSettings -}}
+    {{- $provider := .providerName -}}
+    {{- range $key, $val := . }}
+    {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
+      {{- $key | indent 2 }}: {{ $val }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if .deploymentSpec.autoScaling }}
+    autoScaling:
+  {{- with .autoScaling }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+  {{- if .autoIndexingEnabled }}
+      autoIndexingEnabled: false
+  {{- end }}
+  {{- if .deploymentSpec.biConnector }}
+    biConnector:
+      enabled: {{ .deploymentSpec.biConnector.enabled }}
+      readPreference: {{ .deploymentSpec.biConnector.readPreference }}
+  {{- end }}
+  {{- if .deploymentSpec.clusterType }}
+    clusterType: {{ .deploymentSpec.clusterType }}
+  {{- end }}
+  {{- if .deploymentSpec.diskSizeGB }}
+    diskSizeGB: {{ .deploymentSpec.diskSizeGB }}
+  {{- end }}
+  {{- if .deploymentSpec.encryptionAtRestProvider }}
+    encryptionAtRestProvider: {{ .deploymentSpec.encryptionAtRestProvider }}
+  {{- end }}
+  {{- if .deploymentSpec.labels }}
+    labels:
+    {{- with .deploymentSpec.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- if .deploymentSpec.mongoDBMajorVersion }}
+    mongoDBMajorVersion: {{ .deploymentSpec.mongoDBMajorVersion }}
+  {{- end }}
+  {{- if .deploymentSpec.numShards }}
+    numShards: {{ .deploymentSpec.numShards }}
+  {{- end }}
+  {{- if .deploymentSpec.paused }}
+    paused: {{ .deploymentSpec.paused }}
+  {{- end }}
+  {{- if .deploymentSpec.pitEnabled }}
+    pitEnabled: {{ .deploymentSpec.pitEnabled }}
+  {{- end }}
+  {{- if .deploymentSpec.providerBackupEnabled }}
+    providerBackupEnabled: {{ .deploymentSpec.providerBackupEnabled }}
+  {{- end }}
+  {{- if .deploymentSpec.replicationSpecs }}
+    replicationSpecs:
+    {{- with .deploymentSpec.replicationSpecs }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if .advancedDeploymentSpec }}
+  advancedDeploymentSpec:
+  {{- toYaml .advancedDeploymentSpec | nindent 4}}
+  {{- end }}
+  {{- if .serverlessSpec }}
+  serverlessSpec:
+  {{- toYaml .serverlessSpec | nindent 4}}
+  {{- end }}
+
+{{- if $.Values.postInstallHook.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .name | quote }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+spec:
+  template:
+    metadata:
+      name: {{ .name | quote }}
+      labels:
+        app.kubernetes.io/managed-by: {{ .name | quote }}
+        app.kubernetes.io/instance: {{ .name | quote }}
+    spec:
+      serviceAccountName: mongodb-atlas-operator
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          imagePullPolicy: Always
+          image: "{{ $.Values.postInstallHook.registry }}/{{ $.Values.postInstallHook.image }}:{{ $.Values.postInstallHook.version }}"
+          env:
+            - name: "CLUSTER_NAME"
+              value: "{{ .name }}"
+            - name: "NAMESPACE"
+              value: "{{ $.Release.Namespace }}"
+{{- end }}
+{{- end }}

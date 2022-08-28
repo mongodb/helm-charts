@@ -4,18 +4,18 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
 {{- if .Values.registry.imagePullSecrets}}
 imagePullSecrets:
-  - name: {{ .Values.registry.imagePullSecrets }}
+- name: {{ .Values.registry.imagePullSecrets }}
 {{- end }}
 
 {{- end }}
 
-{{- $watchNamespace := list .Release.Namespace }}
+{{- $watchNamespace := include "mongodb-enterprise-operator.namespace" . | list }}
 {{- if .Values.operator.watchNamespace }}
 {{- $watchNamespace = regexSplit "," .Values.operator.watchNamespace -1 }}
-{{- $watchNamespace = concat $watchNamespace (list .Release.Namespace) }}
+{{- $watchNamespace = concat $watchNamespace (include "mongodb-enterprise-operator.namespace" . | list) | uniq }}
 {{- end }}
 
 {{- $roleScope := "Role" -}}
@@ -29,11 +29,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ .Values.operator.name }}
 {{- if eq $roleScope "Role" }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
 {{- end }}
 rules:
 - apiGroups:
-  - ""
+  - ''
   resources:
   - services
   verbs:
@@ -44,7 +44,7 @@ rules:
   - update
   - delete
 - apiGroups:
-  - ""
+  - ''
   resources:
   - secrets
   - configmaps
@@ -67,7 +67,7 @@ rules:
   - delete
   - update
 - apiGroups:
-  - ""
+  - ''
   resources:
   - pods
   verbs:
@@ -79,7 +79,7 @@ rules:
 - apiGroups:
   - mongodb.com
   verbs:
-  - "*"
+  - '*'
   resources:
   - mongodb
   - mongodb/finalizers
@@ -96,7 +96,7 @@ rules:
 {{- end }}
 {{- if eq $roleScope "ClusterRole" }}
 - apiGroups:
-  - ""
+  - ''
   resources:
   - namespaces
   verbs:
@@ -112,7 +112,7 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.operator.name }}-{{ .Release.Namespace }}-webhook-binding
+  name: {{ .Values.operator.name }}-{{ include "mongodb-enterprise-operator.namespace" . }}-webhook-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -120,7 +120,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
 
 {{- range $idx, $namespace := $watchNamespace }}
 
@@ -146,5 +146,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ $.Values.operator.name }}
-  namespace: {{ $.Release.Namespace }}
+  namespace: {{ include "mongodb-enterprise-operator.namespace" $ }}
 {{- end }}
