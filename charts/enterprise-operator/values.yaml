@@ -18,7 +18,7 @@ operator:
   deployment_name: mongodb-enterprise-operator
 
   # Version of mongodb-enterprise-operator
-  version: 1.16.4
+  version: 1.17.0
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
@@ -47,7 +47,7 @@ database:
 
 initDatabase:
   name: mongodb-enterprise-init-database
-  version: 1.0.11
+  version: 1.0.12
 
 ## Ops Manager
 opsManager:
@@ -55,12 +55,12 @@ opsManager:
 
 initOpsManager:
   name: mongodb-enterprise-init-ops-manager
-  version: 1.0.8
+  version: 1.0.9
 
 ## Application Database
 initAppDb:
   name: mongodb-enterprise-init-appdb
-  version: 1.0.11
+  version: 1.0.12
 
 agent:
   name: mongodb-agent
@@ -89,7 +89,7 @@ registry:
 multiCluster:
   clusters: []
   kubeConfigSecretName: mongodb-enterprise-operator-multi-cluster-kubeconfig
-
+  performFailOver: true
 
 # Set this to false to disable subresource utilization
 # It might be required on some versions of Openshift
