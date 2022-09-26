@@ -12,7 +12,7 @@ operator:
   name: mongodb-enterprise-operator
 
   # Name of the operator image
-  operator_image_name: enterprise-operator
+  operator_image_name: mongodb-enterprise-operator-ubi
 
   # Name of the deployment of the operator pod
   deployment_name: mongodb-enterprise-operator
@@ -34,23 +34,23 @@ operator:
 
 ## Database
 database:
-  name: enterprise-database
+  name: mongodb-enterprise-database-ubi
   version: 2.0.2
 
 initDatabase:
-  name: mongodb-enterprise-init-database
+  name: mongodb-enterprise-init-database-ubi
   version: 1.0.12
 
 ## Ops Manager
 opsManager:
-  name: mongodb-enterprise-ops-manager
+  name: mongodb-enterprise-ops-manager-ubi
 
 initOpsManager:
-  name: mongodb-enterprise-init-ops-manager
+  name: mongodb-enterprise-init-ops-manager-ubi
   version: 1.0.9
 
 initAppDb:
-  name: mongodb-enterprise-init-appdb
+  name: mongodb-enterprise-init-appdb-ubi
   version: 1.0.12
 
 agent:
@@ -58,7 +58,7 @@ agent:
   version: 11.12.0.7388-1
 
 mongodb:
-  name: mongodb-enterprise-appdb-database
+  name: mongodb-enterprise-appdb-database-ubi
   repo: quay.io/mongodb
 
 
@@ -67,14 +67,14 @@ registry:
   # The pull secret must be specified
   imagePullSecrets:
   pullPolicy: Always
-  database: registry.connect.redhat.com/mongodb
-  operator: registry.connect.redhat.com/mongodb
-  initDatabase: registry.connect.redhat.com/mongodb
-  initOpsManager: registry.connect.redhat.com/mongodb
-  opsManager: registry.connect.redhat.com/mongodb
-  initAppDb: registry.connect.redhat.com/mongodb
-  appDb: registry.connect.redhat.com/mongodb
-  agent: registry.connect.redhat.com/mongodb
+  operator: quay.io/mongodb
+  database: quay.io/mongodb
+  initDatabase: quay.io/mongodb
+  initOpsManager: quay.io/mongodb
+  opsManager: quay.io/mongodb
+  initAppDb: quay.io/mongodb
+  appDb: quay.io/mongodb
+  agent: quay.io/mongodb
 
 
 # Set this to false to disable subresource utilization
