@@ -453,6 +453,7 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/enterprise-database-1.13.0/enterprise-database-1.13.0.tgz
     version: 1.13.0
+  enterprise-operator:
   - apiVersion: v2
     created: "2022-10-10T07:34:14.289421968Z"
     description: MongoDB Kubernetes Enterprise Operator
