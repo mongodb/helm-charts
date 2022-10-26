@@ -1,13 +1,13 @@
-
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.9.2
-  labels:
-    {{- include "mongodb-atlas-operator-crds.labels" . | nindent 4 }}
   creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: mongodb-atlas-kubernetes-operator
+    app.kubernetes.io/name: mongodb-atlas-kubernetes-operator
   name: atlasdeployments.atlas.mongodb.com
 spec:
   group: atlas.mongodb.com
@@ -522,6 +522,8 @@ spec:
                     type: string
                   noTableScan:
                     type: boolean
+                  oplogMinRetentionHours:
+                    type: string
                   oplogSizeMB:
                     format: int64
                     type: integer
@@ -804,5 +806,5 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
