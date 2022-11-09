@@ -36,6 +36,25 @@ helm install atlas-operator mongodb/mongodb-atlas-operator \
     --create-namespace
 ```
 
+### Watching over multiple Namespaces
+
+This installation mode will allow the Operator to watch over resources created in the 
+namespaces specified by the watchNamespaces parameter.
+
+```shell
+helm install atlas-operator mongodb/mongodb-atlas-operator \
+    --namespace=atlas-operator \
+    --set watchNamespaces={"ns1","ns2"} \
+    --create-namespace
+```
+
+Note: Same thing can be achieved via _values.yaml_ as well.
+```shell
+watchNamespaces:
+  - ns1
+  - ns2
+```
+
 ### Watching over all Namespaces with Global Atlas configuration
 
 In this mode the Operator will be installed in _Cluster wide mode_ with [Global
