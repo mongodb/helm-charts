@@ -44,7 +44,7 @@ namespaces specified by the watchNamespaces parameter.
 ```shell
 helm install atlas-operator mongodb/mongodb-atlas-operator \
     --namespace=atlas-operator \
-    --set watchNamespaces={"ns1","ns2"} \
+    --set watchNamespaces="{ns1,ns2}" \
     --create-namespace
 ```
 
