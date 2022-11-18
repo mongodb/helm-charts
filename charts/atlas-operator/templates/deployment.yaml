@@ -42,7 +42,7 @@ spec:
           env:
           {{- if .Values.watchNamespaces }}
           - name: WATCH_NAMESPACE
-            value: "{{- .Values.watchNamespaces }}"
+            value: "{{ join "," .Values.watchNamespaces }}"
           {{- end }}
           - name: OPERATOR_POD_NAME
             valueFrom:

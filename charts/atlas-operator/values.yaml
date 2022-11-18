@@ -35,7 +35,7 @@ globalConnectionSecret:
 # The only possible values are:
 # - empty (watch all namespaces) or
 # - the name of the same namespace where the Operator is installed to.
-watchNamespaces: ""
+watchNamespaces: []
 
 # Use these values to use a different Operator image.
 image:

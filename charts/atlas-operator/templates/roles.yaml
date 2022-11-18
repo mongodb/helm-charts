@@ -1,14 +1,16 @@
 {{- $operatorName := include "mongodb-atlas-operator.name" . -}}
-{{- $operatorNamespaceManaged := contains .Release.Namespace .Values.watchNamespaces -}}
+{{- $serviceAccountName := include "mongodb-atlas-operator.serviceAccountName" . -}}
+{{- $operatorNamespaceManaged := has .Release.Namespace .Values.watchNamespaces -}}
 
 {{- /* so far we support only a single namespace but otherwise should iterate over the watchNamespaces */}}
 {{- if .Values.watchNamespaces }}
-
+{{- range $namespace := .Values.watchNamespaces }}
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: "{{ $operatorName }}"
-  namespace: {{ .Values.watchNamespaces }}
+  namespace: {{ $namespace }}
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
@@ -17,8 +19,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $operatorName }}
-  namespace: {{ .Values.watchNamespaces }}
+  name: "{{ $operatorName }}"
+  namespace: {{ $namespace }}
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 roleRef:
@@ -27,9 +29,10 @@ roleRef:
   name: "{{ $operatorName }}"
 subjects:
   - kind: ServiceAccount
-    name: "{{ include "mongodb-atlas-operator.serviceAccountName" . }}"
+    name: "{{ $serviceAccountName }}"
     namespace: {{ $.Release.Namespace }}
 
+{{- end }}
 {{- end }}
 
 {{- /* If operator namespace is not in the managed namespaces list, we need to give the same permissions to it in adition to above */}}
@@ -38,7 +41,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $operatorName }}
+  name: "{{ $operatorName }}"
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
@@ -56,7 +59,7 @@ roleRef:
   name: "{{ $operatorName }}"
 subjects:
   - kind: ServiceAccount
-    name: "{{ include "mongodb-atlas-operator.serviceAccountName" . }}"
+    name: "{{ $serviceAccountName }}"
     namespace: {{ $.Release.Namespace }}
 {{- end }}
 
@@ -102,5 +105,5 @@ roleRef:
   name: "{{ $operatorName }}-leader-election-role"
 subjects:
   - kind: ServiceAccount
-    name: {{ include "mongodb-atlas-operator.serviceAccountName" . }}
+    name: {{ $serviceAccountName }}
     namespace: {{ $.Release.Namespace }}
