@@ -10,14 +10,6 @@ The following Charts are supported by MongoDB.
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
 | [enterprise-operator](charts/enterprise-operator) | MongoDB Enterprise Kubernetes Operator Helm Chart.                        |
 | [enterprise-database](charts/enterprise-database) | MongoDB Enterprise Kubernetes Database Helm Chart.                        |
-
-## Trial Version of Charts
-
-The following Charts are considered "Trial" or "Beta"; they will be eventually supported by
-MongoDB and we encourage users to try them, test them and report any issues you might find.
-
-| Charts                                            | Description                                                               |
-| ------------------------------------------------- | ------------------------------------------------------------------------- |
 | [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                        |
 | [atlas-deployment](charts/atlas-deployment)       | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources.     |
 | [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.              |
