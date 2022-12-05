@@ -35,7 +35,7 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config .github/ct.yaml
 
-  kubeval-chart:
+  kubeconform-chart:
     runs-on: ubuntu-latest
     needs:
       - lint-chart
@@ -55,7 +55,7 @@ jobs:
           .github/dependency_as_file.sh atlas-operator-crds atlas-operator
           .github/dependency_as_file.sh community-operator-crds community-operator
 
-      - name: Run kubeval
+      - name: Run kubeconform
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
-        run: .github/kubeval.sh
+        run: .github/kubeconform.sh
