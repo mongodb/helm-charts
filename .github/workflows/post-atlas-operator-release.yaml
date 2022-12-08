@@ -21,7 +21,7 @@ jobs:
           cd ..
           mkdir helm
           cd helm
-          git clone https://github.com/Sugar-pack/helm-charts.git
+          git clone https://github.com/mongodb/helm-charts.git
           cd ..
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
