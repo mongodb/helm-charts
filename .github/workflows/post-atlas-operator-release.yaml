@@ -27,7 +27,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy crd template files
         run: |
-          find operator/mongodb-atlas-kubernetes/bundle/manifests -name "*.yaml" -not -name "*.clusterserviceversion.yaml" -exec cp "{}" helm/helm-charts/charts/atlas-operator-crds/ \;
+          find operator/mongodb-atlas-kubernetes/bundle/manifests -name "*.yaml" -not -name "*.clusterserviceversion.yaml" \
+          -not -name "mongodb-atlas-controller-manager-metrics-service_v1_service.yaml" \
+          -not -name "mongodb-atlas-metrics-reader_rbac.authorization.k8s.io_v1_clusterrole.yaml" \
+          -exec cp "{}" helm/helm-charts/charts/atlas-operator-crds/templates \;
       - name: Edit versions in chart files
         id: set-version
         run: |
