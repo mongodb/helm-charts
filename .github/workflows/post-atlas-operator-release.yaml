@@ -28,11 +28,6 @@ jobs:
       - name: Copy crd template files
         run: |
           find operator/mongodb-atlas-kubernetes/bundle/manifests -name "*.yaml" -not -name "*.clusterserviceversion.yaml" -exec cp "{}" helm/helm-charts/charts/atlas-operator-crds/ \;
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasbackupschedules.yaml helm/helm-charts/charts/atlas-operator-crds/templates
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasdatabaseusers.yaml helm/helm-charts/charts/atlas-operator-crds/templates
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasdeployments.yaml helm/helm-charts/charts/atlas-operator-crds/templates
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasprojects.yaml helm/helm-charts/charts/atlas-operator-crds/templates
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasteams.yaml helm/helm-charts/charts/atlas-operator-crds/templates
       - name: Edit versions in chart files
         id: set-version
         run: |
