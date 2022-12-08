@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy crd template files
         run: |
-          cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasbackuppolicies.yaml helm/helm-charts/charts/atlas-operator-crds/templates
+          find operator/mongodb-atlas-kubernetes/bundle/manifests -name "*.yaml" -not -name "*.clusterserviceversion.yaml" -exec cp "{}" helm/helm-charts/charts/atlas-operator-crds/ \;
           cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasbackupschedules.yaml helm/helm-charts/charts/atlas-operator-crds/templates
           cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasdatabaseusers.yaml helm/helm-charts/charts/atlas-operator-crds/templates
           cp -a operator/mongodb-atlas-kubernetes/bundle/manifests/atlas.mongodb.com_atlasdeployments.yaml helm/helm-charts/charts/atlas-operator-crds/templates
