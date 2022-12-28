@@ -1,10 +1,9 @@
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.4.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: opsmanagers.mongodb.com
 spec:
@@ -319,6 +318,7 @@ spec:
                                 required:
                                 - key
                                 type: object
+                                x-kubernetes-map-type: atomic
                               automationUserName:
                                 type: string
                               clientCertificateSecretRef:
@@ -373,6 +373,7 @@ spec:
                                 required:
                                 - key
                                 type: object
+                                x-kubernetes-map-type: atomic
                               servers:
                                 items:
                                   type: string
@@ -481,18 +482,6 @@ spec:
                               and not on the AppDB, where TLS is configured by setting
                               `secretRef.Name`.
                             type: boolean
-                          secretRef:
-                            description: DEPRECATED please use security.certsSecretPrefix
-                              instead SecretRef points to a Secret object containing
-                              the certificates to use when enabling TLS.
-                            properties:
-                              prefix:
-                                description: DEPRECATED please use security.certsSecretPrefix
-                                  instead
-                                type: string
-                            required:
-                            - prefix
-                            type: object
                         type: object
                     type: object
                   service:
@@ -514,6 +503,11 @@ spec:
               backup:
                 description: Backup
                 properties:
+                  assignmentLabels:
+                    description: Assignment Labels set in the Ops Manager
+                    items:
+                      type: string
+                    type: array
                   blockStores:
                     items:
                       description: DataStoreConfig is the description of the config
@@ -521,6 +515,11 @@ spec:
                         Optionally references the user if the Mongodb is configured
                         with authentication
                       properties:
+                        assignmentLabels:
+                          description: Assignment Labels set in the Ops Manager
+                          items:
+                            type: string
+                          type: array
                         mongodbResourceRef:
                           properties:
                             name:
@@ -548,6 +547,35 @@ spec:
                     description: Enabled indicates if Backups will be enabled for
                       this Ops Manager.
                     type: boolean
+                  encryption:
+                    description: Encryption settings
+                    properties:
+                      kmip:
+                        description: Kmip corresponds to the KMIP configuration assigned
+                          to the Ops Manager Project's configuration.
+                        properties:
+                          server:
+                            description: KMIP Server configuration
+                            properties:
+                              ca:
+                                description: CA corresponds to a ConfigMap containing
+                                  an entry for the CA certificate (ca.pem) used for
+                                  KMIP authentication
+                                type: string
+                              url:
+                                description: 'KMIP Server url in the following format:
+                                  hostname:port Valid examples are: 10.10.10.3:5696
+                                  my-kmip-server.mycorp.com:5696 kmip-svc.svc.cluster.local:5696'
+                                pattern: '[^\:]+:[0-9]{0,5}'
+                                type: string
+                            required:
+                            - ca
+                            - url
+                            type: object
+                        required:
+                        - server
+                        type: object
+                    type: object
                   externalServiceEnabled:
                     type: boolean
                   fileSystemStores:
@@ -588,6 +616,11 @@ spec:
                         Optionally references the user if the Mongodb is configured
                         with authentication
                       properties:
+                        assignmentLabels:
+                          description: Assignment Labels set in the Ops Manager
+                          items:
+                            type: string
+                          type: array
                         mongodbResourceRef:
                           properties:
                             name:
@@ -626,6 +659,11 @@ spec:
                       store configs used for backup.
                     items:
                       properties:
+                        assignmentLabels:
+                          description: Assignment Labels set in the Ops Manager
+                          items:
+                            type: string
+                          type: array
                         customCertificate:
                           description: Set this to "true" when you have custom certificates
                             for your S3 buckets
@@ -679,6 +717,11 @@ spec:
                   s3Stores:
                     items:
                       properties:
+                        assignmentLabels:
+                          description: Assignment Labels set in the Ops Manager
+                          items:
+                            type: string
+                          type: array
                         customCertificate:
                           description: Set this to "true" when you have custom certificates
                             for your S3 buckets
@@ -1008,9 +1051,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
