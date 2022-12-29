@@ -4,3 +4,4 @@ private/
 *.tgz
 .DS_Store
 .idea
+*.iml
