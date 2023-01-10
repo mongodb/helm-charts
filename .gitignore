@@ -5,3 +5,7 @@ private/
 .DS_Store
 .idea
 *.iml
+
+# ignoring generated charts and chart locks
+Chart.lock
+crds
