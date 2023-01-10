@@ -45,13 +45,13 @@ database:
 
 agent:
   name: mongodb-agent
-  version: 12.0.10.7591-1
+  version: 12.0.15.7646-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
-  version: 1.0.5
+  version: 1.0.6
 readinessProbe:
   name: mongodb-kubernetes-readinessprobe
-  version: 1.0.11
+  version: 1.0.12
 mongodb:
   name: mongo
   repo: docker.io
