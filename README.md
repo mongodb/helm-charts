@@ -45,7 +45,7 @@ Please file issues before filing PRs. For PRs to be accepted, contributors must 
 
 Reviewers, please ensure that the CLA has been signed by referring to [the contributors tool](https://contributors.corp.mongodb.com/) (internal link).
 
-
+## License
 
 These helm charts are available under the Apache 2 license. Please refer to the github repos of the software that the charts install for additional license information.
 
