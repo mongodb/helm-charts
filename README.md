@@ -44,3 +44,11 @@ $ helm repo add mongodb https://mongodb.github.io/helm-charts
 Please file issues before filing PRs. For PRs to be accepted, contributors must sign our [CLA](https://www.mongodb.com/legal/contributor-agreement).
 
 Reviewers, please ensure that the CLA has been signed by referring to [the contributors tool](https://contributors.corp.mongodb.com/) (internal link).
+
+## License
+
+These helm charts are available under the Apache 2 license. Please refer to the github repos of the software that the charts install for additional license information.
+
+* [MongoDB Atlas Operator](https://github.com/mongodb/mongodb-atlas-kubernetes)
+* [MongoDB Community Kubernetes Operator](https://github.com/mongodb/mongodb-kubernetes-operator)
+* [MongoDB Enterprise Kubernetes Operator](https://github.com/mongodb/mongodb-enterprise-kubernetes)
