@@ -30,6 +30,7 @@ spec:
         - name: manager
           args:
             - --atlas-domain={{ .Values.atlasURI }}
+            - --revision={{ .Values.revision }}
             - "--health-probe-bind-address=:8081"
             - "--metrics-bind-address=:8080"
             - "--leader-elect"
