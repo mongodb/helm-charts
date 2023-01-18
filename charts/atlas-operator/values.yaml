@@ -18,8 +18,8 @@ mongodb-atlas-operator-crds:
 # atlasURI is the URI of the MongoDB Atlas. You should not change this value.
 atlasURI: https://cloud.mongodb.com/
 
-# revision is used to only reconsile resources with the mongodb.com/atlas-revision=<revision> annotation
-revision: ""
+# operatorClass is used to only reconsile resources with the mongodb.com/atlas-operator-class=<operator-class> annotation
+operatorClass: ""
 
 # globalConnectionSecret is a default "global" Secret containing Atlas
 # authentication information.
