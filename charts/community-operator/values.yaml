@@ -11,7 +11,7 @@ operator:
   deploymentName: mongodb-kubernetes-operator
 
   # Version of mongodb-kubernetes-operator
-  version: 0.7.6
+  version: 0.7.7
 
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
