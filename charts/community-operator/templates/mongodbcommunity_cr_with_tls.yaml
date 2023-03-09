@@ -75,5 +75,13 @@ spec:
       {{- end }}
     authentication:
       modes: ["SCRAM"]
-  users: []
+  {{ with .Values.resource.statefulSet }}
+  statefulSet: 
+  {{- toYaml . | nindent 4 }}
+  {{- end}}
+  
+  {{- with .Values.resource.users }}
+  users:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}
