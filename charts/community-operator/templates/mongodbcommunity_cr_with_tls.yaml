@@ -75,5 +75,8 @@ spec:
       {{- end }}
     authentication:
       modes: ["SCRAM"]
-  users: []
+  {{- with .Values.resource.users }}
+  users:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}
