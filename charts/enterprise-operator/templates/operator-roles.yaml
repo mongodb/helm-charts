@@ -7,9 +7,7 @@ metadata:
   namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
 {{- if .Values.registry.imagePullSecrets}}
 imagePullSecrets:
-- name: {{ .Values.registry.imagePullSecrets }}
-{{- end }}
-
+  - name: {{ .Values.registry.imagePullSecrets }}
 {{- end }}
 
 {{- $watchNamespace := include "mongodb-enterprise-operator.namespace" . | list }}
@@ -32,101 +30,8 @@ metadata:
   namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
 {{- end }}
 rules:
-- apiGroups:
-  - ''
-  resources:
-  - services
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - delete
-- apiGroups:
-  - ''
-  resources:
-  - secrets
-  - configmaps
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - statefulsets
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - delete
-  - update
-- apiGroups:
-  - ''
-  resources:
-  - pods
-  verbs:
-  - get
-  - list
-  - watch
-  - delete
-  - deletecollection
-- apiGroups:
-  - mongodb.com
-  verbs:
-  - '*'
-  resources:
-  - mongodb
-  - mongodb/finalizers
-  - mongodbusers
-  - opsmanagers
-  - opsmanagers/finalizers
-  - mongodbmulti
-  - mongodbmulti/finalizers
-{{- if .Values.subresourceEnabled }}
-  - mongodb/status
-  - mongodbusers/status
-  - opsmanagers/status
-  - mongodbmulti/status
-{{- end }}
-{{- if eq $roleScope "ClusterRole" }}
-- apiGroups:
-  - ''
-  resources:
-  - namespaces
-  verbs:
-  - list
-  - watch
-{{- end}}
-
-# This ClusterRoleBinding is necessary in order to use validating
-# webhooks—these will prevent you from applying a variety of invalid resource
-# definitions. The validating webhooks are optional so this can be removed if
-# necessary.
----
-{{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "mongodb-enterprise-operator-mongodb-webhook") }}
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: mongodb-enterprise-operator-mongodb-webhook
-rules:
   - apiGroups:
-      - "admissionregistration.k8s.io"
-    resources:
-      - validatingwebhookconfigurations
-    verbs:
-      - get
-      - create
-      - update
-      - delete
-
-  - apiGroups:
-      - ""
+      - ''
     resources:
       - services
     verbs:
@@ -136,20 +41,66 @@ rules:
       - create
       - update
       - delete
-{{- end }}
----
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: {{ .Values.operator.name }}-{{ include "mongodb-enterprise-operator.namespace" . }}-webhook-binding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: mongodb-enterprise-operator-mongodb-webhook
-subjects:
-- kind: ServiceAccount
-  name: {{ .Values.operator.name }}
-  namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
+  - apiGroups:
+      - ''
+    resources:
+      - secrets
+      - configmaps
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - statefulsets
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - delete
+      - update
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+      - delete
+      - deletecollection
+  - apiGroups:
+      - mongodb.com
+    verbs:
+      - '*'
+    resources:
+      - mongodb
+      - mongodb/finalizers
+      - mongodbusers
+      - opsmanagers
+      - opsmanagers/finalizers
+      - mongodbmulticluster
+      - mongodbmulticluster/finalizers
+    {{- if .Values.subresourceEnabled }}
+      - mongodb/status
+      - mongodbusers/status
+      - opsmanagers/status
+      - mongodbmulticluster/status
+    {{- end }}
+{{- if eq $roleScope "ClusterRole" }}
+  - apiGroups:
+      - ''
+    resources:
+      - namespaces
+    verbs:
+      - list
+      - watch
+{{- end}}
 
 {{- range $idx, $namespace := $watchNamespace }}
 
@@ -173,7 +124,55 @@ roleRef:
   kind: {{ $roleScope }}
   name: {{ $.Values.operator.name }}
 subjects:
-- kind: ServiceAccount
-  name: {{ $.Values.operator.name }}
-  namespace: {{ include "mongodb-enterprise-operator.namespace" $ }}
+  - kind: ServiceAccount
+    name: {{ $.Values.operator.name }}
+    namespace: {{ include "mongodb-enterprise-operator.namespace" $ }}
 {{- end }}
+
+{{- end }}
+
+# This ClusterRoleBinding is necessary in order to use validating
+# webhooks—these will prevent you from applying a variety of invalid resource
+# definitions. The validating webhooks are optional so this can be removed if
+# necessary.
+---
+{{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "mongodb-enterprise-operator-mongodb-webhook") }}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mongodb-enterprise-operator-mongodb-webhook
+rules:
+  - apiGroups:
+      - "admissionregistration.k8s.io"
+    resources:
+      - validatingwebhookconfigurations
+    verbs:
+      - get
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+{{- end }}
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Values.operator.name }}-{{ include "mongodb-enterprise-operator.namespace" . }}-webhook-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: mongodb-enterprise-operator-mongodb-webhook
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.operator.name }}
+    namespace: {{ include "mongodb-enterprise-operator.namespace" . }}
