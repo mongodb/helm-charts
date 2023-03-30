@@ -33,7 +33,7 @@ project:
   # fullnameOverride: ""
 
   projectIpAccessList:
-    - ipAddress: "0.0.0.0/1"
+    - ipAddress: "0.0.0.0"
       comment: "REMOVE ME"
 
 # include either deploymentSpec or advancedDeploymentSpec
