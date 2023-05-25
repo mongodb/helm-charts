@@ -79,7 +79,6 @@ spec:
   statefulSet: 
   {{- toYaml . | nindent 4 }}
   {{- end}}
-  
   {{- with .Values.resource.users }}
   users:
   {{- toYaml . | nindent 4 }}

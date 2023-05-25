@@ -8,7 +8,7 @@ operator:
   # Execution environment for the operator, dev or prod. Use dev for more verbose logging
   env: prod
 
-  # Name that will be assigned to most of internal Kubernetes objects like Deployment, ServiceAccount, Role etc.
+  # Name that will be assigned to most internal Kubernetes objects like Deployment, ServiceAccount, Role etc.
   name: mongodb-enterprise-operator
 
   # Name of the operator image
@@ -18,7 +18,7 @@ operator:
   deployment_name: mongodb-enterprise-operator
 
   # Version of mongodb-enterprise-operator
-  version: 1.18.0
+  version: 1.19.1
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
@@ -49,6 +49,8 @@ operator:
     enabled: false
     tlsSecretRef: ''
 
+  replicas: 1
+
 ## Database
 database:
   name: mongodb-enterprise-database
@@ -56,7 +58,7 @@ database:
 
 initDatabase:
   name: mongodb-enterprise-init-database
-  version: 1.0.14
+  version: 1.0.15
 
 ## Ops Manager
 opsManager:
@@ -69,7 +71,7 @@ initOpsManager:
 ## Application Database
 initAppDb:
   name: mongodb-enterprise-init-appdb
-  version: 1.0.14
+  version: 1.0.15
 
 agent:
   name: mongodb-agent
@@ -96,6 +98,7 @@ registry:
   agent: quay.io/mongodb
 
 multiCluster:
+  # Specify if we want to deploy the operator in multi-cluster mode
   clusters: []
   kubeConfigSecretName: mongodb-enterprise-operator-multi-cluster-kubeconfig
   performFailOver: true

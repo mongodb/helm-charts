@@ -1,11 +1,16 @@
+## Reference to one or more secrets to be used when pulling images
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# - name: "image-pull-secret"
+
 ## Operator
 operator:
   # Name that will be assigned to most of internal Kubernetes objects like
   # Deployment, ServiceAccount, Role etc.
   name: mongodb-kubernetes-operator
 
-  # serviceAccount annotations, if any to add 
-  serviceAccount: 
+  # serviceAccount annotations, if any to add
+  serviceAccount:
     annotations: {}
 
   # Name of the operator image
@@ -15,7 +20,7 @@ operator:
   deploymentName: mongodb-kubernetes-operator
 
   # Version of mongodb-kubernetes-operator
-  version: 0.7.8
+  version: 0.8.0
 
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
@@ -40,8 +45,8 @@ database:
   # Name that will be assigned to most of internal Kubernetes objects like
   # ServiceAccount, Role etc.
   name: mongodb-database
-  # serviceAccount annotations, if any to add 
-  serviceAccount: 
+  # serviceAccount annotations, if any to add
+  serviceAccount:
     annotations: {}
 
   # set this to the namespace where you would like
@@ -55,13 +60,13 @@ database:
 
 agent:
   name: mongodb-agent
-  version: 12.0.15.7646-1
+  version: 12.0.21.7698-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
-  version: 1.0.6
+  version: 1.0.7
 readinessProbe:
   name: mongodb-kubernetes-readinessprobe
-  version: 1.0.12
+  version: 1.0.14
 mongodb:
   name: mongo
   repo: docker.io
@@ -87,28 +92,12 @@ resource:
   members: 3
   tls:
     enabled: false
-  # users: []
-  #   - name: my-user
-  #     db: admin
-  #     passwordSecretRef: # a reference to the secret that will be used to generate the user's password
-  #       name: my-user-password
-  #     roles:
-  #       - name: clusterAdmin
-  #         db: admin
-  #       - name: userAdminAnyDatabase
-  #         db: admin
-  #       - name: readWriteAnyDatabase
-  #         db: admin
-  #       - name: dbAdminAnyDatabase
-  #         db: admin
-  #     scramCredentialsSecretName: my-scram
-
   # overwrite MDBC resource statefulset defaults
-  # statefulSet: 
+  # statefulSet:
   #   spec:
   #     template:
   #       spec:
-  #         imagePullSecrets: 
+  #         imagePullSecrets:
   #           - name: my-secret
   #         volumes:
   #         - name: secretmanager-secretproviderclass
@@ -117,9 +106,9 @@ resource:
   #             readOnly: true
   #             volumeAttributes:
   #               secretProviderClass: mysecretclass
-  #         containers: 
-  #           - name: mongodb-agent 
-  #             volumeMounts: 
+  #         containers:
+  #           - name: mongodb-agent
+  #             volumeMounts:
   #             - name: secretmanager-secretproviderclass
   #               mountPath: "/mnt/secrets-store"
   #               readOnly: true
@@ -130,6 +119,23 @@ resource:
     certManager:
       certDuration: 8760h   # 365 days
       renewCertBefore: 720h   # 30 days
+  users: []
+  # if using the MongoDBCommunity Resource, list any users to be added to the resource
+  # users:
+  # - name: my-user
+  #   db: admin
+  #   passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+  #     name: <secretName>
+  #   roles:
+  #     - name: clusterAdmin
+  #       db: admin
+  #     - name: userAdminAnyDatabase
+  #       db: admin
+  #     - name: readWriteAnyDatabase
+  #       db: admin
+  #     - name: dbAdminAnyDatabase
+  #       db: admin
+  #   scramCredentialsSecretName: my-scram
 
 # -- Array of extra K8s manifests to deploy
 extraObjects: []
