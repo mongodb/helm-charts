@@ -215,4 +215,24 @@ RBAC permissions
   - get
   - patch
   - update
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasdatafederations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - atlas.mongodb.com
+  resources:
+  - atlasdatafederations/status
+  verbs:
+  - get
+  - patch
+  - update
 {{- end -}}
