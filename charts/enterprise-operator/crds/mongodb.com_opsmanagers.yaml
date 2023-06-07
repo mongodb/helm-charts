@@ -80,6 +80,10 @@ spec:
                     description: specify startup flags for the AutomationAgent and
                       MonitoringAgent
                     properties:
+                      logLevel:
+                        type: string
+                      maxLogFileDurationHours:
+                        type: integer
                       startupOptions:
                         additionalProperties:
                           type: string
@@ -151,6 +155,20 @@ spec:
                     - ERROR
                     - FATAL
                     type: string
+                  memberConfig:
+                    description: MemberConfig
+                    items:
+                      properties:
+                        priority:
+                          type: string
+                        tags:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        votes:
+                          type: integer
+                      type: object
+                    type: array
                   members:
                     description: Amount of members for this MongoDB Replica Set
                     maximum: 50
@@ -160,6 +178,10 @@ spec:
                     description: specify startup flags for just the MonitoringAgent.
                       These take precedence over the flags set in AutomationAgent
                     properties:
+                      logLevel:
+                        type: string
+                      maxLogFileDurationHours:
+                        type: integer
                       startupOptions:
                         additionalProperties:
                           type: string
@@ -237,10 +259,6 @@ spec:
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
                     type: object
-                  project:
-                    description: 'Deprecated: This has been replaced by the PrivateCloudConfig
-                      which should be used instead'
-                    type: string
                   prometheus:
                     description: Enables Prometheus integration on the AppDB.
                     properties:
