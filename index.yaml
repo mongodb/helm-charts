@@ -637,7 +637,7 @@ entries:
   - apiVersion: v2
     created: "2023-06-07T12:30:47.012419231Z"
     description: MongoDB Kubernetes Enterprise Operator
-    digest: 54a6ef35e8f8d70e62ecea80c155d0c26b01fd5edea459c940209b22581019e9
+    digest: 0e8874767eba21b7093fef925e47f92d11a79fece2618c3077edb5a24c54ea49
     home: https://github.com/mongodb/mongodb-enterprise-kubernetes
     icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
     keywords:
