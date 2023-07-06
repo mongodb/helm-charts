@@ -40,12 +40,7 @@ operator:
     runAsNonRoot: true
     runAsUser: 2000
 
-  securityContext:
-    capabilities:
-      drop:
-        - ALL
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+  securityContext: {}
 
 ## Operator's database
 database:
