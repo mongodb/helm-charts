@@ -72,7 +72,12 @@ spec:
           name: {{ .Values.operator.deploymentName }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
+          {{- if .Values.operator.securityContext }}
           securityContext:
-            readOnlyRootFilesystem: true
-            runAsUser: 2000
+            {{- toYaml .Values.operator.securityContext | nindent 12 }}
+          {{- end }}
+      {{- if .Values.operator.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.operator.podSecurityContext | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ .Values.operator.name }}

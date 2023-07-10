@@ -36,6 +36,12 @@ operator:
   # - name: CLUSTER_DOMAIN
   #   value: my-cluster.domain
 
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 2000
+
+  securityContext: {}
+
 ## Operator's database
 database:
   name: mongodb-database
