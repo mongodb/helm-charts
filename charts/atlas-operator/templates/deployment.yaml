@@ -32,6 +32,8 @@ spec:
             - --atlas-domain={{ .Values.atlasURI }}
             - "--health-probe-bind-address=:8081"
             - "--metrics-bind-address=:8080"
+            - --object-deletion-protection={{ .Values.objectDeletionProtection }}
+            - --subobject-deletion-protection={{ .Values.subobjectDeletionProtection }}
             - "--leader-elect"
           command:
             - /manager
