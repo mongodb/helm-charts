@@ -90,6 +90,8 @@ resource:
     enabled: false
 
     # Installs Cert-Manager in this cluster.
+    sampleX509User: true
+    useAgentCert: true
     useCertManager: true
     certificateKeySecretRef: tls-certificate
     caCertificateSecretRef: tls-ca-key-pair
