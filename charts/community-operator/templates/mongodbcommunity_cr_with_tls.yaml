@@ -51,7 +51,7 @@ spec:
   dnsNames:
     - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
 {{- end }}
-{{- if .Values.resource.tls.useAgentCert}}
+{{- if .Values.resource.tls.useX509 }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -128,9 +128,16 @@ spec:
         name: {{ .Values.resource.tls.caCertificateSecretRef }}
       {{- end }}
     authentication:
+      {{- if .Values.resource.tls.useX509 }}
+      modes: ["X509"]
+      {{- else }}
       modes: ["SCRAM"]
-  {{- with .Values.resource.users }}
+      {{- end }}
+  {{- if .Values.resource.tls.sampleX509User }}
   users:
-  {{- toYaml . | nindent 4 }}
-  {{- end }}
+  {{- toYaml .Values.resource.x509Users | nindent 4 }}
+  {{- else }}
+  users:
+  {{- toYaml .Values.resource.users | nindent 4 }}
+  {{- end}}
 {{- end }}

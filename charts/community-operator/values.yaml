@@ -2,7 +2,6 @@
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # - name: "image-pull-secret"
-
 ## Operator
 operator:
   # Name that will be assigned to most of internal Kubernetes objects like
@@ -90,8 +89,8 @@ resource:
     enabled: false
 
     # Installs Cert-Manager in this cluster.
-    sampleX509User: true
-    useAgentCert: true
+    useX509: false
+    sampleX509User: false
     useCertManager: true
     certificateKeySecretRef: tls-certificate
     caCertificateSecretRef: tls-ca-key-pair
@@ -116,3 +115,14 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
+
+  x509Users:
+    - name: CN=my-x509-user,OU=organizationalunit,O=organization
+      db: $external
+      roles:
+        - name: clusterAdmin
+          db: admin
+        - name: userAdminAnyDatabase
+          db: admin
+        - name: readWriteAnyDatabase
+          db: admin
