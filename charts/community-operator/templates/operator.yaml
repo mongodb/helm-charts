@@ -9,7 +9,7 @@ metadata:
   name: {{ .Values.operator.name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas:  {{ .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.operator.name }}
