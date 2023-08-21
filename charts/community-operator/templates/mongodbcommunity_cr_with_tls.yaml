@@ -50,8 +50,8 @@ spec:
   commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
   dnsNames:
     - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
-{{- end }}
 {{- if .Values.resource.tls.useX509 }}
+# Agent X509 certs
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -84,6 +84,7 @@ spec:
     - client auth
 {{- end }}
 {{- if .Values.resource.tls.sampleX509User }}
+# Client certs
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -105,6 +106,7 @@ spec:
   usages:
     - digital signature
     - client auth
+{{- end }}
 {{- end }}
 {{- if .Values.createResource }}
 # mongodb resources
@@ -135,7 +137,15 @@ spec:
       {{- end }}
   {{- if .Values.resource.tls.sampleX509User }}
   users:
-  {{- toYaml .Values.resource.x509Users | nindent 4 }}
+  - name: CN=my-x509-user,OU=organizationalunit,O=organization
+    db: $external
+    roles:
+      - name: clusterAdmin
+        db: admin
+      - name: userAdminAnyDatabase
+        db: admin
+      - name: readWriteAnyDatabase
+        db: admin
   {{- else }}
   users:
   {{- toYaml .Values.resource.users | nindent 4 }}
