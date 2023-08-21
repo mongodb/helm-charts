@@ -29,6 +29,9 @@ operator:
       cpu: 500m
       memory: 200Mi
 
+  # replicas deployed for the operator pod. Running 1 is optimal and suggested.
+  replicas: 1
+
   # Additional environment variables
   extraEnvs: []
   # environment:
