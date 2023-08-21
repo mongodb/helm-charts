@@ -115,14 +115,3 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
-
-  x509Users:
-    - name: CN=my-x509-user,OU=organizationalunit,O=organization
-      db: $external
-      roles:
-        - name: clusterAdmin
-          db: admin
-        - name: userAdminAnyDatabase
-          db: admin
-        - name: readWriteAnyDatabase
-          db: admin
