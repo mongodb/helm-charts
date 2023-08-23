@@ -118,3 +118,6 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
+
+nodeSelector:
+  kubernetes.io/os: linux
