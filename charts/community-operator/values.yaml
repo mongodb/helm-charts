@@ -20,6 +20,9 @@ operator:
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
 
+  nodeSelector:
+    kubernetes.io/os: linux
+
   # Resources allocated to Operator Pod
   resources:
     limits:
@@ -118,6 +121,3 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
-
-nodeSelector:
-  kubernetes.io/os: linux
