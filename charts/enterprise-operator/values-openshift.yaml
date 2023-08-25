@@ -15,7 +15,7 @@ operator:
   operator_image_name: mongodb-enterprise-operator-ubi
 
   # Version of mongodb-enterprise-operator
-  version: 1.20.1
+  version: 1.21.0
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
@@ -45,7 +45,7 @@ database:
 
 initDatabase:
   name: mongodb-enterprise-init-database-ubi
-  version: 1.0.17
+  version: 1.0.18
 
 ## Ops Manager
 opsManager:
@@ -53,21 +53,20 @@ opsManager:
 
 initOpsManager:
   name: mongodb-enterprise-init-ops-manager-ubi
-  version: 1.0.11
+  version: 1.0.12
 
 initAppDb:
   name: mongodb-enterprise-init-appdb-ubi
-  version: 1.0.17
+  version: 1.0.18
 
 agent:
   name: mongodb-agent-ubi
-  version: 12.0.21.7698-1
+  version: 12.0.25.7724-1
 
 mongodb:
   name: mongodb-enterprise-server
   repo: quay.io/mongodb
   appdbAssumeOldFormat: false
-  imageType: ubi8
 
 ## Registry
 registry:
@@ -111,6 +110,7 @@ relatedImages:
   - 5.0.19
   - 5.0.20
   - 5.0.21
+  - 5.0.22
   - 6.0.0
   - 6.0.1
   - 6.0.2
@@ -126,6 +126,9 @@ relatedImages:
   - 6.0.12
   - 6.0.13
   - 6.0.14
+  - 6.0.15
+  - 6.0.16
+  - 6.0.17
   mongodb:
   - 4.4.0-ubi8
   - 4.4.1-ubi8
@@ -181,6 +184,9 @@ relatedImages:
   - 12.0.15.7646-1
   - 12.0.20.7686-1
   - 12.0.21.7698-1
+  - 12.0.23.7711-1
+  - 12.0.24.7719-1
+  - 12.0.25.7724-1
   mongodbLegacyAppDb:
   - 4.2.11-ent
   - 4.2.2-ent
