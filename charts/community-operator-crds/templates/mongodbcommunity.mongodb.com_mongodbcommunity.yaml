@@ -52,6 +52,12 @@ spec:
           spec:
             description: MongoDBCommunitySpec defines the desired state of MongoDB
             properties:
+              additionalConnectionStringConfig:
+                description: Additional options to be appended to the connection string.
+                  These options apply to the entire resource and to each user.
+                nullable: true
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
               additionalMongodConfig:
                 description: 'AdditionalMongodConfig is additional configuration that
                   can be passed to each data-bearing mongod at runtime. Uses the same
@@ -331,6 +337,19 @@ spec:
                 description: StatefulSetConfiguration holds the optional custom StatefulSet
                   that should be merged into the operator created one.
                 properties:
+                  metadata:
+                    description: StatefulSetMetadataWrapper is a wrapper around Labels
+                      and Annotations
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        type: object
+                    type: object
                   spec:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
@@ -348,6 +367,13 @@ spec:
                   in your deployment
                 items:
                   properties:
+                    additionalConnectionStringConfig:
+                      description: Additional options to be appended to the connection
+                        string. These options apply only to this user and will override
+                        any existing options in the resource.
+                      nullable: true
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
                     connectionStringSecretName:
                       description: ConnectionStringSecretName is the name of the secret
                         object created by the operator which exposes the connection

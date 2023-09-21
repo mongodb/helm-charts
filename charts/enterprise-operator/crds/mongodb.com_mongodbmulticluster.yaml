@@ -52,6 +52,10 @@ spec:
                 x-kubernetes-preserve-unknown-fields: true
               agent:
                 properties:
+                  logLevel:
+                    type: string
+                  maxLogFileDurationHours:
+                    type: integer
                   startupOptions:
                     additionalProperties:
                       type: string
@@ -263,6 +267,19 @@ spec:
                         StatefulSet that should be merged into the operator created
                         one.
                       properties:
+                        metadata:
+                          description: StatefulSetMetadataWrapper is a wrapper around
+                            Labels and Annotations
+                          properties:
+                            annotations:
+                              additionalProperties:
+                                type: string
+                              type: object
+                            labels:
+                              additionalProperties:
+                                type: string
+                              type: object
+                          type: object
                         spec:
                           type: object
                           x-kubernetes-preserve-unknown-fields: true
@@ -505,6 +522,13 @@ spec:
                         type: object
                       modes:
                         items:
+                          enum:
+                          - X509
+                          - SCRAM
+                          - SCRAM-SHA-1
+                          - MONGODB-CR
+                          - SCRAM-SHA-256
+                          - LDAP
                           type: string
                         type: array
                       requireClientTLSAuthentication:
@@ -600,6 +624,19 @@ spec:
                   is specified at cluster level under "clusterSpecList" that takes
                   precedence over the global one
                 properties:
+                  metadata:
+                    description: StatefulSetMetadataWrapper is a wrapper around Labels
+                      and Annotations
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        type: object
+                    type: object
                   spec:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
