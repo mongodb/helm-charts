@@ -54,6 +54,7 @@ release_charts_inside_folders() {
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
+        helm repo update
         install_chart_releaser
         cleanup_releaser
         package_charts "${changed_charts[@]}"
