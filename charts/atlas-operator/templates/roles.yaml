@@ -1,16 +1,20 @@
 {{- $operatorName := include "mongodb-atlas-operator.name" . -}}
 {{- $serviceAccountName := include "mongodb-atlas-operator.serviceAccountName" . -}}
-{{- $operatorNamespaceManaged := has .Release.Namespace .Values.watchNamespaces -}}
+{{- fail ".Values.operatorNamespaceManaged and .Values.watchNamespaces cannot be configured at the same time" -}}
 
 {{- /* so far we support only a single namespace but otherwise should iterate over the watchNamespaces */}}
-{{- if .Values.watchNamespaces }}
+{{- if or .Values.operatorNamespaceManaged .Values.watchNamespaces }}
 {{- range $namespace := .Values.watchNamespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: "{{ $operatorName }}"
+  {{- if .Values.operatorNamespaceManaged }}
+  namespace: {{ .Release.Namespace }}
+  {{- else }}
   namespace: {{ $namespace }}
+  {{- end }}
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
@@ -20,7 +24,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: "{{ $operatorName }}"
+  {{- if .Values.operatorNamespaceManaged }}
+  namespace: {{ .Release.Namespace }}
+  {{- else }}
   namespace: {{ $namespace }}
+  {{- end }}
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 roleRef:

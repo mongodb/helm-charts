@@ -39,8 +39,11 @@ globalConnectionSecret:
 #
 # The only possible values are:
 # - empty (watch all namespaces) or
-# - the name of the same namespace where the Operator is installed to.
+# - a set of specific namespaces which are watched by the Operator.
 watchNamespaces: []
+
+# When enabled, the Operator can only manage the namespace where it is installed in.
+operatorNamespaceManaged: false
 
 # Use these values to use a different Operator image.
 image:
