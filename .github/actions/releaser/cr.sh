@@ -59,13 +59,12 @@ release_charts_inside_folders() {
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
-        echo "would have released charts ${changed_charts[@]}"
-        # helm repo update
-        # install_chart_releaser
-        # cleanup_releaser
-        # package_charts "${changed_charts[@]}"
-        # release_charts
-        # update_index
+        helm repo update
+        install_chart_releaser
+        cleanup_releaser
+        package_charts "${changed_charts[@]}"
+        release_charts
+        update_index
     else
         echo "Nothing to do. No chart changes detected."
     fi
