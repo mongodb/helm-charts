@@ -55,7 +55,6 @@ release_charts_inside_folders() {
         fi
     done
     echo "changed charts: " "${changed_charts[@]}"
-    set +x
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
