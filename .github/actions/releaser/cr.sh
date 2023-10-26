@@ -35,6 +35,9 @@ release_charts_inside_folders() {
     local folders=("$@")
     local changed_charts=()
 
+    echo "fetch remote tags..."
+    git fetch --tags > /dev/null 2>&1
+
     # form list of folder which was changed
     for folder in "${folders[@]}"; do
         [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
