@@ -35,6 +35,7 @@ release_charts_inside_folders() {
     local folders=("$@")
     local changed_charts=()
 
+    set -x
     echo "fetch remote tags..."
     git fetch --tags > /dev/null 2>&1
 
@@ -54,15 +55,17 @@ release_charts_inside_folders() {
         fi
     done
     echo "changed charts: " "${changed_charts[@]}"
+    set +x
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
-        helm repo update
-        install_chart_releaser
-        cleanup_releaser
-        package_charts "${changed_charts[@]}"
-        release_charts
-        update_index
+        echo "would have released charts ${changed_charts[@]}"
+        # helm repo update
+        # install_chart_releaser
+        # cleanup_releaser
+        # package_charts "${changed_charts[@]}"
+        # release_charts
+        # update_index
     else
         echo "Nothing to do. No chart changes detected."
     fi
