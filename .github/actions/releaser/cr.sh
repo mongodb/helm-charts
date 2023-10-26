@@ -38,7 +38,6 @@ release_charts_inside_folders() {
     echo "fetch remote tags..."
     git fetch --tags > /dev/null 2>&1
 
-    set -x
     # form list of folder which was changed
     for folder in "${folders[@]}"; do
         [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
@@ -54,11 +53,7 @@ release_charts_inside_folders() {
             changed_charts+=("$folder")
         fi
     done
-    set +x
     echo "changed charts: " "${changed_charts[@]}"
-
-    echo "exiting debug run"
-    exit 1
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
