@@ -18,11 +18,6 @@ mongodb-atlas-operator-crds:
 # atlasURI is the URI of the MongoDB Atlas. You should not change this value.
 atlasURI: https://cloud.mongodb.com/
 
-# objectDeletionProtection defines the operator will not delete Atlas resource when a Custom Resource is deleted
-objectDeletionProtection: true
-# subobjectDeletionProtection defines that the operator will not overwrite (and consequently delete) subresources that were not previously created by the operator
-subobjectDeletionProtection: true
-
 # globalConnectionSecret is a default "global" Secret containing Atlas
 # authentication information.
 #
