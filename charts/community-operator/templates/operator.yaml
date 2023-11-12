@@ -7,7 +7,7 @@ metadata:
   labels:
     owner: mongodb
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ default .Release.Namespace .Values.operator.namespaceOverride | trunc 63 | trimSuffix "-" }}
 spec:
   replicas:  {{ .Values.operator.replicas }}
   selector:
