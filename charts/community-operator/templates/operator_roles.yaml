@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ default .Release.Namespace .Values.operator.namespaceOverride | trunc 63 | trimSuffix "-" }}
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -13,7 +13,7 @@ metadata:
   {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
   namespace: {{ .Values.operator.watchNamespace }}
   {{- else }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ default .Release.Namespace .Values.operator.namespaceOverride | trunc 63 | trimSuffix "-" }}
   {{- end }}
 rules:
 - apiGroups:
@@ -65,12 +65,12 @@ metadata:
   {{- if ne (.Values.operator.watchNamespace | default "*") "*" }}
   namespace: {{ .Values.operator.watchNamespace }}
   {{- else }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ default .Release.Namespace .Values.operator.namespaceOverride | trunc 63 | trimSuffix "-" }}
   {{- end }}
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ default .Release.Namespace .Values.operator.namespaceOverride | trunc 63 | trimSuffix "-" }}
 roleRef:
   kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
   name: {{ .Values.operator.name }}
