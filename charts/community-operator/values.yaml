@@ -10,7 +10,7 @@ operator:
 
   # Allow the operator namespace to be overridden which is useful when having this operator
   # be a subchart dependency
-  # namespaceOverride:
+  #namespaceOverride: mongodb-solution
 
   # Name of the operator image
   operatorImageName: mongodb-kubernetes-operator
