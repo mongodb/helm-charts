@@ -1,0 +1,30 @@
+default:
+  image: ${CI_REGISTRY}/devops/containers/smm-builder
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MAVEN_OPTS: >-
+    -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository
+  MAVEN_CLI_OPTS: "--batch-mode"
+
+build_job:
+  stage: build
+  script:
+    - mvn ${MAVEN_CLI_OPTS} compile
+
+test_job:
+  stage: test
+  script:
+    - mvn ${MAVEN_CLI_OPTS} test
+
+deploy_job:
+  stage: deploy
+  script:
+    - mvn ${MAVEN_CLI_OPTS} deploy -DskipTests
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
