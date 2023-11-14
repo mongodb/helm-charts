@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+      <groupId>net.canogaperkins.smm</groupId>
+      <artifactId>smm-parent-pom</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>net.canogaperkins.smm</groupId>
+  <artifactId>community-operator</artifactId>
+  <packaging>helm</packaging>
+  <version>0.8.3</version>
+  <name>community-operator</name>
+
+  <properties>
+    <helm.maven.plugin.version>6.11.0</helm.maven.plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.kokuwa.maven</groupId>
+        <artifactId>helm-maven-plugin</artifactId>
+        <version>${helm.maven.plugin.version}</version>
+        <!-- Mandatory when you use a custom lifecycle -->
+        <extensions>true</extensions>
+        
+        <configuration>
+          <chartDirectory>${project.basedir}/charts/community-operator</chartDirectory>
+          <chartVersion>${project.version}</chartVersion>
+
+          <helmExtraRepos>
+            <helmRepo>
+              <name>mongodb</name>
+              <url>https://mongodb.github.io/helm-charts</url>
+            </helmRepo>
+          </helmExtraRepos>
+
+          <uploadRepoStable>
+            <name>smm-chart-stable</name>
+            <url>${helm.uploadRepoStable.url}</url>
+            <username>${helm.uploadRepoStable.username}</username>
+            <password>${helm.uploadRepoStable.password}</password>
+            <type>ARTIFACTORY</type>
+          </uploadRepoStable>
+          <uploadRepoSnapshot>
+            <name>smm-chart-snapshot</name>
+            <url>${helm.uploadRepoSnapshot.url}</url>
+            <username>${helm.uploadRepoSnapshot.username}</username>
+            <password>${helm.uploadRepoSnapshot.password}</password>
+            <type>ARTIFACTORY</type>
+          </uploadRepoSnapshot>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
