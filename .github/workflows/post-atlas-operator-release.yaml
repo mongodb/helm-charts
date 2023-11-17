@@ -61,7 +61,7 @@ jobs:
           if [[ ${VERSION} == ${MAJOR_VERSION}.* ]]; then
             echo "Version OK";
           else
-            echo "Bad major version for ${VERSION}, expected ${MAJOR_VERSION}.x.y";
+            echo "Version mismatch: target version ${VERSION} doesn't match the Kubernetes Atlas Operator major version ${MAJOR_VERSION}.x.y";
             exit 1
           fi
           cp helm/helm-charts/.github/actions/push-files/push-files.sh helm/helm-charts
