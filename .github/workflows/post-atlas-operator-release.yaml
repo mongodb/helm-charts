@@ -55,6 +55,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create and push branch
         run: |
+          export VERSION=${{ github.event.inputs.version }}
+          export MAJOR_VERSION=$(cat operator/mongodb-atlas-kubernetes/major-version)
+          ## Check that VERSION starts with MAJOR_VERSION
+          if [[ ${VERSION} == ${MAJOR_VERSION}.* ]]; then
+            echo "Version OK";
+          else
+            echo "Version mismatch: target version ${VERSION} doesn't match the Kubernetes Atlas Operator major version ${MAJOR_VERSION}.x.y";
+            exit 1
+          fi
           cp helm/helm-charts/.github/actions/push-files/push-files.sh helm/helm-charts
           cd helm/helm-charts
           chmod +x push-files.sh
