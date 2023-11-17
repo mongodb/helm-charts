@@ -36,7 +36,7 @@ project:
     - ipAddress: "0.0.0.0"
       comment: "REMOVE ME"
 
-# include either deploymentSpec or serverlessSpec 
+# include either deploymentSpec or serverlessSpec
 # see https://www.mongodb.com/docs/atlas/reference/api-resources-spec/v2/#tag/Clusters/operation/createCluster for
 # options for creating advanced clusters.
 
