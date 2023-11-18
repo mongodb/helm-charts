@@ -15,9 +15,9 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   isCA: true
-  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+  commonName: "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.test"
   dnsNames:
-    - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.local"
+    - "*.{{ .Values.resource.name }}-svc.{{ .Values.namespace }}.svc.cluster.test"
   secretName: {{ .Values.resource.tls.caCertificateSecretRef }}
   privateKey:
     algorithm: ECDSA
