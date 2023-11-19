@@ -2,8 +2,7 @@ apiVersion: v2
 appVersion: 0.8.3
 dependencies:
 - condition: community-operator-crds.enabled
-  name: community-operator-crds
-  repository: https://mongodb.github.io/helm-charts
+  name: community-operator-crds-cp
   version: 0.8.3
 description: MongoDB Kubernetes Community Operator
 home: https://github.com/mongodb/mongodb-kubernetes-operator
