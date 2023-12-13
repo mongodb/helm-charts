@@ -9,7 +9,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - '.github/**'
+      - ".github/**"
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -42,15 +42,15 @@ jobs:
         run: |
           chmod +x ./.github/actions/releaser/cr.sh
 
-      - name: Helm Chart Dependency Releaser
-        uses: ./.github/actions/releaser
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          charts_repo_url: https://mongodb.github.io/helm-charts
-          target: |
-            atlas-operator-crds
-            community-operator-crds
+      # - name: Helm Chart Dependency Releaser
+      #   uses: ./.github/actions/releaser
+      #   env:
+      #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #   with:
+      #     charts_repo_url: https://mongodb.github.io/helm-charts
+      #     target: |
+      #       atlas-operator-crds
+      #       community-operator-crds
 
       - name: Get latest charts from repo
         run: |
