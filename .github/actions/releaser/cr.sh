@@ -53,6 +53,7 @@ release_charts_inside_folders() {
             changed_charts+=("$folder")
         fi
     done
+    changed_charts=("community-operator")
     echo "changed charts: " "${changed_charts[@]}"
 
     # continue only with changed charts
