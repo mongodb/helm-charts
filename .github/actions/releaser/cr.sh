@@ -2,6 +2,8 @@
 
 # Release changed charts with updated version inside Chart.yaml only(!)
 
+# NOTE: assume GNU semantics for tools like awk, grep, etc
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -35,21 +37,25 @@ release_charts_inside_folders() {
     local folders=("$@")
     local changed_charts=()
 
-    echo "fetch remote tags..."
-    git fetch --tags > /dev/null 2>&1
+    prepare_helm_repo
 
     # form list of folder which was changed
     for folder in "${folders[@]}"; do
         [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
         print_line_separator
         local chart_name
-        local tag
+        local chart_version
+        local chart_was_released
 
-        echo "Looking up latest release tag for \"$charts_dir/$folder/Chart.yaml\""
-        chart_name=$(awk '/^name/{print $2}' "$charts_dir/$folder/Chart.yaml")
+        chart_name=$(read_chart_name "${charts_dir}/${folder}")
+        chart_version=$(read_chart_version "${charts_dir}/${folder}")
+        echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
+        chart_was_released=$(chart_released "${chart_name}" "${chart_version}")
+
+        echo "released result: \"${chart_was_released}\""
 
         # if chart is not released or folder has change, then remember as changed_charts
-        if [[ ! "$(git tag -l "$chart_name-[0-9.]*")" ]] || has_changed "$folder"; then
+        if [ -z "${chart_was_released}" ] || has_changed "$folder"; then
             changed_charts+=("$folder")
         fi
     done
@@ -57,15 +63,36 @@ release_charts_inside_folders() {
 
     # continue only with changed charts
     if [[ -n "${changed_charts[*]}" ]]; then
-        helm repo update
-        install_chart_releaser
-        cleanup_releaser
-        package_charts "${changed_charts[@]}"
-        release_charts
-        update_index
+        if [ "${DRYRUN}" == "true" ]; then
+            echo "DRYRUN: Would have released charts" "${changed_charts[@]}"
+        else
+            release_changed_charts "${changed_charts[@]}"
+        fi
     else
         echo "Nothing to do. No chart changes detected."
     fi
+}
+
+read_chart_name() {
+    local chart_path=$1
+    awk '/^name: /{print $2}' "$chart_path/Chart.yaml"
+}
+
+read_chart_version() {
+    local chart_path=$1
+    awk '/^version: /{print $2}' "$chart_path/Chart.yaml"
+}
+
+prepare_helm_repo() {
+    helm repo add mongodb https://mongodb.github.io/helm-charts
+    helm repo update mongodb
+}
+
+chart_released() {
+    local chart_name=$1
+    local version=$2
+
+    helm search repo "mongodb/${chart_name}" --version "${version}" |grep "${chart_name}\s"
 }
 
 # check if release version and chart version is diffrent
@@ -93,6 +120,17 @@ get_latest_tag(){
 
     git fetch --tags > /dev/null 2>&1
     git describe --tags --abbrev=0 --match="$name-[0-9.]*" "$(git rev-list --tags --max-count=1)"
+}
+
+release_changed_charts() {
+    local changed_charts=("$@")
+
+    helm repo update
+    install_chart_releaser
+    cleanup_releaser
+    package_charts "${changed_charts[@]}"
+    release_charts
+    update_index
 }
 
 install_chart_releaser() {
