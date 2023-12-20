@@ -13,6 +13,11 @@ on:
         type: string
         default: ""
         required: false
+      dryrun:
+        description: "not actually release, but check what would be done"
+        type: boolean
+        default: true
+        required: false
 
 jobs:
   build:
@@ -49,6 +54,7 @@ jobs:
           target: |
             atlas-operator-crds
             community-operator-crds
+          dryrun: ${{ github.event.inputs.dryrun }}
 
       - name: Get latest charts from repo
         run: |
@@ -61,3 +67,4 @@ jobs:
         with:
           charts_repo_url: https://mongodb.github.io/helm-charts
           target: ${{ github.event.inputs.target }}
+          dryrun: ${{ github.event.inputs.dryrun }}

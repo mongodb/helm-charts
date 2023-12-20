@@ -15,6 +15,9 @@ inputs:
   target:
     description: "Specific charts folder inside <charts_dir> for releasing"
     required: false
+  dryrun:
+    description: "not actually release, but check what would be done"
+    required: false
 
 runs:
   using: composite
@@ -24,6 +27,7 @@ runs:
         export VERSION="${{ inputs.version }}"
         export CHART_DIR="${{ inputs.charts_dir }}"
         export CHARTS_REPO_URL="${{ inputs.charts_repo_url }}"
+        export DRYRUN="${{ inputs.dryrun }}"
 
         owner=$(cut -d '/' -f 1 <<< "$GITHUB_REPOSITORY")
         repo=$(cut -d '/' -f 2 <<< "$GITHUB_REPOSITORY")
