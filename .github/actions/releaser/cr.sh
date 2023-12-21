@@ -92,7 +92,7 @@ chart_released() {
     local chart_name=$1
     local version=$2
 
-    helm search repo "mongodb/${chart_name}" --version "${version}" |grep "${chart_name}\s"
+    helm search repo "mongodb/${chart_name}" --version "${version}" | grep "${chart_name}\s" || echo "Not found"
 }
 
 # check if release version and chart version is diffrent
