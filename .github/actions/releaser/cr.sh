@@ -27,6 +27,9 @@ main() {
     print_line_separator
     echo "Target folders: " "${target[@]}"
     release_charts_inside_folders "${target[@]}"
+
+    # double check targets are released or report the error
+    check_charts_released "${target[@]}"
 }
 
 print_line_separator() {
@@ -39,7 +42,7 @@ release_charts_inside_folders() {
 
     prepare_helm_repo
 
-    # form list of folder which was changed
+    # form list of folders which was changed
     for folder in "${folders[@]}"; do
         [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
         print_line_separator
@@ -70,6 +73,40 @@ release_charts_inside_folders() {
         fi
     else
         echo "Nothing to do. No chart changes detected."
+    fi
+}
+
+check_charts_released() {
+    local folders=("$@")
+    local unreleased_charts=()
+
+    prepare_helm_repo
+
+    # form a list of folders which were unreleased
+    for folder in "${folders[@]}"; do
+        [[ ! -f "$charts_dir/$folder/Chart.yaml" ]] && continue
+        print_line_separator
+        local chart_name
+        local chart_version
+        local chart_was_released
+
+        chart_name=$(read_chart_name "${charts_dir}/${folder}")
+        chart_version=$(read_chart_version "${charts_dir}/${folder}")
+        echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
+        chart_was_released=$(chart_released "${chart_name}" "${chart_version}")
+
+        echo "released result: \"${chart_was_released}\""
+
+        if [ -z "${chart_was_released}" ]; then
+            unreleased_charts+=("$chart_name")
+        fi
+    done
+
+    if [[ -n "${unreleased_charts[*]}" ]]; then
+        echo "FAIL: found unreleased charts:" "${unreleased_charts[@]}"
+        exit 1
+    else
+        echo "PASS: all latest helm charts released for" "${folders[@]}"
     fi
 }
 
