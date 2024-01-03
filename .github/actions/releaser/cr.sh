@@ -156,7 +156,7 @@ get_latest_tag(){
     local name=$1
 
     git fetch --tags > /dev/null 2>&1
-    git describe --tags --abbrev=0 --match="$name-[0-9.]*" "$(git rev-list --tags --max-count=1)"
+    git tag -l --sort=-refname |grep "^$name-[0-9]*\." |head -1
 }
 
 release_changed_charts() {
