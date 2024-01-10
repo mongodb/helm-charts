@@ -22,72 +22,8 @@ spec:
     name: {{ include "atlas-deployment.projectfullname" $ }}
   {{- if .deploymentSpec }}
   deploymentSpec:
-    name: {{ .deploymentSpec.name }}
-    providerSettings:
-  {{- with .deploymentSpec.providerSettings -}}
-    {{- $provider := .providerName -}}
-    {{- range $key, $val := . }}
-    {{ if or (ne $key "backingProviderName") (and (eq $key "backingProviderName") (eq $provider "TENANT" )) }}
-      {{- $key | indent 2 }}: {{ $val }}
-    {{- end }}
-    {{- end }}
+  {{- toYaml .deploymentSpec | nindent 4 }}
   {{- end }}
-  {{- if .deploymentSpec.autoScaling }}
-    autoScaling:
-  {{- with .autoScaling }}
-  {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- end }}
-  {{- if .autoIndexingEnabled }}
-      autoIndexingEnabled: false
-  {{- end }}
-  {{- if .deploymentSpec.biConnector }}
-    biConnector:
-      enabled: {{ .deploymentSpec.biConnector.enabled }}
-      readPreference: {{ .deploymentSpec.biConnector.readPreference }}
-  {{- end }}
-  {{- if .deploymentSpec.clusterType }}
-    clusterType: {{ .deploymentSpec.clusterType }}
-  {{- end }}
-  {{- if .deploymentSpec.diskSizeGB }}
-    diskSizeGB: {{ .deploymentSpec.diskSizeGB }}
-  {{- end }}
-  {{- if .deploymentSpec.encryptionAtRestProvider }}
-    encryptionAtRestProvider: {{ .deploymentSpec.encryptionAtRestProvider }}
-  {{- end }}
-  {{- if .deploymentSpec.labels }}
-    labels:
-    {{- with .deploymentSpec.labels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-  {{- end }}
-  {{- if .deploymentSpec.mongoDBMajorVersion }}
-    mongoDBMajorVersion: {{ .deploymentSpec.mongoDBMajorVersion }}
-  {{- end }}
-  {{- if .deploymentSpec.numShards }}
-    numShards: {{ .deploymentSpec.numShards }}
-  {{- end }}
-  {{- if .deploymentSpec.paused }}
-    paused: {{ .deploymentSpec.paused }}
-  {{- end }}
-  {{- if .deploymentSpec.pitEnabled }}
-    pitEnabled: {{ .deploymentSpec.pitEnabled }}
-  {{- end }}
-  {{- if .deploymentSpec.providerBackupEnabled }}
-    providerBackupEnabled: {{ .deploymentSpec.providerBackupEnabled }}
-  {{- end }}
-  {{- if .deploymentSpec.replicationSpecs }}
-    replicationSpecs:
-    {{- with .deploymentSpec.replicationSpecs }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-  {{- end }}
-  {{- end }}
-  {{- if .advancedDeploymentSpec }}
-  advancedDeploymentSpec:
-  {{- toYaml .advancedDeploymentSpec | nindent 4}}
-  {{- end }}
-  {{- if .serverlessSpec }}
   serverlessSpec:
   {{- toYaml .serverlessSpec | nindent 4}}
   {{- end }}
@@ -121,5 +57,4 @@ spec:
               value: "{{ .name }}"
             - name: "NAMESPACE"
               value: "{{ $.Release.Namespace }}"
-{{- end }}
 {{- end }}

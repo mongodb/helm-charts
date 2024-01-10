@@ -36,69 +36,73 @@ project:
     - ipAddress: "0.0.0.0"
       comment: "REMOVE ME"
 
-# include either deploymentSpec or advancedDeploymentSpec
-# see https://docs.atlas.mongodb.com/reference/api/cluster-advanced/create-one-cluster-advanced/ for
+# include either deploymentSpec or serverlessSpec
+# see https://www.mongodb.com/docs/atlas/reference/api-resources-spec/v2/#tag/Clusters/operation/createCluster for
 # options for creating advanced clusters.
+
 deployments:
   - deploymentSpec:
       name: cluster-name
+      clusterType: REPLICASET
       annotations: {}
         # mongodb.com/atlas-resource-policy: keep
-      providerSettings:
-        instanceSizeName: M2
-        providerName: TENANT
-        backingProviderName: AWS
-        regionName: US_EAST_1
+      replicationSpecs:
+        - zoneName: Zone 1
+          regionConfigs:
+            - electableSpecs:
+                instanceSize: M2
+                nodeCount: 1
+              providerName: TENANT
+              backingProviderName: "AWS"
+              regionName: US_EAST_1
+              priority: 7
 
-# Additional clusterSpec values
-# Optional section. for more information visit
-# https://docs.atlas.mongodb.com/reference/api/clusters-create-one/
-# #
-#   autoScaling:
-#     autoIndexingEnabled: false
-#     compute:
-#       enabled: false
-#       maxInstanceSize: 'M40'
-#       minInstanceSize: 'M10'
-#       scaleDownEnabled: false
-#     diskGBEnabled: false
-#   biConnector:
-#     enabled: false
-#     readPreference: 'primary'
-#   clusterType: 'REPLICASET'
-#   diskSizeGB: '50'
-#   encryptionAtRestProvider: 'AWS'
-#   labels:
-#   mongoDBMajorVersion: '4.4'
-#   numShards: 2
-#   paused: false
-#   pitEnabled: false
-#   providerBackupEnabled: false
+# More advanced, multiregional, multitenant cluster
+# deploymentSpec:
+#   clusterType: GEOSHARDED
+#   name: advanced-deployment
 #   replicationSpecs:
+#     - numShards: 1
+#       zoneName: Zone1
+#       regionConfigs:
+#         - electableSpecs:
+#             instanceSize: M10
+#             nodeCount: 3
+#           providerName: AZURE
+#           backingProviderName: AZURE
+#           regionName: EUROPE_NORTH
+#           priority: 7
+
+#     - numShards: 1
+#       zoneName: Zone2
+#       regionConfigs:
+#         - electableSpecs:
+#             instanceSize: M10
+#             nodeCount: 3
+#           providerName: AWS
+#           backingProviderName: AWS
+#           regionName: US_EAST_1
+#           priority: 7
+
+#     - numShards: 1
+#       zoneName: Zone3
+#       regionConfigs:
+#         - electableSpecs:
+#             instanceSize: M10
+#             nodeCount: 3
+#           providerName: GCP
+#           backingProviderName: GCP
+#           regionName: EASTERN_US
+#           priority: 7
 
 # Configure a Serverless Instance
-# https://www.mongodb.com/docs/atlas/reference/api/serverless/create-one-serverless-instance/
-
+# https://www.mongodb.com/docs/atlas/reference/api-resources-spec/v2/#tag/Serverless-Instances/operation/createServerlessInstance
 #  - serverlessSpec:
 #      name: serverless-instance
 #      providerSettings:
 #        providerName: SERVERLESS
 #        backingProviderName: AWS
 #        regionName: US_EAST_1
-
-# Configure an Advanced Cluster
-# https://www.mongodb.com/docs/atlas/reference/api/cluster-advanced/create-one-cluster-advanced/
-
-#  - advancedDeploymentSpec:
-#      clusterType: REPLICASET
-#      name: advanced-cluster
-#      replicationSpecs:
-#        - regionConfigs:
-#            - electableSpecs:
-#                instanceSize: M5
-#              providerName: TENANT
-#              backingProviderName: AWS
-#              regionName: US_EAST_1
 
 users:
   - username: admin-user
