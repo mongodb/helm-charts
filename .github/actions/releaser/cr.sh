@@ -8,10 +8,11 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+mark_latest=${MARK_LATEST:-true}
+
 main() {
     local version=${VERSION:-v1.2.1}
     local charts_dir=${CHART_DIR:-charts}
-    local charts_repo_url=${CHARTS_REPO_URL:-}
     local target=("$@")
     local owner=${OWNER:-}
     local repo=${REPO:-}
@@ -48,17 +49,13 @@ release_charts_inside_folders() {
         print_line_separator
         local chart_name
         local chart_version
-        local chart_was_released
 
         chart_name=$(read_chart_name "${charts_dir}/${folder}")
         chart_version=$(read_chart_version "${charts_dir}/${folder}")
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
-        chart_was_released=$(chart_released "${chart_name}" "${chart_version}")
-
-        echo "released result: \"${chart_was_released}\""
 
         # if chart is not released or folder has change, then remember as changed_charts
-        if [ -z "${chart_was_released}" ] || has_changed "$folder"; then
+        if ! chart_released "${chart_name}" "${chart_version}"; then
             changed_charts+=("$folder")
         fi
     done
@@ -88,23 +85,23 @@ check_charts_released() {
         print_line_separator
         local chart_name
         local chart_version
-        local chart_was_released
 
         chart_name=$(read_chart_name "${charts_dir}/${folder}")
         chart_version=$(read_chart_version "${charts_dir}/${folder}")
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
-        chart_was_released=$(chart_released "${chart_name}" "${chart_version}")
 
-        echo "released result: \"${chart_was_released}\""
-
-        if [ -z "${chart_was_released}" ]; then
+        if ! chart_released "${chart_name}" "${chart_version}"; then
             unreleased_charts+=("$chart_name")
         fi
     done
 
     if [[ -n "${unreleased_charts[*]}" ]]; then
-        echo "FAIL: found unreleased charts:" "${unreleased_charts[@]}"
-        exit 1
+        if [ "${DRYRUN}" == "true" ]; then
+            echo "DRYRUN: would have not seen released charts for" "${unreleased_charts[@]}"
+        else
+            echo "FAIL: found unreleased charts:" "${unreleased_charts[@]}"
+            exit 1
+        fi
     else
         echo "PASS: all latest helm charts released for" "${folders[@]}"
     fi
@@ -129,27 +126,7 @@ chart_released() {
     local chart_name=$1
     local version=$2
 
-    helm search repo "mongodb/${chart_name}" --version "${version}" | grep "${chart_name}\s" || echo "Not found"
-}
-
-# check if release version and chart version is diffrent
-has_changed() {
-    local folder=$1
-    local chart_name
-    chart_name=$(awk '/^name/{print $2}' "$charts_dir/$folder/Chart.yaml")
-    tag=$(get_latest_tag "$chart_name")
-    changed_files=$(git diff --find-renames --name-only "$tag" -- "$charts_dir/$folder")
-
-    echo "Looking for versions..."
-    tag_version=$(echo "$tag" | awk -F '-' '{print $NF}') # sample-0.1.1 | 0.1.1
-    chart_version=$(awk '/^version: /{print $2}' "$charts_dir/$folder/Chart.yaml")
-    echo "version from tag: $tag_version"
-    echo "version from chart: $chart_version"
-
-    if [[ "$tag_version" != "$chart_version" ]] && [[ -n "$changed_files" ]]; then
-        return 0
-    fi
-    return 1
+    helm search repo "mongodb/${chart_name}" --version "${version}" | grep -q "${chart_name}\s"
 }
 
 get_latest_tag(){
@@ -219,15 +196,16 @@ package_charts() {
 }
 
 release_charts() {
-    local args=(-o "$owner" -r "$repo" -c "$(git rev-parse HEAD)")
+    local args=(-o "$owner" -r "$repo" -c "$(git rev-parse HEAD)" --make-release-latest "${mark_latest}")
 
     echo 'Releasing charts...'
     cr upload "${args[@]}"
 }
 
 update_index() {
-    local args=(-o "$owner" -r "$repo" -c "$charts_repo_url" --push)
+    local args=(-o "$owner" -r "$repo" --push --remote origin --pages-branch gh-pages)
 
+    git fetch
     echo 'Updating charts repo index...'
     cr index "${args[@]}"
 }
