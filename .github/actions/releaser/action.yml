@@ -18,6 +18,10 @@ inputs:
   dryrun:
     description: "not actually release, but check what would be done"
     required: false
+  mark_latest:
+    description: "mark released charts as latest"
+    required: false
+    default: "true"
 
 runs:
   using: composite
@@ -28,6 +32,7 @@ runs:
         export CHART_DIR="${{ inputs.charts_dir }}"
         export CHARTS_REPO_URL="${{ inputs.charts_repo_url }}"
         export DRYRUN="${{ inputs.dryrun }}"
+        export MARK_LATEST="${{ inputs.mark_latest }}"
 
         owner=$(cut -d '/' -f 1 <<< "$GITHUB_REPOSITORY")
         repo=$(cut -d '/' -f 2 <<< "$GITHUB_REPOSITORY")

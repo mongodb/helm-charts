@@ -8,6 +8,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+mark_latest=${MARK_LATEST:-true}
+
 main() {
     local version=${VERSION:-v1.2.1}
     local charts_dir=${CHART_DIR:-charts}
@@ -58,7 +60,7 @@ release_charts_inside_folders() {
         echo "released result: \"${chart_was_released}\""
 
         # if chart is not released or folder has change, then remember as changed_charts
-        if [ -z "${chart_was_released}" ] || has_changed "$folder"; then
+        if [ "${chart_was_released}" == "Not found" ] || has_changed "$folder"; then
             changed_charts+=("$folder")
         fi
     done
@@ -95,16 +97,20 @@ check_charts_released() {
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
         chart_was_released=$(chart_released "${chart_name}" "${chart_version}")
 
-        echo "released result: \"${chart_was_released}\""
+        echo "Has been released result: \"${chart_was_released}\""
 
-        if [ -z "${chart_was_released}" ]; then
+        if [ "${chart_was_released}" == "Not found" ]; then
             unreleased_charts+=("$chart_name")
         fi
     done
 
     if [[ -n "${unreleased_charts[*]}" ]]; then
-        echo "FAIL: found unreleased charts:" "${unreleased_charts[@]}"
-        exit 1
+        if [ "${DRYRUN}" == "true" ]; then
+            echo "DRYRUN: would have not seen released charts for" "${unreleased_charts[@]}"
+        else
+            echo "FAIL: found unreleased charts:" "${unreleased_charts[@]}"
+            exit 1
+        fi
     else
         echo "PASS: all latest helm charts released for" "${folders[@]}"
     fi
@@ -219,7 +225,7 @@ package_charts() {
 }
 
 release_charts() {
-    local args=(-o "$owner" -r "$repo" -c "$(git rev-parse HEAD)")
+    local args=(-o "$owner" -r "$repo" -c "$(git rev-parse HEAD)" --make-release-latest "${mark_latest}")
 
     echo 'Releasing charts...'
     cr upload "${args[@]}"

@@ -14,17 +14,32 @@ on:
         default: ""
         required: false
       dryrun:
-        description: "not actually release, but check what would be done"
+        description: "dry-run"
         type: boolean
         default: true
         required: false
+      backport-branch:
+        description: "Branch or leave empty for current CI branch"
+        type: string
+        default: ""
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BACKPORT_BRANCH: ${{ github.event.inputs.backport-branch || '' }}
+      BACKPORT_DIR: 'backport'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout Backport branch
+        uses: actions/checkout@v4
+        if: github.event.inputs.backport-branch != ''
+        with:
+          ref: ${{ env.BACKPORT_BRANCH }}
+          path: ${{ env.BACKPORT_DIR }}
 
       - name: Configure Git
         run: |
@@ -64,7 +79,11 @@ jobs:
         uses: ./.github/actions/releaser
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CHARTS_DIR: ${{ github.event.inputs.backport-branch == '' && 'charts' || format('{0}/charts', env.BACKPORT_DIR) }}
+          MARK_LATEST: ${{ github.event.inputs.backport-branch == '' && 'true' || 'false' }}
         with:
           charts_repo_url: https://mongodb.github.io/helm-charts
           target: ${{ github.event.inputs.target }}
           dryrun: ${{ github.event.inputs.dryrun }}
+          charts_dir: ${{ env.CHARTS_DIR }}
+          mark_latest: ${{ env.MARK_LATEST }}
