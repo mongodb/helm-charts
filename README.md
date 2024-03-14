@@ -1,7 +1,5 @@
 # MongoDB Helm Charts repository for Kubernetes
 
-## Trial Version of Helm Charts
-
 This repository contains Helm Charts for different MongoDB products.
 
 | Charts                                                                                                     | Description                                                        |
