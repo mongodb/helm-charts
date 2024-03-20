@@ -6,8 +6,9 @@ metadata:
     email: support@mongodb.com
   labels:
     owner: mongodb
+    {{- include "community-operator.labels" . | nindent 4 }}
   name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "community-operator.namespace" . }}
 spec:
   replicas:  {{ .Values.operator.replicas }}
   selector:
@@ -21,6 +22,7 @@ spec:
     metadata:
       labels:
         name: {{ .Values.operator.name }}
+        {{- include "community-operator.labels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
