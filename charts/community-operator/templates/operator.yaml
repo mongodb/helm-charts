@@ -76,6 +76,10 @@ spec:
           securityContext:
             {{- toYaml .Values.operator.securityContext | nindent 12 }}
           {{- end }}
+      {{- if .Values.operator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.operator.nodeSelector | nindent 8 }}
+      {{- end }}
       {{- if .Values.operator.podSecurityContext }}
       securityContext:
         {{- toYaml .Values.operator.podSecurityContext | nindent 8 }}
