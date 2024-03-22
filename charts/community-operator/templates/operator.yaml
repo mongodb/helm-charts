@@ -76,7 +76,7 @@ spec:
           securityContext:
             {{- toYaml .Values.operator.securityContext | nindent 12 }}
           {{- end }}
-      {{- if .Values.operator.priorityClassName}}
+      {{- if .Values.operator.priorityClassName }}
       priorityClassName: {{ .Values.operator.priorityClassName }}
       {{- end }}
       {{- if .Values.operator.podSecurityContext }}
