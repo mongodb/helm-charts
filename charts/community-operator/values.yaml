@@ -29,6 +29,10 @@ operator:
       cpu: 500m
       memory: 200Mi
 
+  # PriorityClass configuration for operator
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
+
   # replicas deployed for the operator pod. Running 1 is optimal and suggested.
   replicas: 1
 
