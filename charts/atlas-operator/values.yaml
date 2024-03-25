@@ -84,11 +84,10 @@ securityContext:
 # More information: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 resources:
   limits:
-    cpu: 1000m
     memory: 1Gi
   requests:
     cpu: 100m
-    memory: 50Mi
+    memory: 256Mi
 
 # Assigns the Operator Pod to a specific Node.
 # More information: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
