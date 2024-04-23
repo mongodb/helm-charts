@@ -61,7 +61,7 @@ database:
   # namespace: mongodb-database
 
 agent:
-  name: mongodb-agent
+  name: mongodb-agent-ubi
   version: 107.0.0.8465-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
