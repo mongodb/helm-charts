@@ -1,21 +1,29 @@
 # Name of the Namespace to use
 namespace: mongodb
 
-# OpenShift manages security context on its own
+# Set this to true if your cluster is managing SecurityContext for you.
+# If running OpenShift (Cloud, Minishift, etc.), set this to true.
 managedSecurityContext: true
 
 operator:
   # Execution environment for the operator, dev or prod. Use dev for more verbose logging
   env: prod
 
-  # Name that will be assigned to most of the internal Kubernetes objects like ServiceAccount, Role etc.
+  # Default architecture for the operator.
+  # Values are "static" and "non-static:
+  mdbDefaultArchitecture: non-static
+
+  # Name that will be assigned to most internal Kubernetes objects like Deployment, ServiceAccount, Role etc.
   name: mongodb-enterprise-operator
 
   # Name of the operator image
   operator_image_name: mongodb-enterprise-operator-ubi
 
+  # Name of the deployment of the operator pod
+  deployment_name: mongodb-enterprise-operator
+
   # Version of mongodb-enterprise-operator
-  version: 1.24.0
+  version: 1.25.0
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
@@ -29,23 +37,51 @@ operator:
 
   affinity: {}
 
-# operator cpu requests and limits
-resources:
-  requests:
-    cpu: 500m
-    memory: 200Mi
-  limits:
-    cpu: 1100m
-    memory: 1Gi
+  # operator cpu requests and limits
+  resources:
+    requests:
+      cpu: 500m
+      memory: 200Mi
+    limits:
+      cpu: 1100m
+      memory: 1Gi
+
+  # Create operator service account and roles
+  # if false, then templates/operator-roles.yaml is excluded
+  createOperatorServiceAccount: true
+
+  vaultSecretBackend:
+  # set to true if you want the operator to store secrets in Vault
+    enabled: false
+    tlsSecretRef: ''
+
+  webhook:
+    # registerConfiguration setting (default: true) controls if the operator should automatically register ValidatingWebhookConfiguration and if required for it cluster-wide roles should be installed.
+    #
+    # Setting false:
+    #  - Adds env var MDB_WEBHOOK_REGISTER_CONFIGURATION=false to the operator deployment.
+    #  - ClusterRole and ClusterRoleBinding required to manage ValidatingWebhookConfigurations will not be installed
+    #  - The operator will not create ValidatingWebhookConfigurations upon startup.
+    #  - The operator will not create the service for the webhook. If the `operator-webhook` service was created before, it will be deleted.
+    #  - The operator will still expose the webhook's endpoint on port on MDB_WEBHOOK_PORT (if not specified, the operator uses a default 1993) in case the ValidatingWebhookConfigurations is configured externally (e.g. in OLM/OpenShift) or by the administrator manually.
+    #
+    # Setting true:
+    #  - It's the default setting, behaviour of the operator w.r.t. webhook configuration is the same as before.
+    #  - operator-webhook service will be created by the operator
+    #  - ClusterRole and ClusterRoleBinding required to manage ValidatingWebhookConfigurations will be installed.
+    #  - ValidatingWebhookConfigurations will be managed by the operator (requires cluster permissions)
+    registerConfiguration: false
+
+  replicas: 1
 
 ## Database
 database:
   name: mongodb-enterprise-database-ubi
-  version: 1.24.0
+  version: 1.25.0
 
 initDatabase:
   name: mongodb-enterprise-init-database-ubi
-  version: 1.24.0
+  version: 1.25.0
 
 ## Ops Manager
 opsManager:
@@ -53,28 +89,35 @@ opsManager:
 
 initOpsManager:
   name: mongodb-enterprise-init-ops-manager-ubi
-  version: 1.24.0
+  version: 1.25.0
 
+## Application Database
 initAppDb:
   name: mongodb-enterprise-init-appdb-ubi
-  version: 1.24.0
+  version: 1.25.0
 
 agent:
   name: mongodb-agent-ubi
-  version: 12.0.29.7785-1
+  version: 107.0.0.8502-1
+
+mongodbLegacyAppDb:
+  name: mongodb-enterprise-appdb-database-ubi
+  repo: quay.io/mongodb
 
 mongodb:
   name: mongodb-enterprise-server
   repo: quay.io/mongodb
   appdbAssumeOldFormat: false
+  imageType: ubi8
+
 
 ## Registry
 registry:
-  # The pull secret must be specified
   imagePullSecrets:
   pullPolicy: Always
-  database: quay.io/mongodb
+  # Specify if images are pulled from private registry
   operator: quay.io/mongodb
+  database: quay.io/mongodb
   initDatabase: quay.io/mongodb
   initOpsManager: quay.io/mongodb
   opsManager: quay.io/mongodb
@@ -82,10 +125,21 @@ registry:
   appDb: quay.io/mongodb
   agent: quay.io/mongodb
 
+multiCluster:
+  # Specify if we want to deploy the operator in multi-cluster mode
+  clusters: []
+  kubeConfigSecretName: mongodb-enterprise-operator-multi-cluster-kubeconfig
+  performFailOver: true
+  clusterClientTimeout: 10
+
+# Set this to false to disable subresource utilization
+# It might be required on some versions of Openshift
+subresourceEnabled: true
+
 # Versions listed here are used to populate RELATED_IMAGE_ env variables in the operator deployment.
 # Environment variables prefixed with RELATED_IMAGE_ are used by operator-sdk to generate relatedImages section
 # with sha256 digests pinning for the certified operator bundle with disconnected environment feature enabled.
-# https://docs.openshift.com/container-platform/4.11/operators/operator_sdk/osdk-generating-csvs.html#olm-enabling-operator-for-restricted-network_osdk-generating-csvs
+# https://docs.openshift.com/container-platform/4.14/operators/operator_sdk/osdk-generating-csvs.html#olm-enabling-operator-for-restricted-network_osdk-generating-csvs
 relatedImages:
   opsManager:
   - 6.0.0
@@ -110,6 +164,13 @@ relatedImages:
   - 6.0.19
   - 6.0.20
   - 6.0.21
+  - 6.0.22
+  - 6.0.23
+  - 7.0.0
+  - 7.0.1
+  - 7.0.2
+  - 7.0.3
+  - 7.0.4
   mongodb:
   - 4.4.0-ubi8
   - 4.4.1-ubi8
@@ -159,15 +220,26 @@ relatedImages:
   - 6.0.4-ubi8
   - 6.0.5-ubi8
   agent:
-  - 11.12.0.7388-1
-  - 12.0.4.7554-1
+  - 107.0.0.8465-1
+  - 107.0.0.8502-1
+  - 107.0.1.8507-1
+  - 107.0.1.8507-1_1.25.0
+  - 107.0.2.8531-1_1.25.0
+  - 107.0.3.8550-1_1.25.0
+  - 107.0.4.8567-1_1.25.0
   - 12.0.15.7646-1
   - 12.0.21.7698-1
   - 12.0.24.7719-1
   - 12.0.25.7724-1
   - 12.0.28.7763-1
   - 12.0.29.7785-1
-  - 107.0.0.8465-1
+  - 12.0.29.7785-1_1.25.0
+  - 12.0.30.7791-1
+  - 12.0.30.7791-1_1.25.0
+  - 12.0.31.7825-1_1.25.0
+  - 12.0.4.7554-1
+  - 13.10.0.8620-1
+  - 13.15.0.8788-1_1.25.0
   mongodbLegacyAppDb:
   - 4.2.11-ent
   - 4.2.2-ent
@@ -184,4 +256,3 @@ relatedImages:
   - 5.0.7-ent
   - 5.0.14-ent
   - 5.0.18-ent
-subresourceEnabled: true
