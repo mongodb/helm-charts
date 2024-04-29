@@ -253,4 +253,44 @@ RBAC permissions
   - atlasfederatedauths/status
   verbs:
   - get
+- apiGroups:
+    - atlas.mongodb.com
+  resources:
+    - atlasstreamconnections
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - atlas.mongodb.com
+  resources:
+    - atlasstreamconnections/status
+  verbs:
+    - get
+    - patch
+    - update
+- apiGroups:
+    - atlas.mongodb.com
+  resources:
+    - atlasstreaminstances
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - atlas.mongodb.com
+  resources:
+    - atlasstreaminstances/status
+  verbs:
+    - get
+    - patch
+    - update
 {{- end -}}
