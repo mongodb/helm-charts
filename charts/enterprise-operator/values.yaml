@@ -20,7 +20,7 @@ operator:
   deployment_name: mongodb-enterprise-operator
 
   # Version of mongodb-enterprise-operator
-  version: 1.25.0
+  version: 1.26.0
 
   # The Custom Resources that will be watched by the Operator. Needs to be changed if only some of the CRDs are installed
   watchedResources:
@@ -43,6 +43,16 @@ operator:
       cpu: 1100m
       memory: 1Gi
 
+  # Control how many reconciles can be performed in parallel.
+  # It sets MaxConcurrentReconciles https://pkg.go.dev/github.com/kubernetes-sigs/controller-runtime/pkg/controller#Options).
+  # Increasing the number of concurrent reconciles will decrease the time needed to reconcile all watched resources.
+  # But it might result in increased load on Ops Manager API, K8S API server and will require allocating more cpu and memory for the operator deployment.
+  #
+  # This setting works independently for all watched CRD types, so setting doesn't mean the operator will use only 4 workers in total, but
+  # each CRD type (MongoDB, MongoDBMultiCluster, MongoDBOpsManager, MongoDBUser) will be reconciled with 4 workers, making it
+  # 4*4=20 workers in total. Memory usage depends on the actual number of resources reconciles in parallel and is not allocated upfront.
+  maxConcurrentReconciles: 1
+
   # Create operator service account and roles
   # if false, then templates/operator-roles.yaml is excluded
   createOperatorServiceAccount: true
@@ -63,9 +73,15 @@ operator:
   additionalArguments: []
 
   webhook:
+    # Controls whether the helm chart will install cluster role allowing to create ValidatingWebhookConfiguration. Default: true.
+    # Without the permissions, the operator will log errors when trying to configure admission webhooks, but will work correctly nonetheless.
+    installClusterRole: true
+
     # registerConfiguration setting (default: true) controls if the operator should automatically register ValidatingWebhookConfiguration and if required for it cluster-wide roles should be installed.
+    # DO NOT disable this setting if installing via helm. This setting is used for OLM installations.
     #
     # Setting false:
+    #  - This setting is intended to be used ONLY when the operator is installed via OLM. Do not use it otherwise as the operator won't start due to missing webhook server certificates, which OLM provides automatically.
     #  - Adds env var MDB_WEBHOOK_REGISTER_CONFIGURATION=false to the operator deployment.
     #  - ClusterRole and ClusterRoleBinding required to manage ValidatingWebhookConfigurations will not be installed
     #  - The operator will not create ValidatingWebhookConfigurations upon startup.
@@ -74,19 +90,19 @@ operator:
     #
     # Setting true:
     #  - It's the default setting, behaviour of the operator w.r.t. webhook configuration is the same as before.
-    #  - operator-webhook service will be created by the operator
+    #  - operator-webhook service will be created by the operator.
     #  - ClusterRole and ClusterRoleBinding required to manage ValidatingWebhookConfigurations will be installed.
-    #  - ValidatingWebhookConfigurations will be managed by the operator (requires cluster permissions)
+    #  - ValidatingWebhookConfigurations will be managed by the operator.
     registerConfiguration: true
 
 ## Database
 database:
   name: mongodb-enterprise-database-ubi
-  version: 1.25.0
+  version: 1.26.0
 
 initDatabase:
   name: mongodb-enterprise-init-database-ubi
-  version: 1.25.0
+  version: 1.26.0
 
 ## Ops Manager
 opsManager:
@@ -94,12 +110,12 @@ opsManager:
 
 initOpsManager:
   name: mongodb-enterprise-init-ops-manager-ubi
-  version: 1.25.0
+  version: 1.26.0
 
 ## Application Database
 initAppDb:
   name: mongodb-enterprise-init-appdb-ubi
-  version: 1.25.0
+  version: 1.26.0
 
 agent:
   name: mongodb-agent-ubi
