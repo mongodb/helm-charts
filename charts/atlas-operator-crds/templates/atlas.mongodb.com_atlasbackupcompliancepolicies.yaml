@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: mongodb-atlas-kubernetes-operator
     app.kubernetes.io/name: mongodb-atlas-kubernetes-operator
+  name: atlasbackupcompliancepolicies.atlas.mongodb.com
 spec:
   group: atlas.mongodb.com
   names:
