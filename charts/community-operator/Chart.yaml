@@ -1,7 +1,7 @@
 apiVersion: v2
 name: community-operator
 description: MongoDB Kubernetes Community Operator
-version: 0.10.0
+version: 0.11.0
 type: application
 appVersion: 0.10.0
 kubeVersion: '>=1.16-0'
