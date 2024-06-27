@@ -3,7 +3,7 @@
 {{- $operatorNamespaceManaged := has .Release.Namespace .Values.watchNamespaces -}}
 
 {{- /* so far we support only a single namespace but otherwise should iterate over the watchNamespaces */}}
-{{- if .Values.watchNamespaces }}
+{{- if and (.Values.watchNamespaces) (.Values.crossNamespaceRoles) }}
 {{- range $namespace := .Values.watchNamespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1

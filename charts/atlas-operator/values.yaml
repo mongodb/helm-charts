@@ -35,6 +35,11 @@ globalConnectionSecret:
   publicApiKey: ""
   privateApiKey: ""
 
+# Determines whether RBAC resources should be created across namespaces.
+# If set to true, RBAC resources will be created across all namespaces specified in watchNamespaces.
+# If set to false, RBAC resources will be created only within the namespace of the release.
+crossNamespaceRoles: false
+
 # watchNamespaces is the set of namespaces that are watched by the Operator.
 #
 # The only possible values are:
