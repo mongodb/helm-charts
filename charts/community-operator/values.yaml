@@ -48,6 +48,26 @@ operator:
 
   securityContext: {}
 
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: name
+                operator: In
+                values:
+                  - mongodb-kubernetes-operator
+          topologyKey: kubernetes.io/hostname
+
+  nodeSelector: {}
+
+  schedulerName: ""
+
+  tolerations: []
+
+  topologySpreadConstraints: []
+
+
 ## Operator's database
 database:
   name: mongodb-database

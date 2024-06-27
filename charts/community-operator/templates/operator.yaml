@@ -9,7 +9,7 @@ metadata:
   name: {{ .Values.operator.name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas:  {{ .Values.operator.replicas }}
+  replicas: {{ int .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.operator.name }}
@@ -22,35 +22,24 @@ spec:
       labels:
         name: {{ .Values.operator.name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- with .Values.operator.affinity }}
+      affinity: {{- toYaml . | nindent 8 }}
       {{- end }}
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - {{ .Values.operator.name }}
-              topologyKey: kubernetes.io/hostname
       containers:
         - command:
             - /usr/local/bin/entrypoint
           env:
-{{- if .Values.operator.extraEnvs }}
-            {{ toYaml .Values.operator.extraEnvs | nindent 12 }}
-{{- end }}
+            {{- with .Values.operator.extraEnvs }}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
             - name: WATCH_NAMESPACE
-{{- if .Values.operator.watchNamespace}}
+              {{- if .Values.operator.watchNamespace}}
               value: "{{ .Values.operator.watchNamespace }}"
-{{- else }}
+              {{- else }}
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-{{- end }}
+              {{- end }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -70,17 +59,32 @@ spec:
           image: {{ .Values.registry.operator }}/{{ .Values.operator.operatorImageName }}:{{ .Values.operator.version }}
           imagePullPolicy: {{ .Values.registry.pullPolicy}}
           name: {{ .Values.operator.deploymentName }}
-          resources:
-            {{- toYaml .Values.operator.resources | nindent 12 }}
-          {{- if .Values.operator.securityContext }}
-          securityContext:
-            {{- toYaml .Values.operator.securityContext | nindent 12 }}
+          {{- with .Values.operator.resources }}
+          resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- if .Values.operator.priorityClassName }}
-      priorityClassName: {{ .Values.operator.priorityClassName }}
+          {{- with .Values.operator.securityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.operator.podSecurityContext }}
-      securityContext:
-        {{- toYaml .Values.operator.podSecurityContext | nindent 8 }}
+      {{- with .Values.operator.nodeSelector }}
+      nodeSelector: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
+      {{- with .Values.operator.schedulerName }}
+      schedulerName: {{ . | quote }}
+      {{- end }}
+      {{- with .Values.operator.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ .Values.operator.name }}
+      {{- with .Values.operator.tolerations }}
+      tolerations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- toYaml . | nindent 8 }}
+      {{- end }}
