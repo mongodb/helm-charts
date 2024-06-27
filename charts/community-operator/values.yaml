@@ -2,6 +2,7 @@
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # - name: "image-pull-secret"
+
 ## Operator
 operator:
   # Name that will be assigned to most of internal Kubernetes objects like
@@ -66,7 +67,6 @@ operator:
   tolerations: []
 
   topologySpreadConstraints: []
-
 
 ## Operator's database
 database:
