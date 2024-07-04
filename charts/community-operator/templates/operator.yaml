@@ -67,6 +67,8 @@ spec:
               value: {{ .Values.mongodb.name }}
             - name: MONGODB_REPO_URL
               value: {{ .Values.mongodb.repo }}
+            - name: MDB_IMAGE_TYPE
+              value: {{ .Values.mongodb.imageType }}
           image: {{ .Values.registry.operator }}/{{ .Values.operator.operatorImageName }}:{{ .Values.operator.version }}
           imagePullPolicy: {{ .Values.registry.pullPolicy}}
           name: {{ .Values.operator.deploymentName }}
