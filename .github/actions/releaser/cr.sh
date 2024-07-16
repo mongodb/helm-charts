@@ -76,6 +76,8 @@ release_charts_inside_folders() {
 check_charts_released() {
     local folders=("$@")
     local unreleased_charts=()
+    local retries=5
+    local delay=10
 
     prepare_helm_repo
 
@@ -90,7 +92,17 @@ check_charts_released() {
         chart_version=$(read_chart_version "${charts_dir}/${folder}")
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
 
-        if ! chart_released "${chart_name}" "${chart_version}"; then
+        local released=false
+        for ((i=0; i<retries; i++)); do
+            if chart_released "${chart_name}" "${chart_version}"; then
+                released=true
+                break
+            fi
+            echo "Retrying in ${delay} seconds... ($((i+1))/$retries)"
+            sleep "${delay}"
+        done
+
+        if [ "$released" = false ]; then
             unreleased_charts+=("$chart_name")
         fi
     done
