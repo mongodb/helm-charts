@@ -77,7 +77,7 @@ check_charts_released() {
     local folders=("$@")
     local unreleased_charts=()
     local retries=5
-    local delay=10
+    local delay=5
 
     prepare_helm_repo
 
