@@ -100,6 +100,7 @@ check_charts_released() {
             fi
             echo "Retrying in ${delay} seconds... ($((i+1))/$retries)"
             sleep "${delay}"
+            helm repo update mongodb
         done
 
         if [ "$released" = false ]; then
