@@ -100,7 +100,7 @@ check_charts_released() {
             fi
             echo "Retrying in ${delay} seconds... ($((i+1))/$retries)"
             sleep "${delay}"
-            helm repo update mongodb
+            update_helm_repo
         done
 
         if [ "$released" = false ]; then
@@ -130,9 +130,13 @@ read_chart_version() {
     awk '/^version: /{print $2}' "$chart_path/Chart.yaml"
 }
 
+update_helm_repo(){
+    helm repo update mongodb
+}
+
 prepare_helm_repo() {
     helm repo add mongodb https://mongodb.github.io/helm-charts
-    helm repo update mongodb
+    update_helm_repo
 }
 
 chart_released() {
