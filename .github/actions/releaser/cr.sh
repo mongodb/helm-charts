@@ -91,7 +91,7 @@ check_charts_released() {
         chart_version=$(read_chart_version "${charts_dir}/${folder}")
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
 
-        if ! check_chart_version_released; then
+        if ! check_chart_version_released "${chart_name}" "${chart_version}"; then
             unreleased_charts+=("$chart_name")
         fi
     done
