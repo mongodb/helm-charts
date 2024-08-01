@@ -9,6 +9,7 @@ set -o nounset
 set -o pipefail
 
 mark_latest=${MARK_LATEST:-true}
+skip_execution=${SKIP_EXECUTION:-false}
 
 main() {
     local version=${VERSION:-v1.2.1}
@@ -76,8 +77,6 @@ release_charts_inside_folders() {
 check_charts_released() {
     local folders=("$@")
     local unreleased_charts=()
-    local retries=5
-    local delay=5
 
     prepare_helm_repo
 
@@ -92,18 +91,7 @@ check_charts_released() {
         chart_version=$(read_chart_version "${charts_dir}/${folder}")
         echo "Checking if \"$charts_dir/$folder\" has been released to the repo"
 
-        local released=false
-        for ((i=0; i<retries; i++)); do
-            if chart_released "${chart_name}" "${chart_version}"; then
-                released=true
-                break
-            fi
-            echo "Retrying in ${delay} seconds... ($((i+1))/$retries)"
-            sleep "${delay}"
-            update_helm_repo
-        done
-
-        if [ "$released" = false ]; then
+        if ! check_chart_version_released; then
             unreleased_charts+=("$chart_name")
         fi
     done
@@ -120,6 +108,24 @@ check_charts_released() {
     fi
 }
 
+check_chart_version_released() {
+    local chart_name=$1
+    local chart_version=$2
+    local retries=5
+    local delay=1
+    for ((i=0; i<retries; i++)); do
+        if chart_released "${chart_name}" "${chart_version}"; then
+            return 0
+        fi
+        echo "$(date -u --iso-8601=seconds): Retrying in ${delay} seconds... ($((i+1))/$retries)"
+        sleep "${delay}"
+        delay=$((delay*2))
+        echo "$(date -u --iso-8601=seconds): Retrying..."
+        reset_helm_repo
+    done
+    return 1
+}
+
 read_chart_name() {
     local chart_path=$1
     awk '/^name: /{print $2}' "$chart_path/Chart.yaml"
@@ -128,6 +134,11 @@ read_chart_name() {
 read_chart_version() {
     local chart_path=$1
     awk '/^version: /{print $2}' "$chart_path/Chart.yaml"
+}
+
+reset_helm_repo() {
+    helm repo remove mongodb
+    prepare_helm_repo
 }
 
 update_helm_repo(){
@@ -227,5 +238,9 @@ update_index() {
     cr index "${args[@]}"
 }
 
-mapfile -t target< <(echo "$1" )
-main "${target[@]}"
+if [[ "${skip_execution}" == "true" ]]; then
+  echo "Skipping execution as per SKIP_EXECUTION=${skip_execution}"
+else
+  mapfile -t target< <(echo "$1" )
+  main "${target[@]}"
+fi
