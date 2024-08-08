@@ -62,7 +62,7 @@ database:
 
 agent:
   name: mongodb-agent-ubi
-  version: 107.0.1.8507-1
+  version: 107.0.7.8596-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
   version: 1.0.9
