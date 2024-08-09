@@ -211,7 +211,10 @@ spec:
             defaultMode: 420
             secretName: {{ .Values.multiCluster.kubeConfigSecretName }}
 {{- end }}
-
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
 {{- with .Values.operator }}
   {{- with .nodeSelector }}
       nodeSelector:
