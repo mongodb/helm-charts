@@ -10,7 +10,6 @@ spec:
   databaseName: {{ .Values.dbUser.databaseName }}
   passwordSecretRef:
     name: {{ include "atlas-basic.fullname" $ }}-{{ .Values.dbUser.name }}
-    namespace: {{ $.Release.Namespace }}
   projectRef:
     name: {{ include "atlas-basic.projectfullname" $ }}
     namespace: {{ $.Release.Namespace }}

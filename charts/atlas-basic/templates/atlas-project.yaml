@@ -11,5 +11,5 @@ spec:
     name: {{ include "atlas-basic.fullname" . }}-secret
     namespace: {{ $.Release.Namespace }}
   projectIpAccessList:
-    - name: "Example"
+    - comment: "Example"
       cidrBlock: {{ .Values.project.cidrEntry }}

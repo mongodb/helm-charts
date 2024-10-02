@@ -1,7 +1,7 @@
 apiVersion: atlas.mongodb.com/v1
 kind: AtlasDeployment
 metadata:
-  name: {{ .Values.deployment.name | trunc 63 }}
+  name: {{ include "atlas-basic.fullname" $ }}
   labels:
     {{- include "atlas-basic.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
