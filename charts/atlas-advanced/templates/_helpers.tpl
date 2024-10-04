@@ -70,9 +70,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- define "getInstanceSizeOrFail" -}}
 {{- $arg := . -}}
 {{ $instances := list "M10" "M20" "M30" "M40" "M50" "M60" "M80" "M100" "M140" "M200" "M300" "R40" "R50" "R60" "R80" "R200" "R300" "R400" "R700" "M40_NVME" "M50_NVME" "M60_NVME" "M80_NVME" "M200_NVME" "M400_NVME" }}
-{{- if not (has $arg $instances)}}
-{{ $str := join "," $instances }}
-{{- fail "Instance size can only be one of " print $str }}
+{{- if not (has (toString $arg) $instances)}}
+{{- fail (printf "Instance size can only be one of: %s " (join "," $instances)) }}
 {{- end }}
 {{- $arg -}}
 {{- end }}
@@ -80,9 +79,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- define "getProviderNameOrFail" -}}
 {{- $arg := . -}}
 {{ $providers := list "AWS" "GCP" "AZURE" }}
-{{- if not (has $arg $providers) }}
-{{ $str := join "," $providers }}
-{{- fail "Provider name can only be one of " print $str }}
+{{- if not (has (toString $arg) $providers) }}
+{{- fail (printf "Provider name can only be one of: %s. Got %s" (join "," $providers) $arg) }}
 {{- end }}
 {{- $arg -}}
 {{- end }}
