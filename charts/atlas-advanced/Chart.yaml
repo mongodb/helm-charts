@@ -4,7 +4,7 @@ description: This chart showcases Atlas Advanced (dedicated) deployment
 
 type: application
 
-version: 2.4.1
+version: 1.0.0
 
 keywords:
   - mongodb
