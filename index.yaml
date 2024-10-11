@@ -1,5 +1,45 @@
 apiVersion: v1
 entries:
+  atlas-advanced:
+  - apiVersion: v2
+    appVersion: 2.4.1
+    created: "2024-10-11T12:52:10.221571612Z"
+    description: This chart showcases Atlas Advanced (dedicated) deployment
+    digest: 9fb43008b90154f53da1191cbfc7c262e5608539d6e249bd54c8e962cf645765
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://webimages.mongodb.com/_com_assets/cms/kuyjf3vea2hg34taa-horizontal_default_slate_blue.svg
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: atlas-advanced
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/atlas-advanced-1.0.0/atlas-advanced-1.0.0.tgz
+    version: 1.0.0
+  atlas-basic:
+  - apiVersion: v2
+    appVersion: 2.4.1
+    created: "2024-10-11T12:52:10.333945337Z"
+    description: This chart showcases Atlas Basic (shared) deployment
+    digest: 8fa35d4ab1d6208467dd5a055b95f05f6de5b9fbf0ae49fb50551f228e037dec
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://webimages.mongodb.com/_com_assets/cms/kuyjf3vea2hg34taa-horizontal_default_slate_blue.svg
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: atlas-basic
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/atlas-basic-1.0.0/atlas-basic-1.0.0.tgz
+    version: 1.0.0
   atlas-cluster:
   - apiVersion: v2
     appVersion: 0.8.1
@@ -129,6 +169,25 @@ entries:
     - https://github.com/mongodb/helm-charts/releases/download/atlas-cluster-0.1.2/atlas-cluster-0.1.2.tgz
     version: 0.1.2
   atlas-deployment:
+  - apiVersion: v2
+    appVersion: 2.4.1
+    created: "2024-10-11T12:52:10.466454826Z"
+    description: A Helm chart to manage Atlas resources with Atlas operator
+    digest: 54370d5d41047fb0b6449725db5a000089fcea92d526b1fa6eeed686418d2bf7
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    icon: https://webimages.mongodb.com/_com_assets/cms/kuyjf3vea2hg34taa-horizontal_default_slate_blue.svg
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: atlas-deployment
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/atlas-deployment-2.4.1/atlas-deployment-2.4.1.tgz
+    version: 2.4.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2022-06-01T15:07:40.976780045Z"
@@ -3234,4 +3293,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-02T09:33:37.96195812Z"
+generated: "2024-10-11T12:52:10.466848022Z"
