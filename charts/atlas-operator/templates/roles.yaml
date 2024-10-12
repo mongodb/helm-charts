@@ -14,7 +14,9 @@ metadata:
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
-{{ template "mongodb-atlas-operator.rbacRules" $ | toYaml | indent 2 }}
+{{- range (.Files.Lines "rbac.yaml") }}
+  {{ . -}}
+{{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -45,7 +47,9 @@ metadata:
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
-{{ template "mongodb-atlas-operator.rbacRules" $ | toYaml | indent 2 }}
+{{- range (.Files.Lines "rbac.yaml") }}
+  {{ . -}}
+{{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
