@@ -48,6 +48,9 @@ operator:
 
   securityContext: {}
 
+  # Custom labels to be added to the operator pod
+  podLabels: {}
+
 ## Operator's database
 database:
   name: mongodb-database

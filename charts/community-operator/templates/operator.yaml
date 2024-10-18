@@ -21,6 +21,9 @@ spec:
     metadata:
       labels:
         name: {{ .Values.operator.name }}
+        {{- with .Values.operator.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
