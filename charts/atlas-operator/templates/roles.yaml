@@ -14,7 +14,7 @@ metadata:
   labels:
   {{- include "mongodb-atlas-operator.labels" $ | nindent 4 }}
 rules:
-{{- range (.Files.Lines "rbac.yaml") }}
+{{- range ($.Files.Lines "rbac.yaml") }}
   {{ . -}}
 {{- end }}
 ---
