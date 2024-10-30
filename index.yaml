@@ -1421,6 +1421,35 @@ entries:
     version: 1.13.0
   mongodb-atlas-operator:
   - apiVersion: v2
+    appVersion: 2.5.0
+    created: "2024-10-30T09:57:54.622532783Z"
+    dependencies:
+    - condition: mongodb-atlas-operator-crds.enabled
+      name: mongodb-atlas-operator-crds
+      repository: https://mongodb.github.io/helm-charts
+      version: 2.5.0
+    description: 'MongoDB Atlas Operator - a Helm chart for installing and upgrading
+      Atlas Operator: the official Kubernetes operator allowing to manage MongoDB
+      Atlas resources from Kubernetes'
+    digest: 02b97e9ff0b29c65437c9f4da7755a53b402784f2828b4e0c25a456e87d377de
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://webimages.mongodb.com/_com_assets/cms/kuyjf3vea2hg34taa-horizontal_default_slate_blue.svg
+    keywords:
+    - mongodb
+    - atlas
+    - database
+    - cluster
+    - nosql
+    kubeVersion: '>=1.15.0-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-atlas-operator
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-2.5.0/mongodb-atlas-operator-2.5.0.tgz
+    version: 2.5.0
+  - apiVersion: v2
     appVersion: 2.4.1
     created: "2024-07-31T15:39:38.864570197Z"
     dependencies:
@@ -3316,4 +3345,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-28T17:28:04.488418815Z"
+generated: "2024-10-30T09:57:54.622905219Z"
