@@ -111,8 +111,6 @@ check_charts_released() {
 check_chart_version_released() {
     local chart_name=$1
     local chart_version=$2
-    local retries=5
-    local delay=1
     update_helm_repo
     if chart_released "${chart_name}" "${chart_version}"; then
         return 0
