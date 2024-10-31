@@ -146,7 +146,7 @@ chart_released() {
     local chart_name=$1
     local version=$2
 
-    helm search repo "mongodb/${chart_name}" --version "${version}" | grep -q "${chart_name}\s"
+    helm pull "mongodb/${chart_name}" --version "${version}"
 }
 
 get_latest_tag(){
