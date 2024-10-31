@@ -111,10 +111,18 @@ check_charts_released() {
 check_chart_version_released() {
     local chart_name=$1
     local chart_version=$2
-    update_helm_repo
-    if chart_released "${chart_name}" "${chart_version}"; then
-        return 0
-    fi
+    local retries=30
+    local pause=10
+
+    echo "Checking helm chart ${chart_name} was released for version ${chart_version}"
+    for ((i=0; i<retries; i++)); do
+        update_helm_repo
+        if chart_released "${chart_name}" "${chart_version}"; then
+            return 0
+        fi
+        echo "Retrying to check on ${chart_name}:${chart_version} in ${pause} seconds..."
+        sleep "${pause}"
+    done
     return 1
 }
 
