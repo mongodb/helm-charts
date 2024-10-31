@@ -163,7 +163,7 @@ release_changed_charts() {
 
     echo "Releasing Helm Charts: ${changed_charts[*]}"
     git fetch
-    gh_pages_before=$(git log -1 gh-pages --oneline)
+    gh_pages_before=$(git log -1 origin/gh-pages --oneline)
     echo "gh-pages before at: ${gh-pages-before}"
     helm repo update
     install_chart_releaser
@@ -174,7 +174,7 @@ release_changed_charts() {
     echo "Checking helm chart releases updated the gh-pages branch"
     for ((i=0; i<retries; i++)); do
         git fetch
-        gh_pages_head=$(git log -1 gh-pages --oneline)
+        gh_pages_head=$(git log -1 origin/gh-pages --oneline)
         if [ "${gh_pages_head}" != "${gh_pages_before}" ]; then
             return 0
         fi
