@@ -113,16 +113,10 @@ check_chart_version_released() {
     local chart_version=$2
     local retries=5
     local delay=1
-    for ((i=0; i<retries; i++)); do
-        if chart_released "${chart_name}" "${chart_version}"; then
-            return 0
-        fi
-        echo "$(date -u --iso-8601=seconds): Retrying in ${delay} seconds... ($((i+1))/$retries)"
-        sleep "${delay}"
-        delay=$((delay*2))
-        echo "$(date -u --iso-8601=seconds): Retrying..."
-        reset_helm_repo
-    done
+    update_helm_repo
+    if chart_released "${chart_name}" "${chart_version}"; then
+        return 0
+    fi
     return 1
 }
 
