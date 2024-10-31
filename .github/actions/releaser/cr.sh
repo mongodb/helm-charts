@@ -158,13 +158,26 @@ get_latest_tag(){
 
 release_changed_charts() {
     local changed_charts=("$@")
+    local retries=30
+    local pause=10
 
+    gh_pages_before=$(git log -1 gh-pages --oneline)
     helm repo update
     install_chart_releaser
     cleanup_releaser
     package_charts "${changed_charts[@]}"
     release_charts
     update_index
+    echo "Checking helm chart releases updated the gh-pages branch"
+    for ((i=0; i<retries; i++)); do
+        gh_pages_head=$(git log -1 gh-pages --oneline)
+        if [ "${gh_pages_head}" != "${gh_pages_before}" ]; then
+            return 0
+        fi
+        echo "Still unchanged at '${gh_pages_before}', waiting ${pause} seconds to retry..."
+        sleep "${pause}"
+    done
+    return 1
 }
 
 install_chart_releaser() {
