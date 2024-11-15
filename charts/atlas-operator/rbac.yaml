@@ -27,6 +27,7 @@
     - atlasdatafederations
     - atlasdeployments
     - atlasfederatedauths
+    - atlasprivateendpoints
     - atlasprojects
     - atlassearchindexconfigs
     - atlasstreamconnections
@@ -50,6 +51,7 @@
     - atlasdatafederations/status
     - atlasdeployments/status
     - atlasfederatedauths/status
+    - atlasprivateendpoints/status
     - atlasprojects/status
     - atlassearchindexconfigs/status
     - atlasstreamconnections/status
