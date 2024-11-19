@@ -33,6 +33,7 @@
     - atlasstreamconnections
     - atlasstreaminstances
     - atlasteams
+    - atlascustomroles
   verbs:
     - create
     - delete
@@ -57,6 +58,7 @@
     - atlasstreamconnections/status
     - atlasstreaminstances/status
     - atlasteams/status
+    - atlascustomroles/status
   verbs:
     - get
     - patch
