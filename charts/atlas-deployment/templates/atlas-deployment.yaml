@@ -24,11 +24,11 @@ spec:
   deploymentSpec:
   {{- toYaml .deploymentSpec | nindent 4 }}
   {{- end }}
-  {{- if .serverlessSpec }}
+  {{- if .serverlessSpec}}
   serverlessSpec:
   {{- toYaml .serverlessSpec | nindent 4}}
   {{- end }}
-  {{- end }}
+{{- end }}
 
 {{- if $.Values.postInstallHook.enabled }}
 ---
