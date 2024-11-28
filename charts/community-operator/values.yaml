@@ -2,6 +2,7 @@
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # - name: "image-pull-secret"
+
 ## Operator
 operator:
   # Name that will be assigned to most of internal Kubernetes objects like
@@ -47,6 +48,25 @@ operator:
     runAsUser: 2000
 
   securityContext: {}
+
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: name
+                operator: In
+                values:
+                  - mongodb-kubernetes-operator
+          topologyKey: kubernetes.io/hostname
+
+  nodeSelector: {}
+
+  schedulerName: ""
+
+  tolerations: []
+
+  topologySpreadConstraints: []
 
 ## Operator's database
 database:
