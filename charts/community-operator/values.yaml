@@ -15,7 +15,7 @@ operator:
   deploymentName: mongodb-kubernetes-operator
 
   # Version of mongodb-kubernetes-operator
-  version: 0.11.0
+  version: 0.12.0
 
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
@@ -62,13 +62,13 @@ database:
 
 agent:
   name: mongodb-agent-ubi
-  version: 107.0.7.8596-1
+  version: 108.0.2.8729-1
 versionUpgradeHook:
   name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
   version: 1.0.9
 readinessProbe:
   name: mongodb-kubernetes-readinessprobe
-  version: 1.0.20
+  version: 1.0.22
 mongodb:
   name: mongodb-community-server
   repo: docker.io/mongodb
