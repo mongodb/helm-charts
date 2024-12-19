@@ -18,7 +18,7 @@ spec:
     listKind: AtlasPrivateEndpointList
     plural: atlasprivateendpoints
     shortNames:
-    - pe
+    - ape
     singular: atlasprivateendpoint
   scope: Namespaced
   versions:
@@ -77,6 +77,9 @@ spec:
                   - id
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - id
+                x-kubernetes-list-type: map
               azureConfiguration:
                 description: AzureConfiguration is the specific Azure settings for
                   the private endpoint
@@ -97,9 +100,12 @@ spec:
                   - ipAddress
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - id
+                x-kubernetes-list-type: map
               connectionSecret:
-                description: LocalObjectReference is a reference to an object in the
-                  same namespace as the referent
+                description: Name of the secret containing Atlas API private and public
+                  keys
                 properties:
                   name:
                     description: |-
@@ -160,6 +166,9 @@ spec:
                   - projectId
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - groupName
+                x-kubernetes-list-type: map
               projectRef:
                 description: Project is a reference to AtlasProject resource the user
                   belongs to
