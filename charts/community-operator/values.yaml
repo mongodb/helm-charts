@@ -8,6 +8,14 @@ operator:
   # Deployment, ServiceAccount, Role etc.
   name: mongodb-kubernetes-operator
 
+  # Controls the namespace that will be used or created.  This is useful
+  # if the operator is going to be included as a subchart.
+  namespace:
+    # create set to true will cause the namespace to be created
+    create: false
+    # name set to the operator namespace.  This only used if creating the namespace
+    name:
+
   # Name of the operator image
   operatorImageName: mongodb-kubernetes-operator
 
