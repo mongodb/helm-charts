@@ -23,17 +23,18 @@
     - atlasbackupcompliancepolicies
     - atlasbackuppolicies
     - atlasbackupschedules
+    - atlascustomroles
     - atlasdatabaseusers
     - atlasdatafederations
     - atlasdeployments
     - atlasfederatedauths
+    - atlasnetworkpeerings
     - atlasprivateendpoints
     - atlasprojects
     - atlassearchindexconfigs
     - atlasstreamconnections
     - atlasstreaminstances
     - atlasteams
-    - atlascustomroles
   verbs:
     - create
     - delete
@@ -48,18 +49,25 @@
     - atlasbackupcompliancepolicies/status
     - atlasbackuppolicies/status
     - atlasbackupschedules/status
+    - atlascustomroles/status
     - atlasdatabaseusers/status
     - atlasdatafederations/status
     - atlasdeployments/status
     - atlasfederatedauths/status
+    - atlasnetworkpeerings/status
     - atlasprivateendpoints/status
     - atlasprojects/status
     - atlassearchindexconfigs/status
     - atlasstreamconnections/status
     - atlasstreaminstances/status
     - atlasteams/status
-    - atlascustomroles/status
   verbs:
     - get
     - patch
+    - update
+- apiGroups:
+    - atlas.mongodb.com
+  resources:
+    - atlasnetworkpeerings/finalizers
+  verbs:
     - update
