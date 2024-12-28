@@ -17,8 +17,10 @@ operator:
   # Version of mongodb-kubernetes-operator
   version: 0.11.0
 
-  # Uncomment this line to watch all namespaces
-  # watchNamespace: "*"
+  # watchNamespaces is the set of namespaces that are watched by the Operator.
+  # - empty (watch namespace where the Operator is installed to)
+  # - ["*"] (watch all namespaces)
+  # watchNamespaces: []
 
   # Resources allocated to Operator Pod
   resources:

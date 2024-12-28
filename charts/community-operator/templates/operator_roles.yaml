@@ -1,77 +1,71 @@
+{{- $operatorWatchNamespaces := include "community-operator.watchNamespaces" . | fromYamlArray }}
+{{- $operatorWatchAllNamespace := has "*" $operatorWatchNamespaces }}
+{{- $operatorName := .Values.operator.name -}}
+{{- $operatorRBAC := (.Files.Lines "operator_rbac.yaml")}}
+
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ .Values.operator.name }}
+  name: {{ $operatorName }}
   namespace: {{ .Release.Namespace }}
+
+{{- if $operatorWatchAllNamespace }}
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
+kind: ClusterRole
 metadata:
-  name: {{ .Values.operator.name }}
-  {{- if not (eq (.Values.operator.watchNamespace | default "*") "*") }}
-  namespace: {{ .Values.operator.watchNamespace }}
-  {{- else }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
+  name: {{ $operatorName }}
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - services
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mongodbcommunity.mongodb.com
-  resources:
-  - mongodbcommunity
-  - mongodbcommunity/status
-  - mongodbcommunity/spec
-  - mongodbcommunity/finalizers
-  verbs:
-  - get
-  - patch
-  - list
-  - update
-  - watch
+  {{- range $operatorRBAC }}
+  {{ . -}}
+  {{- end }}
 
 ---
-kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRoleBinding {{ else }} RoleBinding {{ end }}
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.operator.name }}
-  {{- if ne (.Values.operator.watchNamespace | default "*") "*" }}
-  namespace: {{ .Values.operator.watchNamespace }}
-  {{- else }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
+  name: {{ $operatorName }}
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.operator.name }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ $operatorName }}
+  namespace: {{ $.Release.Namespace }}
 roleRef:
-  kind: {{ if eq (.Values.operator.watchNamespace | default "") "*" }} ClusterRole {{ else }} Role {{ end }}
-  name: {{ .Values.operator.name }}
+  kind: ClusterRole
+  name: {{ $operatorName }}
   apiGroup: rbac.authorization.k8s.io
+
+{{- else }}
+
+{{- range $namespace := $operatorWatchNamespaces }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $operatorName }}
+  namespace: {{ $namespace }}
+rules:
+  {{- range $operatorRBAC }}
+  {{ . -}}
+  {{- end }}
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ $operatorName }}
+  namespace: {{ $namespace }}
+subjects:
+- kind: ServiceAccount
+  name: {{ $operatorName }}
+  namespace: {{ $.Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ $operatorName }}
+  apiGroup: rbac.authorization.k8s.io
+
+{{- end }}
+
+{{- end }}
