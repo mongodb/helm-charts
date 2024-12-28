@@ -10,3 +10,16 @@ Operator's watch namespaces
     {{- $namespaces | toYaml  }}
   {{- end }}
 {{- end }}
+
+{{/*
+Database namespaces
+*/}}
+{{- define "community-operator.database.namespaces" -}}
+  {{- $defaultNamespaces := include "community-operator.watchNamespaces" . | fromYamlArray }}
+  {{- $namespaces := default $defaultNamespaces .Values.database.namespaces }}
+  {{- if has "*" $namespaces }}
+    {{- list | toYaml }}
+  {{- else }}
+    {{- $namespaces | toYaml }}
+  {{- end }}
+{{- end }}
