@@ -35,6 +35,9 @@
     - atlasstreamconnections
     - atlasstreaminstances
     - atlasteams
+    - atlascustomroles
+    - atlasnetworkcontainers
+    - atlasnetworkpeerings
   verbs:
     - create
     - delete
@@ -61,6 +64,9 @@
     - atlasstreamconnections/status
     - atlasstreaminstances/status
     - atlasteams/status
+    - atlascustomroles/status
+    - atlasnetworkcontainers/status
+    - atlasnetworkpeerings/status
   verbs:
     - get
     - patch
