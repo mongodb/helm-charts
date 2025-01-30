@@ -36,6 +36,7 @@
     - atlasstreaminstances
     - atlasteams
     - atlascustomroles
+    - atlasnetworkcontainers
     - atlasnetworkpeerings
   verbs:
     - create
@@ -64,6 +65,7 @@
     - atlasstreaminstances/status
     - atlasteams/status
     - atlascustomroles/status
+    - atlasnetworkcontainers/status
     - atlasnetworkpeerings/status
   verbs:
     - get
