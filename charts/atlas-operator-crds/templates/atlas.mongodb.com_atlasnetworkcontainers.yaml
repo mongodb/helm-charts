@@ -85,6 +85,12 @@ spec:
                 required:
                 - id
                 type: object
+              id:
+                description: |-
+                  ID is the container identified for an already existent network container to be managed by the operator.
+                  This field can be used in conjunction with cidrBlock to update the cidrBlock of an existing container.
+                  This field is immutable.
+                type: string
               projectRef:
                 description: |-
                   "projectRef" is a reference to the parent AtlasProject resource.
@@ -110,10 +116,10 @@ spec:
               region:
                 description: |-
                   ContainerRegion is the provider region name of Atlas network peer container in Atlas region format
-                  This is required by AWS and Azure, but not used by GCP
+                  This is required by AWS and Azure, but not used by GCP.
+                  This field is immutable, Atlas does not admit network container changes.
                 type: string
             required:
-            - cidrBlock
             - provider
             type: object
             x-kubernetes-validations:
@@ -129,13 +135,35 @@ spec:
               rule: (self.provider == 'GCP' && !has(self.region)) || (self.provider
                 != 'GCP')
             - message: must set region for AWS and Azure containers
-              rule: ((self.provider == 'AWS' || self.provider == 'Azure') && has(self.region))
+              rule: ((self.provider == 'AWS' || self.provider == 'AZURE') && has(self.region))
                 || (self.provider == 'GCP')
+            - message: id is immutable
+              rule: (self.id == oldSelf.id) || (!has(self.id) && !has(oldSelf.id))
+            - message: region is immutable
+              rule: (self.region == oldSelf.region) || (!has(self.region) && !has(oldSelf.region))
           status:
             description: |-
               AtlasNetworkContainerStatus is a status for the AtlasNetworkContainer Custom resource.
               Not the one included in the AtlasProject
             properties:
+              awsStatus:
+                description: AWSStatus contains AWS only related status information
+                properties:
+                  vpcId:
+                    description: VpcID is AWS VPC id on the Atlas side
+                    type: string
+                type: object
+              azureStatus:
+                description: AzureStatus contains Azure only related status information
+                properties:
+                  azureSubscriptionIDpcId:
+                    description: AzureSubscriptionID is Azure Subscription id on the
+                      Atlas side
+                    type: string
+                  vNetName:
+                    description: VnetName is Azure network on the Atlas side
+                    type: string
+                type: object
               conditions:
                 description: Conditions is the list of statuses showing the current
                   state of the Atlas Custom Resource
@@ -166,10 +194,16 @@ spec:
                   - type
                   type: object
                 type: array
-              containerProvisioned:
-                description: Provisioned is true when the container has been provisioned
-                  in Atlas
-                type: boolean
+              gcpStatus:
+                description: GCPStatus contains GCP only related status information
+                properties:
+                  gcpProjectID:
+                    description: GCPProjectID is GCP project on the Atlas side
+                    type: string
+                  networkName:
+                    description: NetworkName is GCP network on the Atlas side
+                    type: string
+                type: object
               id:
                 description: ID record the identifier of the container in Atlas
                 type: string
@@ -179,6 +213,10 @@ spec:
                   The Atlas Operator updates this field to the 'metadata.generation' as soon as it starts reconciliation of the resource.
                 format: int64
                 type: integer
+              provisioned:
+                description: Provisioned is true when clusters have been deployed
+                  to the container
+                type: boolean
             required:
             - conditions
             type: object

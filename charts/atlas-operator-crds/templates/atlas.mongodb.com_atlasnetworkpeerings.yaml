@@ -22,14 +22,14 @@ spec:
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
       type: string
-    - jsonPath: .spec.providerName
+    - jsonPath: .spec.provider
       name: Provider
       type: string
-    - jsonPath: .spec.containerId
-      name: Container ID
+    - jsonPath: .status.id
+      name: Id
       type: string
-    - jsonPath: .spec.projectIDRef.id
-      name: Project ID
+    - jsonPath: .status.status
+      name: Status
       type: string
     name: v1
     schema:
@@ -57,17 +57,13 @@ spec:
           spec:
             description: AtlasNetworkPeeringSpec defines the desired state of AtlasNetworkPeering
             properties:
-              atlasCidrBlock:
-                description: Atlas CIDR. It needs to be set if ContainerID is not
-                  set.
-                type: string
               awsConfiguration:
                 description: AWSConfiguration is the specific AWS settings for network
                   peering
                 properties:
                   accepterRegionName:
                     description: AccepterRegionName is the provider region name of
-                      user's vpc.
+                      user's vpc in AWS native region format
                     type: string
                   awsAccountId:
                     description: AccountID of the user's vpc.
@@ -114,15 +110,21 @@ spec:
                 required:
                 - name
                 type: object
-              containerId:
-                description: ID of the network peer container. If not set, operator
-                  will create a new container with ContainerRegion and AtlasCIDRBlock
-                  input.
-                type: string
-              containerRegion:
-                description: ContainerRegion is the provider region name of Atlas
-                  network peer container.
-                type: string
+              containerRef:
+                description: ContainerDualReference refers to an Network Container
+                  either by Kubernetes name or Atlas ID
+                properties:
+                  id:
+                    description: |-
+                      ID is the Atlas identifier of the Network Container Atlas resource this Peering Connection relies on
+                      Use either name or ID, not both.
+                    type: string
+                  name:
+                    description: |-
+                      Name of the container Kubernetes resource, must be present in the same namespace
+                      Use either name or ID, not both.
+                    type: string
+                type: object
               externalProjectRef:
                 description: |-
                   "externalProjectRef" holds the parent Atlas project ID.
@@ -168,6 +170,7 @@ spec:
                 - AZURE
                 type: string
             required:
+            - containerRef
             - provider
             type: object
             x-kubernetes-validations:
@@ -179,6 +182,10 @@ spec:
                 project
               rule: (has(self.externalProjectRef) && has(self.connectionSecret)) ||
                 !has(self.externalProjectRef)
+            - message: must either have a container Atlas id or Kubernetes name, but
+                not both (or neither)
+              rule: (self.containerRef.name != '' && self.containerRef.id == '') ||
+                (self.containerRef.name == '' && self.containerRef.id != '')
           status:
             description: |-
               AtlasNetworkPeeringStatus is a status for the AtlasNetworkPeering Custom resource.
@@ -190,20 +197,19 @@ spec:
                   connectionId:
                     description: ConnectionID is the AWS VPC peering connection ID
                     type: string
-                  containerVpcId:
-                    description: ContainerVPCId is the AWS Container VPC ID on the
-                      Atlas side
+                  vpcId:
+                    description: VpcID is AWS VPC id on the Atlas side
                     type: string
                 type: object
               azureStatus:
                 description: AzureStatus contains Azure only related status information
                 properties:
-                  azureSubscriptionId:
-                    description: AzureSubscriptionID is the Azure subcription id on
-                      the Atlas container
+                  azureSubscriptionIDpcId:
+                    description: AzureSubscriptionID is Azure Subscription id on the
+                      Atlas side
                     type: string
-                  vnetName:
-                    description: VnetName is the Azure network name on the Atlas container
+                  vNetName:
+                    description: VnetName is Azure network on the Atlas side
                     type: string
                 type: object
               conditions:
@@ -236,32 +242,14 @@ spec:
                   - type
                   type: object
                 type: array
-              containerId:
-                description: ContainerID records the ID of the container created by
-                  atlas for this peering
-                type: string
-              containerProvisioned:
-                description: ContainerProvisioned is true when the container has been
-                  provisioned in Atlas
-                type: boolean
-              containerStatus:
-                description: ContainerStatus records the last container status seen
-                  for the network container
-                type: string
-              error:
-                description: Error refers to the last error seen in the network peering
-                  setup
-                type: string
-              googleStatus:
-                description: GoogleStatus contains Google only related status information
+              gcpStatus:
+                description: GCPStatus contains GCP only related status information
                 properties:
-                  gcpProjectId:
-                    description: GCPProjectID is the Google Cloud Platform project
-                      id on the Atlas container
+                  gcpProjectID:
+                    description: GCPProjectID is GCP project on the Atlas side
                     type: string
                   networkName:
-                    description: NetworkName is the Google network name on the Atlas
-                      container
+                    description: NetworkName is GCP network on the Atlas side
                     type: string
                 type: object
               id:
