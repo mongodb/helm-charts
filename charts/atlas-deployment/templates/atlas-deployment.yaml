@@ -5,10 +5,10 @@ kind: AtlasDeployment
 metadata:
   {{- if .serverlessSpec }}
   name: {{ .serverlessSpec.name }}
-  {{- else if .advancedDeploymentSpec }}
-  name: {{ .advancedDeploymentSpec.name }}
   {{- else if .deploymentSpec }}
   name: {{ .deploymentSpec.name }}
+  {{- else if .flexSpec }}
+  name: {{ .flexSpec.name }}
   {{- end }}
   labels:
     {{- include "atlas-deployment.labels" $ | nindent 4 }}
@@ -27,6 +27,10 @@ spec:
   {{- if .serverlessSpec}}
   serverlessSpec:
   {{- toYaml .serverlessSpec | nindent 4}}
+  {{- end }}
+  {{- if .flexSpec}}
+  flexSpec:
+  {{- toYaml .flexSpec | nindent 4}}
   {{- end }}
 {{- end }}
 

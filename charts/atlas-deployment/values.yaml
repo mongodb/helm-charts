@@ -36,7 +36,7 @@ project:
     - ipAddress: "0.0.0.0"
       comment: "REMOVE ME"
 
-# include either deploymentSpec or serverlessSpec
+# include either deploymentSpec, serverlessSpec, or flexSpec
 # see https://www.mongodb.com/docs/atlas/reference/api-resources-spec/v2/#tag/Clusters/operation/createCluster for
 # options for creating advanced clusters.
 
@@ -103,6 +103,14 @@ deployments:
 #        providerName: SERVERLESS
 #        backingProviderName: AWS
 #        regionName: US_EAST_1
+
+# Configure a Flex Instance
+# https://www.mongodb.com/docs/atlas/reference/api-resources-spec/v2/#tag/Serverless-Instances/operation/createServerlessInstance
+# - flexSpec:
+#     name: flex-instance
+#     providerSettings:
+#       backingProviderName: AWS
+#       regionName: US_EAST_1
 
 users:
   - username: admin-user
