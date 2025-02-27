@@ -29,14 +29,14 @@
     - atlasdeployments
     - atlasfederatedauths
     - atlasipaccesslists
+    - atlasnetworkcontainers
+    - atlasnetworkpeerings
     - atlasprivateendpoints
     - atlasprojects
     - atlassearchindexconfigs
     - atlasstreamconnections
     - atlasstreaminstances
     - atlasteams
-    - atlasnetworkcontainers
-    - atlasnetworkpeerings
   verbs:
     - create
     - delete
@@ -57,14 +57,14 @@
     - atlasdeployments/status
     - atlasfederatedauths/status
     - atlasipaccesslists/status
+    - atlasnetworkcontainers/status
+    - atlasnetworkpeerings/status
     - atlasprivateendpoints/status
     - atlasprojects/status
     - atlassearchindexconfigs/status
     - atlasstreamconnections/status
     - atlasstreaminstances/status
     - atlasteams/status
-    - atlasnetworkcontainers/status
-    - atlasnetworkpeerings/status
   verbs:
     - get
     - patch
@@ -73,5 +73,7 @@
     - atlas.mongodb.com
   resources:
     - atlasipaccesslists/finalizers
+    - atlasnetworkcontainers/finalizers
+    - atlasnetworkpeerings/finalizers
   verbs:
     - update
