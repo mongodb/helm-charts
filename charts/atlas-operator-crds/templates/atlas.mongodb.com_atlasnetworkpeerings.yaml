@@ -1,9 +1,13 @@
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: mongodb-atlas-kubernetes-operator
+    app.kubernetes.io/name: mongodb-atlas-kubernetes-operator
   name: atlasnetworkpeerings.atlas.mongodb.com
 spec:
   group: atlas.mongodb.com
@@ -76,6 +80,9 @@ spec:
                     type: string
                 required:
                 - accepterRegionName
+                - awsAccountId
+                - routeTableCidrBlock
+                - vpcId
                 type: object
               azureConfiguration:
                 description: AzureConfiguration is the specific Azure settings for
@@ -93,10 +100,15 @@ spec:
                     description: ResourceGroupName is the name of your Azure resource
                       group.
                     type: string
-                  vnetName:
+                  vNetName:
                     description: VNetName is name of your Azure VNet. Its applicable
                       only for Azure.
                     type: string
+                required:
+                - azureDirectoryId
+                - azureSubscriptionId
+                - resourceGroupName
+                - vNetName
                 type: object
               connectionSecret:
                 description: Name of the secret containing Atlas API private and public
@@ -146,7 +158,15 @@ spec:
                   networkName:
                     description: GCP Network Peer Name. Its applicable only for GCP.
                     type: string
+                required:
+                - gcpProjectId
+                - networkName
                 type: object
+              id:
+                description: |-
+                  ID is the peering identifier for an already existent network peering to be managed by the operator.
+                  This field is immutable.
+                type: string
               projectRef:
                 description: |-
                   "projectRef" is a reference to the parent AtlasProject resource.
@@ -184,8 +204,16 @@ spec:
                 !has(self.externalProjectRef)
             - message: must either have a container Atlas id or Kubernetes name, but
                 not both (or neither)
-              rule: (self.containerRef.name != '' && self.containerRef.id == '') ||
-                (self.containerRef.name == '' && self.containerRef.id != '')
+              rule: (has(self.containerRef.name) && !has(self.containerRef.id)) ||
+                (!has(self.containerRef.name) && has(self.containerRef.id))
+            - message: container ref name is immutable
+              rule: (self.containerRef.name == oldSelf.containerRef.name) || (!has(self.containerRef.name)
+                && !has(oldSelf.containerRef.name))
+            - message: container ref id is immutable
+              rule: (self.containerRef.id == oldSelf.containerRef.id) || (!has(self.containerRef.id)
+                && !has(oldSelf.containerRef.id))
+            - message: id is immutable
+              rule: (self.id == oldSelf.id) || (!has(self.id) && !has(oldSelf.id))
           status:
             description: |-
               AtlasNetworkPeeringStatus is a status for the AtlasNetworkPeering Custom resource.
@@ -273,3 +301,9 @@ spec:
     storage: true
     subresources:
       status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: null
+  storedVersions: null
