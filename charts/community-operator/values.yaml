@@ -8,6 +8,10 @@ operator:
   # Deployment, ServiceAccount, Role etc.
   name: mongodb-kubernetes-operator
 
+  # serviceAccount annotations, if any to add
+  serviceAccount:
+    annotations: {}
+
   # Name of the operator image
   operatorImageName: mongodb-kubernetes-operator
 
@@ -53,7 +57,13 @@ operator:
 
 ## Operator's database
 database:
+  # Name that will be assigned to most of internal Kubernetes objects like
+  # ServiceAccount, Role etc.
   name: mongodb-database
+  # serviceAccount annotations, if any to add
+  serviceAccount:
+    annotations: {}
+
   # set this to the namespace where you would like
   # to deploy the MongoDB database,
   # Note if the database namespace is not same
@@ -98,7 +108,26 @@ resource:
   members: 3
   tls:
     enabled: false
-
+  # overwrite MDBC resource statefulset defaults
+  # statefulSet:
+  #   spec:
+  #     template:
+  #       spec:
+  #         imagePullSecrets:
+  #           - name: my-secret
+  #         volumes:
+  #         - name: secretmanager-secretproviderclass
+  #           csi:
+  #             driver: secrets-store.csi.k8s.io
+  #             readOnly: true
+  #             volumeAttributes:
+  #               secretProviderClass: mysecretclass
+  #         containers:
+  #           - name: mongodb-agent
+  #             volumeMounts:
+  #             - name: secretmanager-secretproviderclass
+  #               mountPath: "/mnt/secrets-store"
+  #               readOnly: true
     # Installs Cert-Manager in this cluster.
     useX509: false
     sampleX509User: false
@@ -108,7 +137,6 @@ resource:
     certManager:
       certDuration: 8760h   # 365 days
       renewCertBefore: 720h   # 30 days
-
   users: []
   # if using the MongoDBCommunity Resource, list any users to be added to the resource
   # users:
@@ -126,3 +154,25 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
+
+# -- Array of extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: secrets-store.csi.x-k8s.io/v1
+  #   kind: SecretProviderClass
+  #   metadata:
+  #     name: mongodb-secrets-store
+  #   spec:
+  #     provider: aws
+  #     parameters:
+  #       objects: |
+  #         - objectName: "mongodb"
+  #           objectType: "secretsmanager"
+  #           jmesPath:
+  #               - path: "password"
+  #                 objectAlias: "password"
+  #     secretObjects:
+  #     - data:
+  #       - key: password
+  #         objectName: password
+  #       secretName: my-user-password
+  #       type: Opaque
