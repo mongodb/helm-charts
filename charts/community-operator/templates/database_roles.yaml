@@ -4,6 +4,8 @@ kind: ServiceAccount
 metadata:
   name: {{ .Values.database.name }}
   namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  annotations:
+    "helm.sh/resource-policy": keep
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -11,6 +13,8 @@ kind: Role
 metadata:
   name: {{ .Values.database.name }}
   namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  annotations:
+    "helm.sh/resource-policy": keep
 rules:
   - apiGroups:
       - ""
@@ -33,6 +37,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ .Values.database.name }}
   namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  annotations:
+    "helm.sh/resource-policy": keep
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.database.name }}
