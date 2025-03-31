@@ -17,5 +17,5 @@ maintainers:
 dependencies:
 - name: community-operator-crds
   version: 0.12.1
-  repository: "file://../community-operator-crds"
+  repository: https://mongodb.github.io/helm-charts
   condition: community-operator-crds.enabled
