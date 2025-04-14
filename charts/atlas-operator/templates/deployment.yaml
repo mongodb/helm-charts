@@ -57,8 +57,8 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          {{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 8 }}
+          {{- with .Values.extraEnvs }}
+{{- toYaml . | nindent 10 }}
           {{- end }}
           ports:
             - name: http
