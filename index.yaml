@@ -3903,6 +3903,28 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-crds-0.1.0/mongodb-atlas-operator-crds-0.1.0.tgz
     version: 0.1.0
+  mongodb-kubernetes:
+  - apiVersion: v2
+    created: "2025-05-05T12:34:19.539647829Z"
+    description: MongoDB Controllers for Kubernetes translate the human knowledge
+      of creating a MongoDB instance into a scalable, repeatable, and standardized
+      method.
+    digest: 1f1c5589497944a2a96a8fd5db6574c6c521735ed4e9205e9bb463208952eacf
+    home: https://github.com/mongodb/mongodb-kubernetes
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-kubernetes
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-1.0.0/mongodb-kubernetes-1.0.0.tgz
+    version: 1.0.0
   sample-app:
   - apiVersion: v2
     appVersion: 0.1.0
@@ -3925,4 +3947,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-24T15:03:23.886794942Z"
+generated: "2025-05-05T12:34:19.539918667Z"
