@@ -9,3 +9,4 @@ private/
 
 # ignoring generated charts and chart locks
 Chart.lock
+crds
