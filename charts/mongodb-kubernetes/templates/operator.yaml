@@ -83,6 +83,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+    {{- $opentelemetry := default dict .Values.operator.opentelemetry }}
+    {{- $openTelemetryTracing := default dict $opentelemetry.tracing }}
+    {{- if eq $openTelemetryTracing.enabled true }}
+            - name: OTEL_TRACE_ID
+              value: {{ $openTelemetryTracing.traceID | quote }}
+            - name: OTEL_PARENT_ID
+              value: {{ $openTelemetryTracing.parentID | quote }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ $openTelemetryTracing.collectorEndpoint | quote }}
+    {{- end }}
     {{- if .Values.operator.vaultSecretBackend }}
       {{- if .Values.operator.vaultSecretBackend.enabled }}
             - name: SECRET_BACKEND
@@ -251,10 +261,6 @@ spec:
       {{- range $version := .Values.relatedImages.mongodb }}
             - name: RELATED_IMAGE_{{ $mongodbImageEnv }}_{{ $version | replace "." "_" | replace "-" "_" }}
               value: "{{ $.Values.mongodb.repo }}/{{ $.Values.mongodb.name }}:{{ $version }}"
-      {{- end }}
-      {{- if .Values.search }}
-            - name: RELATED_IMAGE_MDB_SEARCH_IMAGE_{{ .Values.search.community.version | replace "." "_" | replace "-" "_" }}
-              value: "{{ .Values.search.community.repo }}/{{ .Values.search.community.name }}:{{ $.Values.search.community.version }}"
       {{- end }}
     {{- end }}
     {{- if .Values.search }}
