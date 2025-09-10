@@ -17,6 +17,9 @@ operator:
   # Version of mongodb-kubernetes-operator
   version: 0.13.0
 
+  # Additional annotations to be added to the operator pod
+  podAnnotations: {}
+
   # Uncomment this line to watch all namespaces
   # watchNamespace: "*"
 
