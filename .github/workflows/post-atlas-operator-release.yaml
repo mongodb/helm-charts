@@ -37,13 +37,12 @@ jobs:
           VERSION=${{ github.event.inputs.version }}
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           cd helm/helm-charts/charts/atlas-operator-crds
-          sed -i -r 's/version:....../version: '"$VERSION"'/g' Chart.yaml
-          sed -i -r 's/appVersion:....../appVersion: '"$VERSION"'/g' Chart.yaml
+          sed -i -r 's/version:.*/version: '"$VERSION"'/g' Chart.yaml
+          sed -i -r 's/appVersion:.*/appVersion: '"$VERSION"'/g' Chart.yaml
           cd ..
           cd atlas-operator
-          sed -i -r 's/version:.\x22.....\x22/version: \x22'"$VERSION"'\x22/g' Chart.yaml
-          sed -i -r 's/version:......$/version: '"$VERSION"'/g' Chart.yaml
-          sed -i -r 's/appVersion:....../appVersion: '"$VERSION"'/g' Chart.yaml
+          sed -i -r 's/version:.*$/version: '"$VERSION"'/g' Chart.yaml
+          sed -i -r 's/appVersion:.*/appVersion: '"$VERSION"'/g' Chart.yaml
           cd ..
       - name: Set branch name
         id: git-config
