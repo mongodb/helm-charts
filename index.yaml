@@ -3131,6 +3131,29 @@ entries:
     version: 0.1.0
   mongodb-atlas-operator-crds:
   - apiVersion: v2
+    appVersion: 2.11.1
+    created: "2025-10-07T15:58:53.352710979Z"
+    description: MongoDB Atlas Operator CRDs - Helm chart for installing and upgrading
+      Custom Resource Definitions (CRDs) for the Atlas Operator.
+    digest: df244cdaadbc987cd4c1652a6f35f5ebc208ea2b4c1b9a42ca9b671b1899424d
+    home: https://github.com/mongodb/mongodb-atlas-kubernetes
+    icon: https://camo.githubusercontent.com/d473c25e361fb2206f06bdcf24028e8d52bc30d1/68747470733a2f2f6d6f6e676f64622d6b756265726e657465732d6f70657261746f722e73332e616d617a6f6e6177732e636f6d2f696d672f4c6561662d466f7265737425343032782e706e67
+    keywords:
+    - mongodb
+    - atlas
+    - database
+    - cluster
+    - nosql
+    kubeVersion: '>=1.15.0-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-atlas-operator-crds
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-atlas-operator-crds-2.11.1/mongodb-atlas-operator-crds-2.11.1.tgz
+    version: 2.11.1
+  - apiVersion: v2
     appVersion: 2.11.0
     created: "2025-09-25T17:09:08.734524135Z"
     description: MongoDB Atlas Operator CRDs - Helm chart for installing and upgrading
@@ -4312,4 +4335,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-25T17:09:43.471093973Z"
+generated: "2025-10-07T15:58:53.353169026Z"
