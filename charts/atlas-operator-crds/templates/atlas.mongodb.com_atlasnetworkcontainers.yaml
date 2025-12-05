@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.19.0
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -57,7 +57,7 @@ spec:
             type: object
           spec:
             description: AtlasNetworkContainerSpec defines the desired state of an
-              AtlasNetworkContainer
+              AtlasNetworkContainer.
             properties:
               cidrBlock:
                 description: Atlas CIDR. It needs to be set if ContainerID is not
@@ -65,7 +65,7 @@ spec:
                 type: string
               connectionSecret:
                 description: Name of the secret containing Atlas API private and public
-                  keys
+                  keys.
                 properties:
                   name:
                     description: |-
@@ -77,11 +77,11 @@ spec:
                 type: object
               externalProjectRef:
                 description: |-
-                  "externalProjectRef" holds the parent Atlas project ID.
-                  Mutually exclusive with the "projectRef" field
+                  externalProjectRef holds the parent Atlas project ID.
+                  Mutually exclusive with the "projectRef" field.
                 properties:
                   id:
-                    description: ID is the Atlas project ID
+                    description: ID is the Atlas project ID.
                     type: string
                 required:
                 - id
@@ -94,21 +94,21 @@ spec:
                 type: string
               projectRef:
                 description: |-
-                  "projectRef" is a reference to the parent AtlasProject resource.
-                  Mutually exclusive with the "externalProjectRef" field
+                  projectRef is a reference to the parent AtlasProject resource.
+                  Mutually exclusive with the "externalProjectRef" field.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
                 type: object
               provider:
                 description: Provider is the name of the cloud provider hosting the
-                  network container
+                  network container.
                 enum:
                 - AWS
                 - GCP
@@ -155,8 +155,9 @@ spec:
                     at a certain point.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
+                      description: |-
+                        Last time the condition transitioned from one status to another.
+                        Represented in ISO 8601 format.
                       format: date-time
                       type: string
                     message:
