@@ -1661,8 +1661,10 @@ spec:
                   including the prometheusDiscoveryURL
                 properties:
                   prometheusDiscoveryURL:
+                    description: URL from which Prometheus fetches the targets.
                     type: string
                   scheme:
+                    description: Protocol scheme used for Prometheus requests.
                     type: string
                 type: object
               teams:
