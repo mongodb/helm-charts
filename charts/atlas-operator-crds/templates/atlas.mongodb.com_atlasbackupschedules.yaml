@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.19.0
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -30,7 +30,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: AtlasBackupSchedule is the Schema for the atlasbackupschedules
-          API
+          API.
         properties:
           apiVersion:
             description: |-
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: AtlasBackupScheduleSpec defines the desired state of AtlasBackupSchedule
+            description: AtlasBackupScheduleSpec defines the desired state of AtlasBackupSchedule.
             properties:
               autoExportEnabled:
                 default: false
@@ -95,10 +95,12 @@ spec:
                 properties:
                   exportBucketId:
                     description: Unique Atlas identifier of the AWS bucket which was
-                      granted access to export backup snapshot
+                      granted access to export backup snapshot.
                     type: string
                   frequencyType:
                     default: monthly
+                    description: Human-readable label that indicates the rate at which
+                      the export policy item occurs.
                     enum:
                     - monthly
                     type: string
@@ -111,10 +113,10 @@ spec:
                   desired updated backup policy.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
@@ -155,6 +157,7 @@ spec:
             - policy
             type: object
           status:
+            description: BackupScheduleStatus defines the observed state of AtlasBackupSchedule.
             properties:
               conditions:
                 description: Conditions is the list of statuses showing the current
@@ -164,8 +167,9 @@ spec:
                     at a certain point.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
+                      description: |-
+                        Last time the condition transitioned from one status to another.
+                        Represented in ISO 8601 format.
                       format: date-time
                       type: string
                     message:
@@ -187,6 +191,8 @@ spec:
                   type: object
                 type: array
               deploymentID:
+                description: List of the human-readable names of all deployments utilizing
+                  this backup schedule.
                 items:
                   type: string
                 type: array

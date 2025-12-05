@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.19.0
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -56,24 +56,24 @@ spec:
             type: object
           spec:
             description: |-
-              AtlasDeploymentSpec defines the desired state of AtlasDeployment
-              Only one of DeploymentSpec, AdvancedDeploymentSpec and ServerlessSpec should be defined
+              AtlasDeploymentSpec defines the desired state of AtlasDeployment.
+              Only one of DeploymentSpec, AdvancedDeploymentSpec and ServerlessSpec should be defined.
             properties:
               backupRef:
-                description: Backup schedule for the AtlasDeployment
+                description: Reference to the backup schedule for the AtlasDeployment.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
                 type: object
               connectionSecret:
                 description: Name of the secret containing Atlas API private and public
-                  keys
+                  keys.
                 properties:
                   name:
                     description: |-
@@ -89,8 +89,8 @@ spec:
                 properties:
                   backupEnabled:
                     description: |-
-                      Applicable only for M10+ deployments.
                       Flag that indicates if the deployment uses Cloud Backups for backups.
+                      Applicable only for M10+ deployments.
                     type: boolean
                   biConnector:
                     description: |-
@@ -98,8 +98,8 @@ spec:
                       The MongoDB Connector for Business Intelligence for Atlas (BI Connector) is only available for M10 and larger deployments.
                     properties:
                       enabled:
-                        description: Flag that indicates whether or not BI Connector
-                          for Atlas is enabled on the deployment.
+                        description: Flag that indicates whether the Business Intelligence
+                          Connector for Atlas is enabled on the deployment.
                         type: boolean
                       readPreference:
                         description: Source from which the BI Connector for Atlas
@@ -125,11 +125,18 @@ spec:
                     - FIXED_TO_DEDICATED
                     type: string
                   customZoneMapping:
+                    description: List that contains Global Cluster parameters that
+                      map zones to geographic regions.
                     items:
                       properties:
                         location:
+                          description: |-
+                            Code that represents a location that maps to a zone in your global cluster.
+                            MongoDB Atlas represents this location with a ISO 3166-2 location and subdivision codes when possible.
                           type: string
                         zone:
+                          description: Human-readable label that identifies the zone
+                            in your global cluster. This zone maps to a location code.
                           type: string
                       required:
                       - location
@@ -158,14 +165,18 @@ spec:
                     description: |-
                       Collection of key-value pairs that tag and categorize the deployment.
                       Each key and value has a maximum length of 255 characters.
+                      DEPRECATED: Cluster labels are deprecated and will be removed in a future release. We strongly recommend that you use Resource Tags instead.
                     items:
                       description: LabelSpec contains key-value pairs that tag and
                         categorize the Cluster/DBUser
                       properties:
                         key:
+                          description: Key applied to tag and categorize this component.
                           maxLength: 255
                           type: string
                         value:
+                          description: Value set to the Key applied to tag and categorize
+                            this component.
                           type: string
                       required:
                       - key
@@ -173,23 +184,44 @@ spec:
                       type: object
                     type: array
                   managedNamespaces:
+                    description: List that contains information to create a managed
+                      namespace in a specified Global Cluster to create.
                     items:
                       description: ManagedNamespace represents the information about
                         managed namespace configuration.
                       properties:
                         collection:
+                          description: Human-readable label of the collection to manage
+                            for this Global Cluster.
                           type: string
                         customShardKey:
+                          description: |-
+                            Database parameter used to divide the collection into shards. Global clusters require a compound shard key.
+                            This compound shard key combines the location parameter and the user-selected custom key.
                           type: string
                         db:
+                          description: Human-readable label of the database to manage
+                            for this Global Cluster.
                           type: string
                         isCustomShardKeyHashed:
+                          description: |-
+                            Flag that indicates whether someone hashed the custom shard key for the specified collection.
+                            If you set this value to false, MongoDB Cloud uses ranged sharding.
                           type: boolean
                         isShardKeyUnique:
+                          description: |-
+                            Flag that indicates whether someone hashed the custom shard key.
+                            If this parameter returns false, this cluster uses ranged sharding.
                           type: boolean
                         numInitialChunks:
+                          description: |-
+                            Minimum number of chunks to create initially when sharding an empty collection with a hashed shard key.
+                            Maximum value is 8192.
                           type: integer
                         presplitHashedZones:
+                          description: |-
+                            Flag that indicates whether MongoDB Cloud should create and distribute initial chunks for an empty or non-existing collection.
+                            MongoDB Cloud distributes data based on the defined zones and zone ranges for the collection.
                           type: boolean
                       required:
                       - collection
@@ -197,9 +229,11 @@ spec:
                       type: object
                     type: array
                   mongoDBMajorVersion:
-                    description: Version of the deployment to deploy.
+                    description: MongoDB major version of the cluster. Set to the
+                      binary major version.
                     type: string
                   mongoDBVersion:
+                    description: Version of MongoDB that the cluster runs.
                     type: string
                   name:
                     description: |-
@@ -240,6 +274,8 @@ spec:
                           items:
                             properties:
                               analyticsSpecs:
+                                description: Hardware specifications for analytics
+                                  nodes deployed in the region.
                                 properties:
                                   diskIOPS:
                                     description: |-
@@ -259,7 +295,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size
+                                      The instance size you select applies to all the data-bearing hosts in your instance size.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -267,8 +303,8 @@ spec:
                                     type: integer
                                 type: object
                               autoScaling:
-                                description: AdvancedAutoScalingSpec configures your
-                                  deployment to automatically scale its storage
+                                description: Options that determine how this cluster
+                                  handles resource scaling.
                                 properties:
                                   compute:
                                     description: Collection of settings that configure
@@ -305,6 +341,9 @@ spec:
                                       auto-scaling is enabled. The default is true.
                                     properties:
                                       enabled:
+                                        description: |-
+                                          Flag that indicates whether this cluster enables disk auto-scaling.
+                                          The maximum memory allowed for the selected cluster tier and the oplog size can limit storage auto-scaling.
                                         type: boolean
                                     type: object
                                 type: object
@@ -312,13 +351,15 @@ spec:
                                 description: |-
                                   Cloud service provider on which the host for a multi-tenant deployment is provisioned.
                                   This setting only works when "providerName" : "TENANT" and "providerSetting.instanceSizeName" : M2 or M5.
-                                  Otherwise it should be equal to "providerName" value
+                                  Otherwise, it should be equal to the "providerName" value.
                                 enum:
                                 - AWS
                                 - GCP
                                 - AZURE
                                 type: string
                               electableSpecs:
+                                description: Hardware specifications for nodes deployed
+                                  in the region.
                                 properties:
                                   diskIOPS:
                                     description: |-
@@ -338,7 +379,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size
+                                      The instance size you select applies to all the data-bearing hosts in your instance size.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -361,6 +402,8 @@ spec:
                                 - SERVERLESS
                                 type: string
                               readOnlySpecs:
+                                description: Hardware specifications for read only
+                                  nodes deployed in the region.
                                 properties:
                                   diskIOPS:
                                     description: |-
@@ -380,7 +423,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size
+                                      The instance size you select applies to all the data-bearing hosts in your instance size.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -401,39 +444,43 @@ spec:
                       type: object
                     type: array
                   rootCertType:
+                    description: Root Certificate Authority that MongoDB Atlas cluster
+                      uses.
                     type: string
                   searchIndexes:
-                    description: A list of atlas search indexes configuration for
-                      the current deployment
+                    description: An array of SearchIndex objects with fields that
+                      describe the search index.
                     items:
                       description: SearchIndex is the CRD to configure part of the
-                        Atlas Search Index
+                        Atlas Search Index.
                       properties:
                         DBName:
                           description: Human-readable label that identifies the database
                             that contains the collection with one or more Atlas Search
-                            indexes
+                            indexes.
                           type: string
                         collectionName:
                           description: Human-readable label that identifies the collection
-                            that contains one or more Atlas Search indexes
+                            that contains one or more Atlas Search indexes.
                           type: string
                         name:
                           description: Human-readable label that identifies this index.
-                            Must be unique for a deployment
+                            Must be unique for a deployment.
                           type: string
                         search:
-                          description: Atlas search index configuration
+                          description: Atlas search index configuration.
                           properties:
                             mappings:
                               description: Index specifications for the collection's
-                                fields
+                                fields.
                               properties:
                                 dynamic:
-                                  description: Flag that indicates whether the index
-                                    uses dynamic or static mappings. Required if mapping.fields
-                                    is omitted.
-                                  type: boolean
+                                  description: |-
+                                    Indicates whether the index uses static, default dynamic, or configurable dynamic mappings.
+                                    Set to **true** to enable dynamic mapping with default type set or define object to specify the name of the configured type sets for dynamic mapping.
+                                    If you specify configurable dynamic mappings, you must define the referred type sets in the **typeSets** field.
+                                    Set to **false** to use only static mappings through **mappings.fields**.
+                                  x-kubernetes-preserve-unknown-fields: true
                                 fields:
                                   description: One or more field specifications for
                                     the Atlas Search index. Required if mapping.dynamic
@@ -442,29 +489,27 @@ spec:
                               type: object
                             searchConfigurationRef:
                               description: A reference to the AtlasSearchIndexConfig
-                                custom resource
+                                custom resource.
                               properties:
                                 name:
-                                  description: Name is the name of the Kubernetes
-                                    Resource
+                                  description: Name of the Kubernetes Resource
                                   type: string
                                 namespace:
-                                  description: Namespace is the namespace of the Kubernetes
-                                    Resource
+                                  description: Namespace of the Kubernetes Resource
                                   type: string
                               required:
                               - name
                               type: object
                             synonyms:
                               description: Rule sets that map words to their synonyms
-                                in this index
+                                in this index.
                               items:
                                 description: Synonym represents "Synonym" type of
-                                  Atlas Search Index
+                                  Atlas Search Index.
                                 properties:
                                   analyzer:
                                     description: Specific pre-defined method chosen
-                                      to apply to the synonyms to be searched
+                                      to apply to the synonyms to be searched.
                                     enum:
                                     - lucene.standard
                                     - lucene.simple
@@ -516,17 +561,17 @@ spec:
                                   name:
                                     description: Human-readable label that identifies
                                       the synonym definition. Each name must be unique
-                                      within the same index definition
+                                      within the same index definition.
                                     type: string
                                   source:
                                     description: Data set that stores the mapping
                                       one or more words map to one or more synonyms
-                                      of those words
+                                      of those words.
                                     properties:
                                       collection:
                                         description: Human-readable label that identifies
                                           the MongoDB collection that stores words
-                                          and their applicable synonyms
+                                          and their applicable synonyms.
                                         type: string
                                     required:
                                     - collection
@@ -542,13 +587,13 @@ spec:
                           - searchConfigurationRef
                           type: object
                         type:
-                          description: Type of the index
+                          description: Type of the index.
                           enum:
                           - search
                           - vectorSearch
                           type: string
                         vectorSearch:
-                          description: Atlas vector search index configuration
+                          description: Atlas vector search index configuration.
                           properties:
                             fields:
                               description: Array of JSON objects. See examples https://dochub.mongodb.org/core/avs-vector-type
@@ -603,11 +648,13 @@ spec:
                         on this deployment.
                       properties:
                         key:
+                          description: Constant that defines the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
                           type: string
                         value:
+                          description: Variable that belongs to the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
@@ -626,17 +673,20 @@ spec:
                       the cluster.
                     type: boolean
                   versionReleaseSystem:
+                    description: |-
+                      Method by which the cluster maintains the MongoDB versions.
+                      If value is CONTINUOUS, you must not specify mongoDBMajorVersion.
                     type: string
                 required:
                 - name
                 type: object
               externalProjectRef:
                 description: |-
-                  "externalProjectRef" holds the parent Atlas project ID.
-                  Mutually exclusive with the "projectRef" field
+                  externalProjectRef holds the parent Atlas project ID.
+                  Mutually exclusive with the "projectRef" field.
                 properties:
                   id:
-                    description: ID is the Atlas project ID
+                    description: ID is the Atlas project ID.
                     type: string
                 required:
                 - id
@@ -676,18 +726,20 @@ spec:
                     - regionName
                     type: object
                   tags:
-                    description: List that contains key-value pairs between 1 to 255
-                      characters in length for tagging and categorizing the instance.
+                    description: List that contains key-value pairs between 1 and
+                      255 characters in length for tagging and categorizing the instance.
                     items:
                       description: TagSpec holds a key-value pair for resource tagging
                         on this deployment.
                       properties:
                         key:
+                          description: Constant that defines the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
                           type: string
                         value:
+                          description: Variable that belongs to the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
@@ -709,42 +761,69 @@ spec:
                 - providerSettings
                 type: object
               processArgs:
-                description: ProcessArgs allows to modify Advanced Configuration Options
+                description: ProcessArgs allows modification of Advanced Configuration
+                  Options.
                 properties:
                   defaultReadConcern:
+                    description: String that indicates the default level of acknowledgment
+                      requested from MongoDB for read operations set for this cluster.
                     type: string
                   defaultWriteConcern:
+                    description: String that indicates the default level of acknowledgment
+                      requested from MongoDB for write operations set for this cluster.
                     type: string
                   failIndexKeyTooLong:
+                    description: |-
+                      Flag that indicates whether to fail the operation and return an error when you insert or update documents where all indexed entries exceed 1024 bytes.
+                      If you set this to false, mongod writes documents that exceed this limit, but doesn't index them.
                     type: boolean
                   javascriptEnabled:
+                    description: Flag that indicates whether the cluster allows execution
+                      of operations that perform server-side executions of JavaScript.
                     type: boolean
                   minimumEnabledTlsProtocol:
+                    description: |-
+                      String that indicates the minimum TLS version that the cluster accepts for incoming connections.
+                      Clusters using TLS 1.0 or 1.1 should consider setting TLS 1.2 as the minimum TLS protocol version.
                     type: string
                   noTableScan:
+                    description: Flag that indicates whether the cluster disables
+                      executing any query that requires a collection scan to return
+                      results.
                     type: boolean
                   oplogMinRetentionHours:
+                    description: Minimum retention window for cluster's oplog expressed
+                      in hours. A value of null indicates that the cluster uses the
+                      default minimum oplog window that MongoDB Cloud calculates.
                     type: string
                   oplogSizeMB:
+                    description: |-
+                      Number that indicates the storage limit of a cluster's oplog expressed in megabytes.
+                      A value of null indicates that the cluster uses the default oplog size that Atlas calculates.
                     format: int64
                     type: integer
                   sampleRefreshIntervalBIConnector:
+                    description: Number that indicates the documents per database
+                      to sample when gathering schema information.
                     format: int64
                     type: integer
                   sampleSizeBIConnector:
+                    description: Number that indicates the interval in seconds at
+                      which the mongosqld process re-samples data to create its relational
+                      schema.
                     format: int64
                     type: integer
                 type: object
               projectRef:
                 description: |-
-                  "projectRef" is a reference to the parent AtlasProject resource.
-                  Mutually exclusive with the "externalProjectRef" field
+                  projectRef is a reference to the parent AtlasProject resource.
+                  Mutually exclusive with the "externalProjectRef" field.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
@@ -752,14 +831,16 @@ spec:
               serverlessSpec:
                 description: |-
                   Configuration for the serverless deployment API. https://www.mongodb.com/docs/atlas/reference/api/serverless-instances/
-                  DEPRECATED FIELD: Serverless instances are deprecated. See https://dochub.mongodb.org/core/atlas-flex-migration for details.
+                  DEPRECATED: Serverless instances are deprecated. See https://dochub.mongodb.org/core/atlas-flex-migration for details.
                 properties:
                   backupOptions:
                     description: Serverless Backup Options
                     properties:
                       serverlessContinuousBackupEnabled:
                         default: true
-                        description: ServerlessContinuousBackupEnabled
+                        description: |-
+                          ServerlessContinuousBackupEnabled indicates whether the cluster uses continuous cloud backups.
+                          DEPRECATED: Serverless instances are deprecated, and no longer support continuous backup. See https://dochub.mongodb.org/core/atlas-flex-migration for details.
                         type: boolean
                     type: object
                   name:
@@ -770,7 +851,13 @@ spec:
                     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]*$
                     type: string
                   privateEndpoints:
+                    description: |-
+                      List that contains the private endpoint configurations for the Serverless instance.
+                      DEPRECATED: Serverless private endpoints are deprecated. See https://dochub.mongodb.org/core/atlas-flex-migration for details.
                     items:
+                      description: |-
+                        ServerlessPrivateEndpoint configures private endpoints for the Serverless instances.
+                        DEPRECATED: Serverless private endpoints are deprecated. See https://dochub.mongodb.org/core/atlas-flex-migration for details.
                       properties:
                         cloudProviderEndpointID:
                           description: CloudProviderEndpointID is the identifier of
@@ -793,15 +880,15 @@ spec:
                       service provider.
                     properties:
                       autoScaling:
-                        description: DEPRECATED FIELD. The value of this field doesn't
-                          take any effect. Range of instance sizes to which your deployment
-                          can scale.
+                        description: |-
+                          Range of instance sizes to which your deployment can scale.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         properties:
                           autoIndexingEnabled:
                             description: |-
-                              Deprecated: This flag is not supported anymore.
                               Flag that indicates whether autopilot mode for Performance Advisor is enabled.
                               The default is false.
+                              DEPRECATED: This flag is no longer supported.
                             type: boolean
                           compute:
                             description: Collection of settings that configure how
@@ -846,28 +933,25 @@ spec:
                         type: string
                       diskIOPS:
                         description: |-
-                          DEPRECATED FIELD. The value of this field doesn't take any effect. Disk IOPS setting for AWS storage.
+                          Disk IOPS setting for AWS storage.
                           Set only if you selected AWS as your cloud service provider.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         format: int64
                         type: integer
                       diskTypeName:
-                        description: DEPRECATED FIELD. The value of this field doesn't
-                          take any effect. Type of disk if you selected Azure as your
-                          cloud service provider.
+                        description: |-
+                          Type of disk if you selected Azure as your cloud service provider.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         type: string
                       encryptEBSVolume:
-                        description: DEPRECATED FIELD. The value of this field doesn't
-                          take any effect. Flag that indicates whether the Amazon
-                          EBS encryption feature encrypts the host's root volume for
-                          both data at rest within the volume and for data moving
-                          between the volume and the deployment.
+                        description: |-
+                          Flag that indicates whether the Amazon EBS encryption feature encrypts the host's root volume for both data at rest within the volume and for data moving between the volume and the deployment.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         type: boolean
                       instanceSizeName:
-                        description: DEPRECATED FIELD. The value of this field doesn't
-                          take any effect. Atlas provides different deployment tiers,
-                          each with a default storage capacity and RAM size. The deployment
-                          you select is used for all the data-bearing hosts in your
-                          deployment tier.
+                        description: |-
+                          Atlas provides different deployment tiers, each with a default storage capacity and RAM size. The deployment you select is used for all the data-bearing hosts in your deployment tier.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         type: string
                       providerName:
                         description: Cloud service provider on which Atlas provisions
@@ -886,8 +970,9 @@ spec:
                         type: string
                       volumeType:
                         description: |-
-                          DEPRECATED FIELD. The value of this field doesn't take any effect. Disk IOPS setting for AWS storage.
+                          Disk IOPS setting for AWS storage.
                           Set only if you selected AWS as your cloud service provider.
+                          DEPRECATED: The value of this field doesn't take any effect.
                         enum:
                         - STANDARD
                         - PROVISIONED
@@ -902,11 +987,13 @@ spec:
                         on this deployment.
                       properties:
                         key:
+                          description: Constant that defines the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
                           type: string
                         value:
+                          description: Variable that belongs to the set of the tag.
                           maxLength: 255
                           minLength: 1
                           pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
@@ -944,6 +1031,11 @@ spec:
                 project
               rule: (has(self.externalProjectRef) && has(self.connectionSecret)) ||
                 !has(self.externalProjectRef)
+            - fieldPath: .serverlessSpec
+              message: serverlessSpec cannot be added - serverless instances are deprecated
+              optionalOldSelf: true
+              rule: '!has(self.serverlessSpec) || (oldSelf.hasValue() && oldSelf.value().serverlessSpec
+                != null)'
           status:
             description: AtlasDeploymentStatus defines the observed state of AtlasDeployment.
             properties:
@@ -955,8 +1047,9 @@ spec:
                     at a certain point.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
+                      description: |-
+                        Last time the condition transitioned from one status to another.
+                        Represented in ISO 8601 format.
                       format: date-time
                       type: string
                     message:
@@ -1031,6 +1124,9 @@ spec:
                             string for this private endpoint.
                           type: string
                         srvShardOptimizedConnectionString:
+                          description: Private endpoint-aware connection string optimized
+                            for sharded clusters that uses the `mongodb+srv://` protocol
+                            to connect to MongoDB Cloud through a private endpoint.
                           type: string
                         type:
                           description: |-
@@ -1059,36 +1155,66 @@ spec:
                     type: string
                 type: object
               customZoneMapping:
+                description: |-
+                  List that contains key value pairs to map zones to geographic regions.
+                  These pairs map an ISO 3166-1a2 location code, with an ISO 3166-2 subdivision code when possible, to a unique 24-hexadecimal string that identifies the custom zone.
                 properties:
                   customZoneMapping:
                     additionalProperties:
                       type: string
+                    description: |-
+                      List that contains key value pairs to map zones to geographic regions.
+                      These pairs map an ISO 3166-1a2 location code, with an ISO 3166-2 subdivision code when possible, to a unique 24-hexadecimal string that identifies the custom zone.
                     type: object
                   zoneMappingErrMessage:
+                    description: Error message for failed Custom Zone Mapping.
                     type: string
                   zoneMappingState:
+                    description: Status of the Custom Zone Mapping.
                     type: string
                 type: object
               managedNamespaces:
+                description: List that contains a namespace for a Global Cluster.
+                  MongoDB Atlas manages this cluster.
                 items:
                   properties:
                     collection:
+                      description: Human-readable label of the collection to manage
+                        for this Global Cluster.
                       type: string
                     customShardKey:
+                      description: |-
+                        Database parameter used to divide the collection into shards. Global clusters require a compound shard key.
+                        This compound shard key combines the location parameter and the user-selected custom key.
                       type: string
                     db:
+                      description: Human-readable label of the database to manage
+                        for this Global Cluster.
                       type: string
                     errMessage:
+                      description: Error message for a failed Managed Namespace.
                       type: string
                     isCustomShardKeyHashed:
+                      description: |-
+                        Flag that indicates whether someone hashed the custom shard key for the specified collection.
+                        If you set this value to false, MongoDB Atlas uses ranged sharding.
                       type: boolean
                     isShardKeyUnique:
+                      description: Flag that indicates whether someone hashed the
+                        custom shard key. If this parameter returns false, this cluster
+                        uses ranged sharding.
                       type: boolean
                     numInitialChunks:
+                      description: Minimum number of chunks to create initially when
+                        sharding an empty collection with a hashed shard key.
                       type: integer
                     presplitHashedZones:
+                      description: |-
+                        Flag that indicates whether MongoDB Cloud should create and distribute initial chunks for an empty or non-existing collection.
+                        MongoDB Atlas distributes data based on the defined zones and zone ranges for the collection.
                       type: boolean
                     status:
+                      description: Status of the Managed Namespace.
                       type: string
                   required:
                   - collection
@@ -1111,11 +1237,18 @@ spec:
                 format: int64
                 type: integer
               replicaSets:
+                description: |-
+                  Details that explain how MongoDB Cloud replicates data on the specified MongoDB database.
+                  This array has one object per shard representing node configurations in each shard. For replica sets there is only one object representing node configurations.
                 items:
                   properties:
                     id:
+                      description: Unique 24-hexadecimal digit string that identifies
+                        the replication object for a shard in a Cluster.
                       type: string
                     zoneName:
+                      description: Human-readable label that describes the zone this
+                        shard belongs to in a Global Cluster.
                       type: string
                   required:
                   - id
@@ -1123,16 +1256,21 @@ spec:
                 type: array
               searchIndexes:
                 description: SearchIndexes contains a list of search indexes statuses
-                  configured for a project
+                  configured for a project.
                 items:
                   properties:
                     ID:
+                      description: Unique 24-hexadecimal digit string that identifies
+                        this Atlas Search index.
                       type: string
                     message:
+                      description: Details on the status of the search index.
                       type: string
                     name:
+                      description: Human-readable label that identifies this index.
                       type: string
                     status:
+                      description: Condition of the search index.
                       type: string
                   required:
                   - ID
@@ -1142,6 +1280,8 @@ spec:
                   type: object
                 type: array
               serverlessPrivateEndpoints:
+                description: ServerlessPrivateEndpoints contains a list of private
+                  endpoints configured for the serverless deployment.
                 items:
                   properties:
                     _id:

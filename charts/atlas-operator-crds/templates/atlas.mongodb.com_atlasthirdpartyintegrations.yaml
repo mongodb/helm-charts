@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.19.0
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -55,7 +55,7 @@ spec:
             properties:
               connectionSecret:
                 description: Name of the secret containing Atlas API private and public
-                  keys
+                  keys.
                 properties:
                   name:
                     description: |-
@@ -66,11 +66,11 @@ spec:
                 - name
                 type: object
               datadog:
-                description: Datadog contains the config fields for Datadog's Integration
+                description: Datadog contains the config fields for Datadog's Integration.
                 properties:
                   apiKeySecretRef:
                     description: APIKeySecretRef holds the name of a secret containing
-                      the datadog api key
+                      the Datadog API key.
                     properties:
                       name:
                         description: |-
@@ -86,7 +86,7 @@ spec:
                   sendCollectionLatencyMetrics:
                     default: disabled
                     description: SendCollectionLatencyMetrics toggles sending collection
-                      latency metrics
+                      latency metrics.
                     enum:
                     - enabled
                     - disabled
@@ -106,22 +106,22 @@ spec:
                 type: object
               externalProjectRef:
                 description: |-
-                  "externalProjectRef" holds the parent Atlas project ID.
-                  Mutually exclusive with the "projectRef" field
+                  externalProjectRef holds the parent Atlas project ID.
+                  Mutually exclusive with the "projectRef" field.
                 properties:
                   id:
-                    description: ID is the Atlas project ID
+                    description: ID is the Atlas project ID.
                     type: string
                 required:
                 - id
                 type: object
               microsoftTeams:
                 description: MicrosoftTeams contains the config fields for Microsoft
-                  Teams's Integration
+                  Teams's Integration.
                 properties:
                   urlSecretRef:
                     description: URLSecretRef holds the name of a secret containing
-                      the microsoft teams secret URL
+                      the Microsoft Teams secret URL.
                     properties:
                       name:
                         description: |-
@@ -135,12 +135,12 @@ spec:
                 - urlSecretRef
                 type: object
               newRelic:
-                description: NewRelic contains the config fields for New Relic's Integration
+                description: NewRelic contains the config fields for New Relic's Integration.
                 properties:
                   credentialsSecretRef:
                     description: |-
                       CredentialsSecretRef holds the name of a secret containing new relic's credentials:
-                      account id, license key, read and write tokens
+                      account id, license key, read and write tokens.
                     properties:
                       name:
                         description: |-
@@ -154,11 +154,11 @@ spec:
                 - credentialsSecretRef
                 type: object
               opsGenie:
-                description: OpsGenie contains the config fields for Ops Genie's Integration
+                description: OpsGenie contains the config fields for Ops Genie's Integration.
                 properties:
                   apiKeySecretRef:
                     description: APIKeySecretRef holds the name of a secret containing
-                      Ops Genie's API key
+                      Ops Genie's API key.
                     properties:
                       name:
                         description: |-
@@ -169,7 +169,7 @@ spec:
                     - name
                     type: object
                   region:
-                    description: Region is the Ops Genie region
+                    description: Region is the Ops Genie region.
                     type: string
                 required:
                 - apiKeySecretRef
@@ -177,14 +177,14 @@ spec:
                 type: object
               pagerDuty:
                 description: PagerDuty contains the config fields for PagerDuty's
-                  Integration
+                  Integration.
                 properties:
                   region:
-                    description: Region is the Pager Duty region
+                    description: Region is the Pager Duty region.
                     type: string
                   serviceKeySecretRef:
                     description: ServiceKeySecretRef holds the name of a secret containing
-                      Pager Duty service key
+                      Pager Duty service key.
                     properties:
                       name:
                         description: |-
@@ -200,28 +200,28 @@ spec:
                 type: object
               projectRef:
                 description: |-
-                  "projectRef" is a reference to the parent AtlasProject resource.
-                  Mutually exclusive with the "externalProjectRef" field
+                  projectRef is a reference to the parent AtlasProject resource.
+                  Mutually exclusive with the "externalProjectRef" field.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
                 type: object
               prometheus:
                 description: Prometheus contains the config fields for Prometheus's
-                  Integration
+                  Integration.
                 properties:
                   enabled:
-                    description: Enabled is true when Prometheus integration is enabled
+                    description: Enabled is true when Prometheus integration is enabled.
                     type: string
                   prometheusCredentialsSecretRef:
                     description: |-
-                      PrometheusCredentialsSecretRef holds the name of a secret containing the Prometheus
+                      PrometheusCredentialsSecretRef holds the name of a secret containing the Prometheus.
                       username & password
                     properties:
                       name:
@@ -233,7 +233,7 @@ spec:
                     - name
                     type: object
                   serviceDiscovery:
-                    description: ServiceDiscovery to be used by Prometheus
+                    description: ServiceDiscovery to be used by Prometheus.
                     enum:
                     - file
                     - http
@@ -244,11 +244,11 @@ spec:
                 - serviceDiscovery
                 type: object
               slack:
-                description: Slack contains the config fields for Slack's Integration
+                description: Slack contains the config fields for Slack's Integration.
                 properties:
                   apiTokenSecretRef:
                     description: APITokenSecretRef holds the name of a secret containing
-                      the Slack API token
+                      the Slack API token.
                     properties:
                       name:
                         description: |-
@@ -259,11 +259,11 @@ spec:
                     - name
                     type: object
                   channelName:
-                    description: ChannelName to be used by Prometheus
+                    description: ChannelName to be used by Prometheus.
                     type: string
                   teamName:
-                    description: TeamName flags whether or not Prometheus integration
-                      is enabled
+                    description: TeamName flags whether Prometheus integration is
+                      enabled.
                     type: string
                 required:
                 - apiTokenSecretRef
@@ -271,7 +271,7 @@ spec:
                 - teamName
                 type: object
               type:
-                description: Type of the integration
+                description: Type of the integration.
                 enum:
                 - DATADOG
                 - MICROSOFT_TEAMS
@@ -285,11 +285,11 @@ spec:
                 type: string
               victorOps:
                 description: VictorOps contains the config fields for VictorOps's
-                  Integration
+                  Integration.
                 properties:
                   apiKeySecretRef:
                     description: APIKeySecretRef is the name of a secret containing
-                      Victor Ops API key
+                      Victor Ops API key.
                     properties:
                       name:
                         description: |-
@@ -300,18 +300,18 @@ spec:
                     - name
                     type: object
                   routingKey:
-                    description: RoutingKey holds VictorOps routing key
+                    description: RoutingKey holds VictorOps routing key.
                     type: string
                 required:
                 - apiKeySecretRef
                 - routingKey
                 type: object
               webhook:
-                description: Webhook contains the config fields for Webhook's Integration
+                description: Webhook contains the config fields for Webhook's Integration.
                 properties:
                   urlSecretRef:
                     description: URLSecretRef holds the name of a secret containing
-                      Webhook URL and secret
+                      Webhook URL and secret.
                     properties:
                       name:
                         description: |-
