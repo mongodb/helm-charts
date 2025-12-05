@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.19.0
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -49,6 +49,7 @@ spec:
           metadata:
             type: object
           spec:
+            description: AtlasFederatedAuthSpec defines the desired state of AtlasFederatedAuth.
             properties:
               connectionSecretRef:
                 description: |-
@@ -56,10 +57,10 @@ spec:
                   These credentials must have OrganizationOwner permissions.
                 properties:
                   name:
-                    description: Name is the name of the Kubernetes Resource
+                    description: Name of the Kubernetes Resource
                     type: string
                   namespace:
-                    description: Namespace is the namespace of the Kubernetes Resource
+                    description: Namespace of the Kubernetes Resource
                     type: string
                 required:
                 - name
@@ -67,7 +68,7 @@ spec:
               dataAccessIdentityProviders:
                 description: |-
                   The collection of unique ids representing the identity providers that can be used for data access in this organization.
-                  Currently connected data access identity providers missing from the this field will be disconnected.
+                  Currently connected data access identity providers missing from this field will be disconnected.
                 items:
                   type: string
                 type: array
@@ -80,7 +81,7 @@ spec:
               domainRestrictionEnabled:
                 default: false
                 description: |-
-                  Prevent users in the federation from accessing organizations outside of the federation, and creating new organizations.
+                  Prevent users in the federation from accessing organizations outside the federation, and creating new organizations.
                   This option applies to the entire federation.
                   See more information at https://www.mongodb.com/docs/atlas/security/federation-advanced-options/#restrict-user-membership-to-the-federation
                 type: boolean
@@ -124,20 +125,18 @@ spec:
                             - ORG_GROUP_CREATOR
                             - ORG_OWNER
                             - ORG_BILLING_READ_ONLY
-                            - ORG_TEAM_MEMBERS_ADMIN
-                            - GROUP_AUTOMATION_ADMIN
-                            - GROUP_BACKUP_ADMIN
-                            - GROUP_MONITORING_ADMIN
                             - GROUP_OWNER
                             - GROUP_READ_ONLY
-                            - GROUP_USER_ADMIN
-                            - GROUP_BILLING_ADMIN
                             - GROUP_DATA_ACCESS_ADMIN
                             - GROUP_DATA_ACCESS_READ_ONLY
                             - GROUP_DATA_ACCESS_READ_WRITE
-                            - GROUP_CHARTS_ADMIN
                             - GROUP_CLUSTER_MANAGER
                             - GROUP_SEARCH_INDEX_EDITOR
+                            - GROUP_DATABASE_ACCESS_ADMIN
+                            - GROUP_BACKUP_MANAGER
+                            - GROUP_STREAM_PROCESSING_OWNER
+                            - ORG_STREAM_PROCESSING_ADMIN
+                            - GROUP_OBSERVABILITY_VIEWER
                             type: string
                         type: object
                       type: array
@@ -148,6 +147,7 @@ spec:
                 type: boolean
             type: object
           status:
+            description: AtlasFederatedAuthStatus defines the observed state of AtlasFederatedAuth.
             properties:
               conditions:
                 description: Conditions is the list of statuses showing the current
@@ -157,8 +157,9 @@ spec:
                     at a certain point.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
+                      description: |-
+                        Last time the condition transitioned from one status to another.
+                        Represented in ISO 8601 format.
                       format: date-time
                       type: string
                     message:
