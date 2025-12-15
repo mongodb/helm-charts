@@ -49,7 +49,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: AtlasBackupPolicySpec defines the desired state of AtlasBackupPolicy
+            description: AtlasBackupPolicySpec defines the target state of AtlasBackupPolicy.
             properties:
               items:
                 description: A list of BackupPolicy items.
@@ -57,8 +57,8 @@ spec:
                   properties:
                     frequencyInterval:
                       description: |-
-                        Desired frequency of the new backup policy item specified by FrequencyType. A value of 1 specifies the first instance of the corresponding FrequencyType.
-                        The only accepted value you can set for frequency interval with NVMe clusters is 12.
+                        Frequency of the new backup policy item specified by FrequencyType. A value of 1 specifies the first instance of the corresponding FrequencyType.
+                        You can set FrequencyInterval only to 12 for NVMe clusters.
                       enum:
                       - 1
                       - 2
@@ -92,7 +92,7 @@ spec:
                       type: integer
                     frequencyType:
                       description: Frequency associated with the backup policy item.
-                        You cannot specify multiple hourly and daily backup policy
+                        You can specify only one each of hourly or daily backup policy
                         items.
                       enum:
                       - hourly
@@ -147,14 +147,13 @@ spec:
                       format: date-time
                       type: string
                     message:
-                      description: A human readable message indicating details about
-                        the transition.
+                      description: A message providing details about the transition.
                       type: string
                     reason:
                       description: The reason for the condition's last transition.
                       type: string
                     status:
-                      description: Status of the condition, one of True, False, Unknown.
+                      description: Status of the condition; one of True, False, Unknown.
                       type: string
                     type:
                       description: Type of Atlas Custom Resource condition.
@@ -166,8 +165,8 @@ spec:
                 type: array
               observedGeneration:
                 description: |-
-                  ObservedGeneration indicates the generation of the resource specification that the Atlas Operator is aware of.
-                  The Atlas Operator updates this field to the 'metadata.generation' as soon as it starts reconciliation of the resource.
+                  ObservedGeneration indicates the generation of the resource specification of which the Atlas Operator is aware.
+                  The Atlas Operator updates this field to the value of 'metadata.generation' as soon as it starts reconciliation of the resource.
                 format: int64
                 type: integer
             required:
