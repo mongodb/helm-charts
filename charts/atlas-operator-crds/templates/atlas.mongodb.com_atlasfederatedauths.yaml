@@ -49,7 +49,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: AtlasFederatedAuthSpec defines the desired state of AtlasFederatedAuth.
+            description: AtlasFederatedAuthSpec defines the target state of AtlasFederatedAuth.
             properties:
               connectionSecretRef:
                 description: |-
@@ -163,14 +163,13 @@ spec:
                       format: date-time
                       type: string
                     message:
-                      description: A human readable message indicating details about
-                        the transition.
+                      description: A message providing details about the transition.
                       type: string
                     reason:
                       description: The reason for the condition's last transition.
                       type: string
                     status:
-                      description: Status of the condition, one of True, False, Unknown.
+                      description: Status of the condition; one of True, False, Unknown.
                       type: string
                     type:
                       description: Type of Atlas Custom Resource condition.
@@ -182,8 +181,8 @@ spec:
                 type: array
               observedGeneration:
                 description: |-
-                  ObservedGeneration indicates the generation of the resource specification that the Atlas Operator is aware of.
-                  The Atlas Operator updates this field to the 'metadata.generation' as soon as it starts reconciliation of the resource.
+                  ObservedGeneration indicates the generation of the resource specification of which the Atlas Operator is aware.
+                  The Atlas Operator updates this field to the value of 'metadata.generation' as soon as it starts reconciliation of the resource.
                 format: int64
                 type: integer
             required:
