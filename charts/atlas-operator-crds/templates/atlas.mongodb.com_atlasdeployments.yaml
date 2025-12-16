@@ -56,7 +56,7 @@ spec:
             type: object
           spec:
             description: |-
-              AtlasDeploymentSpec defines the desired state of AtlasDeployment.
+              AtlasDeploymentSpec defines the target state of AtlasDeployment.
               Only one of DeploymentSpec, AdvancedDeploymentSpec and ServerlessSpec should be defined.
             properties:
               backupRef:
@@ -1053,14 +1053,13 @@ spec:
                       format: date-time
                       type: string
                     message:
-                      description: A human readable message indicating details about
-                        the transition.
+                      description: A message providing details about the transition.
                       type: string
                     reason:
                       description: The reason for the condition's last transition.
                       type: string
                     status:
-                      description: Status of the condition, one of True, False, Unknown.
+                      description: Status of the condition; one of True, False, Unknown.
                       type: string
                     type:
                       description: Type of Atlas Custom Resource condition.
@@ -1232,8 +1231,8 @@ spec:
                 type: string
               observedGeneration:
                 description: |-
-                  ObservedGeneration indicates the generation of the resource specification that the Atlas Operator is aware of.
-                  The Atlas Operator updates this field to the 'metadata.generation' as soon as it starts reconciliation of the resource.
+                  ObservedGeneration indicates the generation of the resource specification of which the Atlas Operator is aware.
+                  The Atlas Operator updates this field to the value of 'metadata.generation' as soon as it starts reconciliation of the resource.
                 format: int64
                 type: integer
               replicaSets:
