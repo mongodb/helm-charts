@@ -215,6 +215,12 @@ community:
     name: mongodb-replica-set
     version: 4.4.0
     members: 3
+    # override persistence settings
+    persistence:
+      data:
+        storage: 60Gi
+      logs:
+        storage: 8Gi
     tls:
       # when tls.enabled == true and tls.useCertManager == true then Cert Manager's Issuer and Certificate resources will be created
       enabled: false
