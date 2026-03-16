@@ -12,8 +12,8 @@ The following Charts are supported by MongoDB.
 
 | Charts                                            | Description                                                                                          |
 |---------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| [mongodb-operator](charts/mongodb-kubernetes)     | MongoDB Controllers for Kubernetes Helm Chart                                                       |
-| [enterprise-operator](charts/enterprise-operator) | (**DEPRECATED** - use `mongodb-operator` instead) MongoDB Enterprise Kubernetes Operator Helm Chart. |
+| [mongodb-kubernetes](charts/mongodb-kubernetes)   | MongoDB Controllers for Kubernetes Helm Chart                                                       |
+| [enterprise-operator](charts/enterprise-operator) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Enterprise Kubernetes Operator Helm Chart. |
 | [enterprise-database](charts/enterprise-database) | MongoDB Enterprise Kubernetes Database Helm Chart.                                                   |
 | [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                                                   |
 | [atlas-deployment](charts/atlas-deployment)       | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources.                                |
@@ -25,8 +25,8 @@ The following Helm Charts are not supported by MongoDB.
 
 | Charts                                                    | Description                                                                                                        |
 |-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| [community-operator](charts/community-operator)           | (**DEPRECATED** - use `mongodb-operator` instead) MongoDB Community Operator Helm Chart.                           |
-| [community-operator-crds](charts/community-operator-crds) | (**DEPRECATED** - use `mongodb-operator` instead) MongoDB Community Custom Resource Definitions (CRDs) Helm Chart. |
+| [community-operator](charts/community-operator)           | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Operator Helm Chart.                           |
+| [community-operator-crds](charts/community-operator-crds) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Custom Resource Definitions (CRDs) Helm Chart. |
 | [sample-app](charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.                                                  |
 
 - Please note that the `CRD` Charts ([Community](charts/community-operator-crds)
