@@ -20,7 +20,7 @@ metadata:
                       version: v1
                   x-openapi-mapping:
                     property: $.groupId
-              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312014/admin
+              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312016/admin
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
