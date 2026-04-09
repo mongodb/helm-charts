@@ -7,7 +7,7 @@ metadata:
         spec:
           properties:
             v20250312:
-              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312016/admin
+              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312018/admin
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
