@@ -115,8 +115,7 @@ spec:
                         type: array
                       withDefaultAlertsSettings:
                         description: Flag that indicates whether to create the project
-                          with default alert settings. This setting cannot be updated
-                          after project creation.
+                          with default alert settings.
                         type: boolean
                     required:
                     - name
