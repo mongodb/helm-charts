@@ -100,6 +100,25 @@ spec:
                     - enabled
                     - disabled
                     type: string
+                  sendQueryStatsMetrics:
+                    default: disabled
+                    description: |-
+                      SendQueryStatsMetrics toggles sending query shape metrics that includes
+                      query hash and metrics on latency, execution frequency, documents returned,
+                      and timestamps.
+                    enum:
+                    - enabled
+                    - disabled
+                    type: string
+                  sendUserProvidedResourceTags:
+                    default: disabled
+                    description: |-
+                      SendUserProvidedResourceTags toggles sending user-provided group and cluster
+                      resource tags with the Datadog metrics.
+                    enum:
+                    - enabled
+                    - disabled
+                    type: string
                 required:
                 - apiKeySecretRef
                 - region
