@@ -24,6 +24,9 @@ on:
         default: ""
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
