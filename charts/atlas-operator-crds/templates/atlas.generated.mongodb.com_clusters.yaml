@@ -20,7 +20,7 @@ metadata:
                       version: v1
                   x-openapi-mapping:
                     property: $.groupId
-              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312018/admin
+              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312020/admin
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -92,6 +92,19 @@ spec:
                           operation which carries that risk, set `acceptDataRisksAndForceReplicaSetReconfig`
                           to the current date. This parameter expresses its value
                           in the ISO 8601 timestamp format in UTC.
+                        type: string
+                      adaptiveCapacity:
+                        description: Governs adaptive capacity behavior of Azure nodes
+                          in single-cloud Azure clusters or multi-cloud clusters that
+                          include Azure nodes. Adaptive capacity enables fallback
+                          hardware selection when the primary instance family is unavailable.
+                          ``ENABLED`` means the cluster explicitly opts in to adaptive
+                          capacity. ``DISABLED`` means the cluster explicitly opts
+                          out; the cluster receives capacity errors instead of being
+                          placed on fallback hardware. ``null`` means the field is
+                          unset; Azure clusters use adaptive capacity by default when
+                          the feature is enabled at the group level. Setting this
+                          field for single-cloud AWS or GCP clusters is a no-op.
                         type: string
                       advancedConfiguration:
                         description: Group of settings that configures a subset of
@@ -393,6 +406,12 @@ spec:
                                           space, consider upgrading your cluster to
                                           a higher tier."
                                         type: number
+                                      diskThroughput:
+                                        description: Target throughput desired for
+                                          storage attached to this hardware. Only
+                                          returned for Gen 2 instance sizes with Standard
+                                          (GP3) volume type.
+                                        type: integer
                                       ebsVolumeType:
                                         description: "Type of storage you want to
                                           attach to your AWS-provisioned cluster.\n\n-
@@ -522,6 +541,12 @@ spec:
                                           space, consider upgrading your cluster to
                                           a higher tier."
                                         type: number
+                                      diskThroughput:
+                                        description: Target throughput desired for
+                                          storage attached to this hardware. Only
+                                          returned for Gen 2 instance sizes with Standard
+                                          (GP3) volume type.
+                                        type: integer
                                       ebsVolumeType:
                                         description: "Type of storage you want to
                                           attach to your AWS-provisioned cluster.\n\n-
@@ -595,6 +620,12 @@ spec:
                                           space, consider upgrading your cluster to
                                           a higher tier."
                                         type: number
+                                      diskThroughput:
+                                        description: Target throughput desired for
+                                          storage attached to this hardware. Only
+                                          returned for Gen 2 instance sizes with Standard
+                                          (GP3) volume type.
+                                        type: integer
                                       ebsVolumeType:
                                         description: "Type of storage you want to
                                           attach to your AWS-provisioned cluster.\n\n-
@@ -793,6 +824,19 @@ spec:
                 description: The last observed Atlas state of the cluster resource
                   for version v20250312.
                 properties:
+                  adaptiveCapacity:
+                    description: Governs adaptive capacity behavior of Azure nodes
+                      in single-cloud Azure clusters or multi-cloud clusters that
+                      include Azure nodes. Adaptive capacity enables fallback hardware
+                      selection when the primary instance family is unavailable. ``ENABLED``
+                      means the cluster explicitly opts in to adaptive capacity. ``DISABLED``
+                      means the cluster explicitly opts out; the cluster receives
+                      capacity errors instead of being placed on fallback hardware.
+                      ``null`` means the field is unset; Azure clusters use adaptive
+                      capacity by default when the feature is enabled at the group
+                      level. Setting this field for single-cloud AWS or GCP clusters
+                      is a no-op.
+                    type: string
                   advancedConfiguration:
                     description: Group of settings that configures a subset of the
                       advanced configuration details.
@@ -1114,6 +1158,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
@@ -1232,6 +1282,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
@@ -1292,6 +1348,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
@@ -1352,6 +1414,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
@@ -1415,6 +1483,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
@@ -1484,6 +1558,12 @@ spec:
                                       If you require more storage space, consider
                                       upgrading your cluster to a higher tier."
                                     type: number
+                                  diskThroughput:
+                                    description: Target throughput desired for storage
+                                      attached to this hardware. Only returned for
+                                      Gen 2 instance sizes with Standard (GP3) volume
+                                      type.
+                                    type: integer
                                   ebsVolumeType:
                                     description: "Type of storage you want to attach
                                       to your AWS-provisioned cluster.\n\n- `STANDARD`
