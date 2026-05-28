@@ -985,6 +985,16 @@ spec:
                 - GOV_REGIONS_ONLY
                 - COMMERCIAL_FEDRAMP_REGIONS_ONLY
                 type: string
+              regionalizedPrivateEndpoint:
+                description: |-
+                  RegionalizedPrivateEndpoint allows to enable regionalized private endpoints. See more at
+                  https://www.mongodb.com/docs/atlas/security-private-endpoint/
+                properties:
+                  enabled:
+                    description: Flag indicating whether regionalized private endpoint
+                      mode should be enabled.
+                    type: boolean
+                type: object
               settings:
                 description: Settings allows the configuration of the Project Settings.
                 properties:
@@ -1664,6 +1674,16 @@ spec:
                   scheme:
                     description: Protocol scheme used for Prometheus requests.
                     type: string
+                type: object
+              regionalizedPrivateEndpoint:
+                description: Status of the multiple regionalized private endpoint
+                  setting ("Multiple Regionalized Private Endpoints" setting in the
+                  UI)
+                properties:
+                  enabled:
+                    description: Flag indicating whether regionalized private endpoint
+                      mode should be enabled.
+                    type: boolean
                 type: object
               teams:
                 description: Teams contains a list of teams assignment statuses
