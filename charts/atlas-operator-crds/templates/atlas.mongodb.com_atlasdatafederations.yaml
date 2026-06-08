@@ -72,30 +72,40 @@ spec:
                           role ID is authorized to access.Required if specifying cloudProviderConfig.
                         type: string
                     type: object
+                  azure:
+                    description: Configuration for running Data Federation in Azure.
+                    properties:
+                      roleId:
+                        description: Unique identifier of the role that Data Federation
+                          can use to access the data stores.
+                        type: string
+                    required:
+                    - roleId
+                    type: object
+                  gcp:
+                    description: Configuration for running Data Federation in GCP.
+                    properties:
+                      roleId:
+                        description: Unique identifier of the role that Data Federation
+                          can use to access the data stores.
+                        type: string
+                    required:
+                    - roleId
+                    type: object
                 type: object
               dataProcessRegion:
                 description: Information about the cloud provider region to which
                   the Federated Database Instance routes client connections.
                 properties:
                   cloudProvider:
-                    description: Name of the cloud service that hosts the Federated
-                      Database Instance's infrastructure.
-                    enum:
-                    - AWS
+                    description: |-
+                      Name of the cloud service that hosts the Federated Database Instance's infrastructure.
+                      see the list of available values here: https://www.mongodb.com/docs/api/doc/atlas-admin-api-v2/operation/operation-creategroupdatafederation#operation-creategroupdatafederation-body-application-vnd-atlas-2023-01-01-json-dataprocessregion-cloudprovider
                     type: string
                   region:
-                    description: Name of the region to which the data lake routes
-                      client connections.
-                    enum:
-                    - SYDNEY_AUS
-                    - MUMBAI_IND
-                    - FRANKFURT_DEU
-                    - DUBLIN_IRL
-                    - LONDON_GBR
-                    - VIRGINIA_USA
-                    - OREGON_USA
-                    - SAOPAULO_BRA
-                    - SINGAPORE_SGP
+                    description: |-
+                      Name of the region to which the data lake routes client connections.
+                      see the list of available values here: https://www.mongodb.com/docs/api/doc/atlas-admin-api-v2/operation/operation-creategroupdatafederation#operation-creategroupdatafederation-body-application-vnd-atlas-2023-01-01-json-dataprocessregion-region
                     type: string
                 type: object
               name:
@@ -290,6 +300,10 @@ spec:
                             Human-readable label that identifies the AWS S3 bucket.
                             This label must exactly match the name of an S3 bucket that the data lake can access with the configured AWS Identity and Access Management (IAM) credentials.
                           type: string
+                        clusterName:
+                          description: 'Human-readable label of the Atlas cluster
+                            used as a data store (provider: atlas).'
+                          type: string
                         delimiter:
                           description: |-
                             The delimiter that separates path segments in the data store.
@@ -320,6 +334,40 @@ spec:
                             If set to true, MongoDB Cloud doesn't use the configured AWS Identity and Access Management (IAM) role to access the S3 bucket.
                             If set to false, the configured AWS IAM role must include permissions to access the S3 bucket.
                           type: boolean
+                        readConcern:
+                          description: 'Read concern for Atlas cluster data stores
+                            (provider: atlas).'
+                          properties:
+                            level:
+                              type: string
+                          type: object
+                        readPreference:
+                          description: 'Read preference for Atlas cluster data stores
+                            (provider: atlas).'
+                          properties:
+                            maxStalenessSeconds:
+                              description: Maximum replication lag in seconds for
+                                reads from secondaries.
+                              type: integer
+                            mode:
+                              description: Read preference mode.
+                              type: string
+                            tagSets:
+                              description: List of tag sets to route read requests
+                                to specific replica set members.
+                              items:
+                                items:
+                                  description: ReadPreferenceTag is a key-value pair
+                                    used to route read requests.
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                  type: object
+                                type: array
+                              type: array
+                          type: object
                         region:
                           description: |-
                             Physical location where MongoDB Cloud deploys your AWS-hosted MongoDB cluster nodes. The region you choose can affect network latency for clients accessing your databases.
@@ -336,6 +384,54 @@ spec:
           status:
             description: DataFederationStatus defines the observed state of AtlasDataFederation.
             properties:
+              cloudProviderConfig:
+                description: CloudProviderConfig holds Atlas-assigned read-only fields
+                  for the cloud provider configuration.
+                properties:
+                  aws:
+                    description: AWS holds Atlas-assigned read-only fields for the
+                      AWS cloud provider config.
+                    properties:
+                      externalId:
+                        description: ExternalID is the IAM role external ID assigned
+                          by Atlas.
+                        type: string
+                      iamAssumedRoleARN:
+                        description: IAMAssumedRoleARN is the ARN of the IAM role
+                          Atlas assumes when accessing data stores.
+                        type: string
+                      iamUserARN:
+                        description: IAMUserARN is the ARN of the IAM user Atlas assumes
+                          when accessing data stores.
+                        type: string
+                    type: object
+                  azure:
+                    description: Azure holds Atlas-assigned read-only fields for the
+                      Azure cloud provider config.
+                    properties:
+                      atlasAppId:
+                        description: AtlasAppID is the App ID generated by Atlas for
+                          the Service Principal's access policy.
+                        type: string
+                      servicePrincipalId:
+                        description: ServicePrincipalID is the ID of the Service Principal
+                          Atlas uses to access Azure resources.
+                        type: string
+                      tenantId:
+                        description: TenantID is the Azure Active Directory tenant
+                          ID of the Service Principal.
+                        type: string
+                    type: object
+                  gcp:
+                    description: GCP holds Atlas-assigned read-only fields for the
+                      GCP cloud provider config.
+                    properties:
+                      gcpServiceAccount:
+                        description: GCPServiceAccount is the email of the GCP service
+                          account created by Atlas.
+                        type: string
+                    type: object
+                type: object
               conditions:
                 description: Conditions is the list of statuses showing the current
                   state of the Atlas Custom Resource
