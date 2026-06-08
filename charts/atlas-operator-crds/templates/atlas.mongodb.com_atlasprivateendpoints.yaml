@@ -170,6 +170,10 @@ spec:
                 x-kubernetes-list-map-keys:
                 - groupName
                 x-kubernetes-list-type: map
+              portMappingEnabled:
+                description: PortMappingEnabled indicates whether this endpoint service
+                  uses PSC port-mapping. GCP only.
+                type: boolean
               projectRef:
                 description: |-
                   projectRef is a reference to the parent AtlasProject resource.
@@ -196,6 +200,13 @@ spec:
                 description: Region of the chosen cloud provider in which you want
                   to create the private endpoint service.
                 type: string
+              supportedRegions:
+                description: SupportedRegions is the list of regions from which AWS
+                  Private Link traffic is forwarded to this endpoint. AWS only.
+                items:
+                  type: string
+                maxItems: 35
+                type: array
             required:
             - provider
             - region
@@ -295,6 +306,10 @@ spec:
                   The Atlas Operator updates this field to the value of 'metadata.generation' as soon as it starts reconciliation of the resource.
                 format: int64
                 type: integer
+              portMappingEnabled:
+                description: PortMappingEnabled indicates whether the GCP endpoint
+                  service uses PSC port-mapping. GCP only.
+                type: boolean
               resourceId:
                 description: ResourceID is the root-relative path that identifies
                   of the Atlas Azure Private Link Service
@@ -318,6 +333,12 @@ spec:
               serviceStatus:
                 description: ServiceStatus is the state of the private endpoint service
                 type: string
+              supportedRegions:
+                description: SupportedRegions is the list of regions from which AWS
+                  Private Link traffic is forwarded. AWS only.
+                items:
+                  type: string
+                type: array
             required:
             - conditions
             type: object
