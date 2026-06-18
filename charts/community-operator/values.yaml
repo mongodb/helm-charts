@@ -36,6 +36,8 @@ operator:
   # replicas deployed for the operator pod. Running 1 is optimal and suggested.
   replicas: 1
 
+  tolerations: []
+
   # Additional environment variables
   extraEnvs: []
   # environment:
