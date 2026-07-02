@@ -150,4 +150,64 @@ spec:
   users:
   {{- toYaml .Values.community.resource.users | nindent 4 }}
   {{- end}}
+  {{- if .Values.community.resource.persistence }}
+  statefulSet:
+    spec:
+      {{- if .Values.community.resource.persistence.data }}
+      template:
+        spec:
+          #  Hostpath volumes are owned by root
+          #  but MongoDB containers run as non root
+          #  so we use an init container to change the owner of
+          #  the directory (init containers run as root)
+          initContainers:
+            - command:
+                - chown
+                - -R
+                - "2000"
+                - /data
+              image: busybox
+              volumeMounts:
+                - mountPath: /data
+                  name: data-volume
+              securityContext:
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
+              name: change-dir-permissions
+      {{- end }}
+      {{- if (hasKey .Values.community.resource.persistence "data") | or ( hasKey .Values.community.resource.persistence "logs") }}
+      volumeClaimTemplates:
+      {{- if .Values.community.resource.persistence.data }}
+        - metadata:
+            name: data-volume
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: {{ .Values.community.resource.persistence.data.storage | default "40Gi" }}
+            {{- /* selector:
+              matchLabels:
+                # We set this labels when creating the volume
+                # (see below)
+                type: data*/}}
+            storageClassName: {{ .Values.community.resource.persistence.data.storageClassName | default "" }}
+  {{- end }}
+  {{- if .Values.community.resource.persistence.logs }}
+        - metadata:
+            name: logs-volume
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: {{ .Values.community.resource.persistence.logs.storage | default "2Gi" }}
+            {{- /* selector:
+              matchLabels:
+                type: logs */}}
+            storageClassName: {{ .Values.community.resource.persistence.logs.storageClassName | default "" }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
 {{- end }}
