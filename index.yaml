@@ -4581,6 +4581,27 @@ entries:
     version: 0.1.0
   mongodb-kubernetes:
   - apiVersion: v2
+    created: "2026-07-03T08:08:33.622932202Z"
+    description: 'MongoDB Controllers for Kubernetes translate the human knowledge
+      of creating a MongoDB instance into a scalable, repeatable, and standardized
+      method. '
+    digest: 3333d3ec37d6b34dfd2bb59ec8fbc7a5da3d1a67d6cd36f1a3da39846b0417d1
+    home: https://github.com/mongodb/mongodb-kubernetes
+    icon: https://mongodb-images-new.s3.eu-west-1.amazonaws.com/leaf-green-dark.png
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.16-0'
+    maintainers:
+    - email: support@mongodb.com
+      name: MongoDB
+    name: mongodb-kubernetes
+    type: application
+    urls:
+    - https://github.com/mongodb/helm-charts/releases/download/mongodb-kubernetes-1.9.1/mongodb-kubernetes-1.9.1.tgz
+    version: 1.9.1
+  - apiVersion: v2
     created: "2026-06-30T21:36:18.169240924Z"
     description: 'MongoDB Controllers for Kubernetes translate the human knowledge
       of creating a MongoDB instance into a scalable, repeatable, and standardized
@@ -4875,4 +4896,4 @@ entries:
     urls:
     - https://github.com/mongodb/helm-charts/releases/download/sample-app-0.1.0/sample-app-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-30T21:36:18.169855186Z"
+generated: "2026-07-03T08:08:33.623253474Z"
