@@ -1023,6 +1023,34 @@ spec:
                       Advisor for the specified project.
                     type: boolean
                 type: object
+              tags:
+                description: |-
+                  Tags is a list of key-value pairs used to tag and categorize the project. See more at
+                  https://www.mongodb.com/docs/atlas/tags/
+                  If you omit this setting, Atlas Kubernetes Operator doesn't alter the project's tags. Set it to an empty list
+                  to remove all tags from the project.
+                items:
+                  description: TagSpec holds a key-value pair for resource tagging
+                    on this resource.
+                  properties:
+                    key:
+                      description: Constant that defines the set of the tag.
+                      maxLength: 255
+                      minLength: 1
+                      pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
+                      type: string
+                    value:
+                      description: Variable that belongs to the set of the tag.
+                      maxLength: 255
+                      minLength: 1
+                      pattern: ^[a-zA-Z0-9][a-zA-Z0-9 @_.+`;`-]*$
+                      type: string
+                  required:
+                  - key
+                  - value
+                  type: object
+                maxItems: 50
+                type: array
               teams:
                 description: Teams enable you to grant project access roles to multiple
                   users.
