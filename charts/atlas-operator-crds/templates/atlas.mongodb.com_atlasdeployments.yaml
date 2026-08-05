@@ -677,7 +677,7 @@ spec:
                     description: Key-value pairs for resource tagging.
                     items:
                       description: TagSpec holds a key-value pair for resource tagging
-                        on this deployment.
+                        on this resource.
                       properties:
                         key:
                           description: Constant that defines the set of the tag.
@@ -762,7 +762,7 @@ spec:
                       255 characters in length for tagging and categorizing the instance.
                     items:
                       description: TagSpec holds a key-value pair for resource tagging
-                        on this deployment.
+                        on this resource.
                       properties:
                         key:
                           description: Constant that defines the set of the tag.
@@ -1016,7 +1016,7 @@ spec:
                     description: Key-value pairs for resource tagging.
                     items:
                       description: TagSpec holds a key-value pair for resource tagging
-                        on this deployment.
+                        on this resource.
                       properties:
                         key:
                           description: Constant that defines the set of the tag.
