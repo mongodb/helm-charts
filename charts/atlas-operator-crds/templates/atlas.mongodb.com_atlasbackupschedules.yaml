@@ -103,6 +103,7 @@ spec:
                       the export policy item occurs.
                     enum:
                     - monthly
+                    - yearly
                     type: string
                 required:
                 - exportBucketId
