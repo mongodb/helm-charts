@@ -39,6 +39,10 @@ spec:
                     values:
                       - {{ .Values.operator.name }}
               topologyKey: kubernetes.io/hostname
+      {{- with .Values.operator.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - command:
             - /usr/local/bin/entrypoint
