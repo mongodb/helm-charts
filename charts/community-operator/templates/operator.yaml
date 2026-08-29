@@ -84,6 +84,10 @@ spec:
       {{- if .Values.operator.priorityClassName }}
       priorityClassName: {{ .Values.operator.priorityClassName }}
       {{- end }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
       {{- if .Values.operator.podSecurityContext }}
       securityContext:
         {{- toYaml .Values.operator.podSecurityContext | nindent 8 }}
