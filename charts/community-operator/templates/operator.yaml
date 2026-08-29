@@ -1,3 +1,4 @@
+{{- $operatorWatchNamespaces := include "community-operator.watchNamespaces" . | fromYamlArray }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,13 +47,9 @@ spec:
 {{- if .Values.operator.extraEnvs }}
             {{ toYaml .Values.operator.extraEnvs | nindent 12 }}
 {{- end }}
+{{- if $operatorWatchNamespaces }}
             - name: WATCH_NAMESPACE
-{{- if .Values.operator.watchNamespace}}
-              value: "{{ .Values.operator.watchNamespace }}"
-{{- else }}
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: "{{ join "," $operatorWatchNamespaces }}"
 {{- end }}
             - name: POD_NAME
               valueFrom:
