@@ -24,6 +24,10 @@ spec:
         {{- with .Values.operator.podLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
+      {{- with .Values.operator.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
