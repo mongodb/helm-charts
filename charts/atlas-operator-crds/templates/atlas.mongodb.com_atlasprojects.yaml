@@ -804,6 +804,13 @@ spec:
                       Flag indicating whether project maintenance has been directed to start immediately.
                       Cannot be specified if defer is true
                     type: boolean
+                  waveAssignment:
+                    description: |-
+                      Wave assigned to this project for maintenance sequencing across an organization.
+                      Must be between 1 and 3, inclusive. Cannot be specified if autoDefer is true.
+                    maximum: 3
+                    minimum: 1
+                    type: integer
                 type: object
               name:
                 description: |-
