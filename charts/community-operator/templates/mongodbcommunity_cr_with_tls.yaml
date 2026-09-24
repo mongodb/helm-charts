@@ -120,6 +120,17 @@ spec:
   members: {{ .Values.resource.members }}
   type: ReplicaSet
   version: {{ .Values.resource.version }}
+  statefulSetConfiguration:
+    spec:
+      template:
+        spec:
+          initContainers:
+            - name: mongod-posthook
+              resources:
+                {{- toYaml .Values.resource.initContainers.resources | nindent 16 }}
+            - name: mongodb-agent-readinessprobe
+              resources:
+                {{- toYaml .Values.resource.initContainers.resources | nindent 16 }}
   security:
     tls:
       enabled: {{ .Values.resource.tls.enabled }}
