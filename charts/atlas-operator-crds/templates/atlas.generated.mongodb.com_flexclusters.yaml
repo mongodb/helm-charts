@@ -20,7 +20,7 @@ metadata:
                       version: v1
                   x-openapi-mapping:
                     property: $.groupId
-              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312025/admin
+              x-atlas-sdk-version: go.mongodb.org/atlas-sdk/v20250312026/admin
   creationTimestamp: null
   labels:
     app.kubernetes.io/component: controller
@@ -80,6 +80,11 @@ spec:
                     description: The entry fields of the flexcluster resource spec.
                       These fields can be set for creating and updating flexclusters.
                     properties:
+                      databaseEdition:
+                        description: 'Available in Public Preview: Optional field
+                          that indicates whether your tenant cluster will be upgraded
+                          to Atlas INFINITE or CORE.'
+                        type: string
                       name:
                         description: Human-readable label that identifies the instance.
                         type: string
@@ -248,6 +253,11 @@ spec:
                   createDate:
                     description: Date and time when MongoDB Cloud created this instance.
                       This parameter expresses its value in ISO 8601 format in UTC.
+                    type: string
+                  databaseEdition:
+                    description: 'Available in Public Preview: Optional field that
+                      indicates whether your tenant cluster will be upgraded to Atlas
+                      INFINITE or CORE.'
                     type: string
                   groupId:
                     description: Unique 24-hexadecimal character string that identifies
