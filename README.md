@@ -1,16 +1,33 @@
+> **DEPRECATED:** The MongoDB Enterprise Kubernetes Operator is now deprecated in favor of a new replacement Operator available here [mongodb/mongodb-kubernetes](https://github.com/mongodb/mongodb-kubernetes) with [official documentation here](https://www.mongodb.com/docs/kubernetes-operator/current/). Existing versions of the Enterprise Kubernetes Operator remain supported until end of life dates listed here: [official support lifecycle](https://www.mongodb.com/docs/kubernetes-operator/current/reference/support-lifecycle/).
+>
+> For more information on this decision - what it means and entails - see the [announcement](https://github.com/mongodb/mongodb-kubernetes/releases/tag/v1.0.0) and our [public documentation](https://www.mongodb.com/docs/kubernetes/current/).
+
 # MongoDB Helm Charts repository for Kubernetes
 
 This repository contains Helm Charts for different MongoDB products.
 
-| Charts                                                                                                     | Description                                                        |
-|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [atlas-operator](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator)                   | MongoDB Atlas Operator Helm Chart.                                 |
-| [atlas-deployment](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-deployment)               | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources. |
-| [atlas-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds)         | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.       |
-| [community-operator](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator)           | MongoDB Community Operator Helm Chart.                             |
-| [community-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds) | MongoDB Community Custom Resource Definitions (CRDs) Helm Chart.   |
-| [enterprise-operator](https://github.com/mongodb/helm-charts/tree/main/charts/enterprise-operator)         | MongoDB Enterprise Kubernetes Operator Helm Chart.                 |
-| [sample-app](https://github.com/mongodb/helm-charts/tree/main/charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.  |
+## Supported Charts
+
+The following Charts are supported by MongoDB.
+
+| Charts                                            | Description                                                                                            |
+|---------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| [mongodb-kubernetes](https://github.com/mongodb/helm-charts/tree/main/charts/mongodb-kubernetes)   | MongoDB Controllers for Kubernetes Helm Chart                                                          |
+| [enterprise-operator](https://github.com/mongodb/helm-charts/tree/main/charts/enterprise-operator) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Enterprise Kubernetes Operator Helm Chart. |
+| [enterprise-database](https://github.com/mongodb/helm-charts/tree/main/charts/enterprise-database) | MongoDB Enterprise Kubernetes Database Helm Chart.                                                     |
+| [atlas-operator](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                                                     |
+| [atlas-deployment](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-deployment)       | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources.                                  |
+| [atlas-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.                                           |
+
+## Unsupported Charts
+
+The following Helm Charts are not supported by MongoDB.
+
+| Charts                                                    | Description                                                                                                          |
+|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| [community-operator](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator)           | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Operator Helm Chart.                           |
+| [community-operator-crds](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Custom Resource Definitions (CRDs) Helm Chart. |
+| [sample-app](https://github.com/mongodb/helm-charts/tree/main/charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.                                                    |
 
 - Please note that the `CRD` Charts ([Community](https://github.com/mongodb/helm-charts/tree/main/charts/community-operator-crds)
   and [Atlas](https://github.com/mongodb/helm-charts/tree/main/charts/atlas-operator-crds)) will be installed, by default,
@@ -27,9 +44,15 @@ $ helm repo add mongodb https://mongodb.github.io/helm-charts
 "mongodb" has been added to your repositories
 ```
 
-## Additional Charts
+## Contribute
 
-All of MongoDB Helm charts will be moved into this repository. In the meantime,
-please find them on their own repositories:
+Please file issues before filing PRs. For PRs to be accepted, contributors must sign our [CLA](https://www.mongodb.com/legal/contributor-agreement).
 
-- [MongoDB Enterprise Kubernetes Operator](https://github.com/mongodb/mongodb-enterprise-kubernetes)
+Reviewers, please ensure that the CLA has been signed by referring to [the contributors tool](https://contributors.corp.mongodb.com/) (internal link).
+
+## License
+
+These helm charts are available under the Apache 2 license. Please refer to the github repos of the software that the charts install for additional license information.
+
+* [MongoDB Atlas Operator](https://github.com/mongodb/mongodb-atlas-kubernetes)
+* [MongoDB Controllers for Kubernetes](https://github.com/mongodb/mongodb-kubernetes)
