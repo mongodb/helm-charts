@@ -1,0 +1,54 @@
+name: Sync Landing Page
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-readme
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Publish README to gh-pages
+        run: |
+          sed 's#](charts/#](https://github.com/${{ github.repository }}/tree/main/charts/#g' main/README.md > gh-pages/README.md
+
+          cd gh-pages
+          if git diff --quiet -- README.md; then
+            echo "gh-pages README is up to date"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Sync README from main@${GITHUB_SHA::7}"
+
+          for attempt in 1 2 3; do
+            git push origin HEAD:gh-pages && exit 0
+            echo "Push rejected (attempt ${attempt}), rebasing onto gh-pages"
+            git pull --rebase origin gh-pages
+          done
+          exit 1
