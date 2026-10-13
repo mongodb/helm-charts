@@ -32,23 +32,9 @@ jobs:
           path: gh-pages
 
       - name: Publish README to gh-pages
-        run: |
-          sed 's#](charts/#](https://github.com/${{ github.repository }}/tree/main/charts/#g' main/README.md > gh-pages/README.md
-
-          cd gh-pages
-          if git diff --quiet -- README.md; then
-            echo "gh-pages README is up to date"
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "Sync README from main@${GITHUB_SHA::7}"
-
-          for attempt in 1 2 3; do
-            git push origin HEAD:gh-pages && exit 0
-            echo "Push rejected (attempt ${attempt}), rebasing onto gh-pages"
-            git pull --rebase origin gh-pages
-          done
-          exit 1
+        working-directory: main
+        env:
+          README_SRC: README.md
+          PAGES_DIR: ../gh-pages
+          REPOSITORY: ${{ github.repository }}
+        run: ./.github/actions/pages-readme/sync-readme.sh
