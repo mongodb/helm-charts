@@ -10,24 +10,24 @@ This repository contains Helm Charts for different MongoDB products.
 
 The following Charts are supported by MongoDB.
 
-| Charts                                            | Description                                                                                          |
-|---------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| [mongodb-kubernetes](charts/mongodb-kubernetes)   | MongoDB Controllers for Kubernetes Helm Chart                                                       |
+| Charts                                            | Description                                                                                            |
+|---------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| [mongodb-kubernetes](charts/mongodb-kubernetes)   | MongoDB Controllers for Kubernetes Helm Chart                                                          |
 | [enterprise-operator](charts/enterprise-operator) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Enterprise Kubernetes Operator Helm Chart. |
-| [enterprise-database](charts/enterprise-database) | MongoDB Enterprise Kubernetes Database Helm Chart.                                                   |
-| [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                                                   |
-| [atlas-deployment](charts/atlas-deployment)       | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources.                                |
-| [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.                                         |
+| [enterprise-database](charts/enterprise-database) | MongoDB Enterprise Kubernetes Database Helm Chart.                                                     |
+| [atlas-operator](charts/atlas-operator)           | MongoDB Atlas Operator Helm Chart.                                                                     |
+| [atlas-deployment](charts/atlas-deployment)       | MongoDB Atlas Deployment Helm Chart. Create Mongo Database resources.                                  |
+| [atlas-operator-crds](charts/atlas-operator-crds) | MongoDB Atlas Custom Resource Definitions (CRDs) Helm Chart.                                           |
 
 ## Unsupported Charts
 
 The following Helm Charts are not supported by MongoDB.
 
-| Charts                                                    | Description                                                                                                        |
-|-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| Charts                                                    | Description                                                                                                          |
+|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | [community-operator](charts/community-operator)           | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Operator Helm Chart.                           |
 | [community-operator-crds](charts/community-operator-crds) | (**DEPRECATED** - use `mongodb-kubernetes` instead) MongoDB Community Custom Resource Definitions (CRDs) Helm Chart. |
-| [sample-app](charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.                                                  |
+| [sample-app](charts/sample-app)                           | A Sample Front/Back-end application backed by a MongoDB Database.                                                    |
 
 - Please note that the `CRD` Charts ([Community](charts/community-operator-crds)
   and [Atlas](charts/atlas-operator-crds)) will be installed, by default,

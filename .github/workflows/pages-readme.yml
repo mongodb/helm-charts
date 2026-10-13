@@ -1,0 +1,40 @@
+name: Sync Landing Page
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-readme
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Publish README to gh-pages
+        working-directory: main
+        env:
+          README_SRC: README.md
+          PAGES_DIR: ../gh-pages
+          REPOSITORY: ${{ github.repository }}
+        run: ./.github/actions/pages-readme/sync-readme.sh
