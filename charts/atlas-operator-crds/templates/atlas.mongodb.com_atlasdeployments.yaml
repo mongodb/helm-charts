@@ -143,6 +143,24 @@ spec:
                       - zone
                       type: object
                     type: array
+                  databaseEdition:
+                    description: |-
+                      Type of database topology.
+                      Setting this field to "INFINITE" creates an Atlas Infinite cluster, where compute is detached
+                      from storage. Atlas assigns the edition at creation time and refuses to change it afterwards,
+                      so the field is immutable. Leave it unset to let Atlas pick the default edition.
+                      An Atlas Infinite cluster may be a REPLICASET or SHARDED, but must use exactly one region
+                      and exactly two electable nodes, and cannot change its topology afterwards. Atlas reports
+                      it as CONTINUOUS and manages its storage, so versionReleaseSystem, pitEnabled,
+                      autoScaling.diskGB, diskSizeGB and diskIOPS are not configurable on it. On an Atlas Infinite cluster backupEnabled instead selects
+                      Additional Backup Retention, and defaults to enabled: backups always run either way.
+                    enum:
+                    - CORE
+                    - INFINITE
+                    type: string
+                    x-kubernetes-validations:
+                    - message: databaseEdition is immutable
+                      rule: self == oldSelf
                   diskSizeGB:
                     description: |-
                       Capacity, in gigabytes, of the host's root volume.
@@ -1208,6 +1226,12 @@ spec:
                     description: Status of the Custom Zone Mapping.
                     type: string
                 type: object
+              databaseEdition:
+                description: |-
+                  DatabaseEdition is the database edition Atlas assigned to the cluster, either CORE or
+                  INFINITE. Atlas picks a default when spec.deploymentSpec.databaseEdition is left unset,
+                  so this reports the edition actually in effect rather than the one requested.
+                type: string
               managedNamespaces:
                 description: List that contains a namespace for a Global Cluster.
                   MongoDB Atlas manages this cluster.
