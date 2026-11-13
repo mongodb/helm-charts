@@ -1,16 +1,20 @@
+{{- $databaseNamespaces := include "community-operator.database.namespaces" . | fromYamlArray }}
+{{- $databaseName := $.Values.database.name }}
+{{- range $namespace := $databaseNamespaces }}
+
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ .Values.database.name }}
-  namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  name: {{ $databaseName }}
+  namespace: {{ $namespace }}
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ .Values.database.name }}
-  namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  name: {{ $databaseName }}
+  namespace: {{ $namespace }}
 rules:
   - apiGroups:
       - ""
@@ -31,12 +35,14 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.database.name }}
-  namespace: {{ if .Values.database.namespace }} {{ .Values.database.namespace }} {{ else }} {{ .Release.Namespace }} {{ end }}
+  name: {{ $databaseName }}
+  namespace: {{ $namespace }}
 subjects:
   - kind: ServiceAccount
-    name: {{ .Values.database.name }}
+    name: {{ $databaseName }}
 roleRef:
   kind: Role
-  name: {{ .Values.database.name }}
+  name: {{ $databaseName }}
   apiGroup: rbac.authorization.k8s.io
+
+{{- end }}

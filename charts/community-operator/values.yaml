@@ -17,8 +17,10 @@ operator:
   # Version of mongodb-kubernetes-operator
   version: 0.13.0
 
-  # Uncomment this line to watch all namespaces
-  # watchNamespace: "*"
+  # watchNamespaces is the set of namespaces that are watched by the Operator.
+  # - empty (watch namespace where the Operator is installed to)
+  # - ["*"] (watch all namespaces)
+  # watchNamespaces: []
 
   # Resources allocated to Operator Pod
   resources:
@@ -54,14 +56,11 @@ operator:
 ## Operator's database
 database:
   name: mongodb-database
-  # set this to the namespace where you would like
-  # to deploy the MongoDB database,
-  # Note if the database namespace is not same
-  # as the operator namespace,
-  # make sure to set "watchNamespace" to "*"
+  # If "watchNamespaces" is set to ["*"],
+  # then set the database namespaces
   # to ensure that the operator has the
   # permission to reconcile resources in other namespaces
-  # namespace: mongodb-database
+  # namespaces: ["mongodb-database"]
 
 agent:
   name: mongodb-agent-ubi
