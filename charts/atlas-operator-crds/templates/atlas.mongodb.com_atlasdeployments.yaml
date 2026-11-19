@@ -292,13 +292,17 @@ spec:
                             Each regionConfigs object describes the region's priority in elections and the number and type of MongoDB nodes that MongoDB Cloud deploys to the region.
                             Each regionConfigs object must have either an analyticsSpecs object, electableSpecs object, or readOnlySpecs object.
                             Tenant clusters only require electableSpecs. Dedicated clusters can specify any of these specifications, but must have at least one electableSpecs object within a replicationSpec.
-                            Every hardware specification must use the same instanceSize.
+                            Analytics nodes can use a different instanceSize from electable and read-only nodes.
                           items:
                             properties:
                               analyticsAutoScaling:
                                 description: |-
-                                  Options that determine how this cluster handles resource scaling for analytics nodes specifically.
-                                  When set, must match across all regionConfigs. Atlas requires all autoScaling objects to be consistent.
+                                  Options that determine how this cluster handles resource scaling for analytics nodes.
+                                  These settings are independent of autoScaling and do not have to match it.
+                                  Atlas requires analyticsAutoScaling settings to match across all regionConfigs in all replicationSpecs.
+                                  Atlas validates analytics instance sizes against these settings, not the autoScaling limits.
+                                  When compute.enabled is true, Atlas Kubernetes Operator does not revert analytics instance size changes made by Atlas auto-scaling.
+                                  When compute.enabled is false, Atlas Kubernetes Operator reconciles the instance size specified in analyticsSpecs.
                                 properties:
                                   compute:
                                     description: Collection of settings that configure
@@ -311,23 +315,19 @@ spec:
                                           is false.
                                         type: boolean
                                       maxInstanceSize:
-                                        description: 'Maximum instance size to which
-                                          your deployment can automatically scale
-                                          (such as M40). Atlas requires this parameter
-                                          if "autoScaling.compute.enabled" : true.'
+                                        description: |-
+                                          Maximum instance size to which your deployment can automatically scale (such as M40).
+                                          Atlas requires this parameter when enabled is true in the same compute configuration.
                                         type: string
                                       minInstanceSize:
-                                        description: 'Minimum instance size to which
-                                          your deployment can automatically scale
-                                          (such as M10). Atlas requires this parameter
-                                          if "autoScaling.compute.scaleDownEnabled"
-                                          : true.'
+                                        description: |-
+                                          Minimum instance size to which your deployment can automatically scale (such as M10).
+                                          Atlas requires this parameter when scaleDownEnabled is true in the same compute configuration.
                                         type: string
                                       scaleDownEnabled:
-                                        description: 'Flag that indicates whether
-                                          the deployment tier may scale down. Atlas
-                                          requires this parameter if "autoScaling.compute.enabled"
-                                          : true.'
+                                        description: |-
+                                          Flag that indicates whether the deployment tier may scale down.
+                                          Atlas requires this parameter when enabled is true in the same compute configuration.
                                         type: boolean
                                     type: object
                                   diskGB:
@@ -363,7 +363,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size.
+                                      The instance size you select applies to all nodes of this type in this region.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -371,8 +371,9 @@ spec:
                                     type: integer
                                 type: object
                               autoScaling:
-                                description: Options that determine how this cluster
-                                  handles resource scaling.
+                                description: |-
+                                  Options that determine how this cluster handles resource scaling for electable and read-only nodes.
+                                  Atlas requires autoScaling settings to match across all regionConfigs in all replicationSpecs.
                                 properties:
                                   compute:
                                     description: Collection of settings that configure
@@ -385,23 +386,19 @@ spec:
                                           is false.
                                         type: boolean
                                       maxInstanceSize:
-                                        description: 'Maximum instance size to which
-                                          your deployment can automatically scale
-                                          (such as M40). Atlas requires this parameter
-                                          if "autoScaling.compute.enabled" : true.'
+                                        description: |-
+                                          Maximum instance size to which your deployment can automatically scale (such as M40).
+                                          Atlas requires this parameter when enabled is true in the same compute configuration.
                                         type: string
                                       minInstanceSize:
-                                        description: 'Minimum instance size to which
-                                          your deployment can automatically scale
-                                          (such as M10). Atlas requires this parameter
-                                          if "autoScaling.compute.scaleDownEnabled"
-                                          : true.'
+                                        description: |-
+                                          Minimum instance size to which your deployment can automatically scale (such as M10).
+                                          Atlas requires this parameter when scaleDownEnabled is true in the same compute configuration.
                                         type: string
                                       scaleDownEnabled:
-                                        description: 'Flag that indicates whether
-                                          the deployment tier may scale down. Atlas
-                                          requires this parameter if "autoScaling.compute.enabled"
-                                          : true.'
+                                        description: |-
+                                          Flag that indicates whether the deployment tier may scale down.
+                                          Atlas requires this parameter when enabled is true in the same compute configuration.
                                         type: boolean
                                     type: object
                                   diskGB:
@@ -447,7 +444,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size.
+                                      The instance size you select applies to all nodes of this type in this region.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -491,7 +488,7 @@ spec:
                                     description: |-
                                       Hardware specification for the instance sizes in this region.
                                       Each instance size has a default storage and memory capacity.
-                                      The instance size you select applies to all the data-bearing hosts in your instance size.
+                                      The instance size you select applies to all nodes of this type in this region.
                                     type: string
                                   nodeCount:
                                     description: Number of nodes of the given type
@@ -954,21 +951,19 @@ spec:
                                   tier auto-scaling is enabled. The default is false.
                                 type: boolean
                               maxInstanceSize:
-                                description: 'Maximum instance size to which your
-                                  deployment can automatically scale (such as M40).
-                                  Atlas requires this parameter if "autoScaling.compute.enabled"
-                                  : true.'
+                                description: |-
+                                  Maximum instance size to which your deployment can automatically scale (such as M40).
+                                  Atlas requires this parameter when enabled is true in the same compute configuration.
                                 type: string
                               minInstanceSize:
-                                description: 'Minimum instance size to which your
-                                  deployment can automatically scale (such as M10).
-                                  Atlas requires this parameter if "autoScaling.compute.scaleDownEnabled"
-                                  : true.'
+                                description: |-
+                                  Minimum instance size to which your deployment can automatically scale (such as M10).
+                                  Atlas requires this parameter when scaleDownEnabled is true in the same compute configuration.
                                 type: string
                               scaleDownEnabled:
-                                description: 'Flag that indicates whether the deployment
-                                  tier may scale down. Atlas requires this parameter
-                                  if "autoScaling.compute.enabled" : true.'
+                                description: |-
+                                  Flag that indicates whether the deployment tier may scale down.
+                                  Atlas requires this parameter when enabled is true in the same compute configuration.
                                 type: boolean
                             type: object
                           diskGBEnabled:
