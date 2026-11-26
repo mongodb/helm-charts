@@ -126,3 +126,5 @@ resource:
   #     - name: dbAdminAnyDatabase
   #       db: admin
   #   scramCredentialsSecretName: my-scram
+
+topologySpreadConstraints: {}
