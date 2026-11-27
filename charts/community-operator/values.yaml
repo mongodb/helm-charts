@@ -29,6 +29,16 @@ operator:
       cpu: 500m
       memory: 200Mi
 
+  # Resources for init containers
+  initContainers:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+
   # PriorityClass configuration for operator
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   priorityClassName: ''
@@ -96,6 +106,15 @@ resource:
   name: mongodb-replica-set
   version: 4.4.0
   members: 3
+  # Resources for MongoDB pod init containers
+  initContainers:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
   tls:
     enabled: false
 
